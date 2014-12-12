@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<SiGnAtUrE>
+	<device>
+		<usb>
+			<seqno>1</seqno>
+			<count>1</count>
+			<mnt_root>/var/tmp/storage</mnt_root>
+			<helper>/etc/scripts/services.sh</helper>
+			<entry>
+				<uid>USB1</uid>
+				<devname>rtl8652-ehci.0</devname>
+				<luv></luv>
+				<port_id>1</port_id>
+			</entry>
+		</usb>
+	</device>
+	<runtime>
+		<device>
+			<usb>
+				<count>1</count>
+				<mnt_root></mnt_root>
+				<entry>
+					<uid>USB1</uid>
+					<devname>rtl8652-ehci.0</devname>
+					<port_id>1</port_id>
+				</entry>
+			</usb>
+		</device>
+	</runtime>
+</SiGnAtUrE>

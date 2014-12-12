@@ -1,0 +1,21 @@
+--- build/samba-3.0.24/source/smbd/server.c	2007-02-05 02:59:13.000000000 +0800
++++ build_final/samba-3.0.24/source/smbd/server.c	2011-03-08 17:48:42.250048000 +0800
+@@ -763,6 +763,18 @@
+ 	set_auth_parameters(argc,argv);
+ #endif
+ 
++//sam_pan add
++#ifdef SAMBA_LINK_ALL        
++    if(strcmp(argv[0],"smbpasswd")==0)
++    {
++        return main_with_smbd(argc, argv);
++    }    
++    else if(strcmp(argv[0],"nmbd")==0)
++    {
++        return nmbd_main(argc, argv);
++    }   
++#endif
++
+ 	pc = poptGetContext("smbd", argc, argv, long_options, 0);
+ 	
+ 	while((opt = poptGetNextOpt(pc)) != -1) {

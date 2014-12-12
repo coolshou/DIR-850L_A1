@@ -1,0 +1,35 @@
+# speed test parameter file
+
+PATTERN		IBBPBBPBBPBBPBB
+
+OUTPUT		/n/picasso/users/keving/encode/output/sequoia.mpg
+GOP_SIZE	30
+SLICES_PER_FRAME	1
+
+BASE_FILE_FORMAT	PPM
+YUV_SIZE	352x240
+
+INPUT_CONVERT	djpeg *
+
+INPUT_DIR	/n/zonker/video/seqframes
+
+INPUT
+sequoia*.jpeg	[378-600]
+END_INPUT
+
+# quality parameters
+
+IQSCALE		8
+PQSCALE		10
+BQSCALE		22
+
+# motion vector search parameters
+
+PIXEL		HALF
+
+RANGE		10
+
+PSEARCH_ALG	LOGARITHMIC
+BSEARCH_ALG	CROSS2
+
+REFERENCE_FRAME	DECODED

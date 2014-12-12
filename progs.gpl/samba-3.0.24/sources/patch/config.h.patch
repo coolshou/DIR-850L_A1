@@ -1,0 +1,29 @@
+--- build/samba-3.0.24/source/include/config.h	2011-04-13 10:19:54.000000000 +0800
++++ build_big/samba-3.0.24/source/include/config.h	2011-04-12 19:17:54.000000000 +0800
+@@ -346,7 +346,7 @@
+ #define HAVE_EXECL 1
+ 
+ /* Whether large file support can be enabled */
+-/* #undef HAVE_EXPLICIT_LARGEFILE_SUPPORT */
++#define HAVE_EXPLICIT_LARGEFILE_SUPPORT 1
+ 
+ /* Define to 1 if you have the `extattr_delete_fd' function. */
+ /* #undef HAVE_EXTATTR_DELETE_FD */
+@@ -2245,7 +2245,7 @@
+ /* #undef _ALIGNMENT_REQUIRED */
+ 
+ /* File offset bits */
+-/* #undef _FILE_OFFSET_BITS */
++#define _FILE_OFFSET_BITS 64
+ 
+ /* Whether to use GNU libc extensions */
+ /* #undef _GNU_SOURCE */
+@@ -2254,7 +2254,7 @@
+ /* #undef _HPUX_SOURCE */
+ 
+ /* Whether to enable large file support */
+-/* #undef _LARGEFILE64_SOURCE */
++#define _LARGEFILE64_SOURCE 1 
+ 
+ /* Whether to enable large file support */
+ /* #undef _LARGE_FILES */

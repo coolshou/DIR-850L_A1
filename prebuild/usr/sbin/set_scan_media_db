@@ -1,0 +1,19 @@
+#!/bin/sh
+usage="Usage: set_scan_media_db [-g|-s] [xml node]"
+case "$1" in
+-s)
+	case "$2" in
+	enable)
+		rgdb -i -s /runtime/scan_media/enable 1
+		rgdb -i -s /runtime/scan_media/scan_done 0
+		rgdb -i -s /runtime/scan_media/total_file 1
+		rgdb -i -s /runtime/scan_media/total_scan_file 0
+		;;
+	
+	disable)
+		rgdb -i -s /runtime/scan_media/enable 0
+		;;
+	esac
+;;
+esac
+exit 0

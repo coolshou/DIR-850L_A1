@@ -1,0 +1,60 @@
+# test suite parameter file
+
+PATTERN		IBBBPBBBBP
+OUTPUT		/tmp/foobar.mpg
+
+YUV_SIZE	352x240
+
+BASE_FILE_FORMAT	YUV
+INPUT_CONVERT	cat *.Y *.U *.V
+GOP_SIZE	30
+SLICES_PER_FRAME  1
+
+INPUT_DIR	/n/picasso/users/keving/encode/input/tennis
+
+INPUT
+stennis.0
+stennis.*	[1-3]
+stennis.*	[4-5]
+stennis.*	[6-6]
+stennis.7
+stennis.*	[8-15]
+stennis.16
+stennis.17
+stennis.*	[18-34]
+END_INPUT
+
+
+
+# all of the remaining options have to do with the motion search and qscale
+#
+# change this only if you're unsatisfied with the CPU time or quality, or
+# are experimenting
+#
+
+# if this appears in the file, then in addition to testing luminance when
+# computing motion vectors, program will also take into account chrominance
+#
+# this option MUST appear before ERROR option, or it will be ignored
+#
+# CHROMINANCE
+
+# MAD or MSE -- must be upper case
+ERROR		MAD
+
+# FULL or HALF -- must be upper case
+PIXEL		FULL
+
+# means +/- this many pixels
+RANGE		8
+
+PSEARCH_ALG	LOGARITHMIC
+
+BSEARCH_ALG	SIMPLE
+
+IQSCALE		8
+PQSCALE		10
+BQSCALE		25
+
+
+REFERENCE_FRAME	ORIGINAL

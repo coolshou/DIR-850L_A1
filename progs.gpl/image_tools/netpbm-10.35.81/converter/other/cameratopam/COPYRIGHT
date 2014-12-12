@@ -1,0 +1,35 @@
+Cameratopam is derived from Dave Coffin's Dcraw program.
+
+Bryan Henderson derived it in April 2005.  Bryan mainly just split it up
+into manageable pieces and replaced the parts that generate Netpbm formats
+and the command line parser.
+
+Dcraw and therefore Cameratopam is Copyright 1997-2005 by Dave Coffin,
+dcoffin a cybercom o net, and Dave licenses it to the public freely,
+except that the Foveon code (in foveon.c in Netpbm) is copyrighted by
+someone else (I don't know who).
+
+Dave licenses his copyright to the public freely, with the words, "Any
+code not declared GPL is free for all uses."  Only the code in
+foveon.c in Netpbm was declared GPL in Dave's work.
+
+The foveon code is licensed to the public by its unknown copyright owner
+under GPL.
+
+The Netpbm maintainer distributes the entire Cameratopam package under
+GPL.
+
+Dave's distribution to Bryan may be a copyright violation, but
+strangely enough, Bryan's distribution to others is not.  I.e.  you DO
+have license from every copyright owner to do GPL-compatible things
+with this code.
+
+The problem with Dave's distribution is that he combined the Foveon
+code and his code into a single work and distributed it with GPL terms
+applying only to the Foveon code.  The combined work may be a
+derivative work of the Foveon code and therefore cannot be distributed
+with the permission of the Foveon copyright owner, who gives that
+permission only on the condition that the distributor license the
+entire derivative work under GPL.  Dave did not do that.  He did not,
+for example, prohibit Bryan from distributing Dave's part of the code
+in object code only format.

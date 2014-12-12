@@ -1,0 +1,71 @@
+/* vector.h: operations on vectors and points. */
+
+#ifndef VECTOR_H
+#define VECTOR_H
+
+#include "point.h"
+#include "exception.h"
+
+/* Our vectors are represented as displacements along the x and y axes.  */
+
+typedef struct
+{
+  float dx, dy, dz;
+} vector_type;
+
+
+/* Consider a point as a vector from the origin.  */
+extern vector_type make_vector (const float_coord);
+
+/* And a vector as a point, i.e., a displacement from the origin.  */
+extern float_coord vector_to_point (const vector_type);
+
+
+/* Definitions for these common operations can be found in any decent
+   linear algebra book, and most calculus books.  */
+
+extern float magnitude (const vector_type);
+extern vector_type normalize (const vector_type);
+
+extern vector_type Vadd (const vector_type, const vector_type);
+extern float Vdot (const vector_type, const vector_type);
+extern vector_type Vmult_scalar (const vector_type, const float);
+extern float Vangle (const vector_type in, const vector_type out, at_exception_type * exp);
+
+/* These operations could have been named `P..._vector' just as well as
+   V..._point, so we may as well allow both names.  */
+#define Padd_vector Vadd_point
+extern float_coord Vadd_point
+  (const float_coord, const vector_type);
+
+#define Psubtract_vector Vsubtract_point
+extern float_coord Vsubtract_point
+  (const float_coord, const vector_type);
+
+/* This returns the rounded sum.  */
+#define IPadd_vector Vadd_int_point
+
+pm_pixelcoord
+Vadd_int_point(pm_pixelcoord const c,
+               vector_type   const v);
+
+/* Take the absolute value of both components.  */
+extern vector_type Vabs (const vector_type);
+
+/* Operations on points with real coordinates.  It is not orthogonal,
+   but more convenient, to have the subtraction operator return a
+   vector, and the addition operator return a point.  */
+extern vector_type Psubtract
+  (const float_coord, const float_coord);
+
+vector_type
+IPsubtract(pm_pixelcoord const coord1,
+           pm_pixelcoord const coord2);
+
+/* These are heavily used in spline fitting.  */
+extern float_coord Padd (const float_coord,
+                                  const float_coord);
+extern float_coord Pmult_scalar (const float_coord, const float);
+
+#endif
+

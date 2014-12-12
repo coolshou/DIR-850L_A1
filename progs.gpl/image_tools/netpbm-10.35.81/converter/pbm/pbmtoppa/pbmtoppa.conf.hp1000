@@ -1,0 +1,18 @@
+# Sample configuration file for the HP720
+#
+# This file will be automatically read upon startup if it's placed in
+# /etc/pbm2ppa.conf
+#
+
+version  1000
+
+papersize	us
+
+xoff     100 # \ Adjust these for your printer.
+yoff    -650 # / (see CALIBRATE)
+
+# 1/4 inch margins all around (at 600 DPI)
+top      150
+bottom   150
+left     150
+right    150

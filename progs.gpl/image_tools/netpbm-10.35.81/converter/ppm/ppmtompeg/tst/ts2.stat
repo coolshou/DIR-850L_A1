@@ -1,0 +1,52 @@
+MPEG ENCODER STATS (1.5)
+------------------------
+TIME STARTED:  Mon Jun 26 14:22:56 1995
+MACHINE:  odie.CS.Berkeley.EDU
+FIRST FILE:  ./tst/ts/stennis.30.yuv
+LAST FILE:  ./tst/ts/stennis.39.yuv
+PATTERN:  ibbpbbpbb
+GOP_SIZE:  30
+SLICES PER FRAME:  1
+RANGE:  +/-10
+FULL SEARCH:  0
+PSEARCH:  LOGARITHMIC
+BSEARCH:  CROSS2
+QSCALE:  8 10 25
+REFERENCE FRAME:  ORIGINAL
+TIME COMPLETED:  Mon Jun 26 14:23:11 1995
+Total time:  15 seconds
+
+-------------------------
+*****I FRAME SUMMARY*****
+-------------------------
+  Blocks:      660     (171792 bits)     (  260 bpb)
+  Frames:        2     (172008 bits)     (86004 bpf)     (60.0% of total)
+  Compression:   23:1     (   1.0180 bpp)
+  Seconds:          0     (   2.9851 fps)  (   252179 pps)  (      985 mps)
+-------------------------
+*****P FRAME SUMMARY*****
+-------------------------
+  I Blocks:     54     ( 13161 bits)     (  243 bpb)
+  P Blocks:    598     ( 69956 bits)     (  116 bpb)
+  Skipped:       8
+  Frames:        2     ( 83344 bits)     (41672 bpf)     (29.1% of total)
+  Compression:   48:1     (   0.4933 bpp)
+  Seconds:          1     (   1.2821 fps)  (   108307 pps)  (      423 mps)
+-------------------------
+*****B FRAME SUMMARY*****
+-------------------------
+  I Blocks:      5     (   391 bits)     (   78 bpb)
+  B Blocks:   1733     ( 29897 bits)     (   17 bpb)
+  B types:     250     (  11 bpb) forw    483 (  12 bpb) back    1000 (  20 bpb) bi
+  Skipped:     491
+  Frames:        6     ( 30960 bits)     ( 5160 bpf)     (10.8% of total)
+  Compression:  392:1     (   0.0611 bpp)
+  Seconds:         11     (   0.5029 fps)  (    42487 pps)  (      165 mps)
+---------------------------------------------
+Total Compression:   70:1     (   0.3392 bpp)
+Total Frames Per Second:  0.666667 (220 mps)
+CPU Time:  0.706215 fps     (233 mps)
+Total Output Bit Rate (30 fps):  859608 bits/sec
+MPEG file created in :  /tmp/ts2.mpg
+
+

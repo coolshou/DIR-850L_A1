@@ -1,0 +1,81 @@
+# speed test parameter file
+
+PATTERN		ibpbpb
+OUTPUT		/n/picasso/users/keving/encode/output/flowgard.mpg
+GOP_SIZE	30
+SLICES_PER_FRAME	1
+
+BASE_FILE_FORMAT	YUV
+YUV_SIZE	352x240
+
+INPUT_CONVERT	cat *.Y *.U *.V
+
+INPUT_DIR	/n/picasso/users/keving/links/flowg
+
+INPUT
+sflowg.*	[0-6]
+END_INPUT
+
+# the following two are optional  (default = 10, 60)
+
+# number of frames to do initially to gauge speed of machine
+PARALLEL_TEST_FRAMES	3
+
+# number of seconds per chunk thereafter
+PARALLEL_TIME_CHUNKS	30
+
+
+PARALLEL
+# lines must be of form "machine <whitespace> username <whitespace> executable"
+# these guys are sorta slow:
+#elmer-fudd	keving	~keving/encode/bin/sun/mpeg_encode
+#zonker		keving	~keving/encode/bin/sun/mpeg_encode
+#roger-rabbit	keving	~keving/encode/bin/sun/mpeg_encode
+#tweety		keving	~keving/encode/bin/sun/mpeg_encode
+#mickey		keving	~keving/encode/bin/mickey/mpeg_encode
+#
+# these guys are pretty fast:
+#
+#big-bird	keving	~keving/encode/bin/hp/mpeg_encode
+#gumby		keving	~keving/encode/bin/hp/mpeg_encode
+#charlie-brown	keving	~keving/encode/bin/dec-alpha/mpeg_encode
+#woodstock	keving	~keving/encode/bin/dec-alpha/mpeg_encode
+#bugs-bunny	keving	~keving/encode/bin/sun/mpeg_encode
+#
+# remotes
+#
+#REMOTE anaconda	keving	~keving/mpeg_encode ~keving/parallel.test
+#REMOTE adder	keving	~keving/mpeg_encode ~keving/parallel.test
+#REMOTE moccasin	keving	~keving/mpeg_encode ~keving/parallel.test
+#REMOTE cobra	keving	~keving/mpeg_encode ~keving/parallel.test
+#REMOTE boa	keving	~keving/mpeg_encode ~keving/parallel.test
+#REMOTE asp	keving	~keving/mpeg_encode ~keving/parallel.test
+#REMOTE rattler	keving	~keving/mpeg_encode ~keving/parallel.test
+#REMOTE viper	keving	~keving/mpeg_encode ~keving/parallel.test
+# mamba doesn't seem to work for whatever reason...don't know why
+#REMOTE mamba	keving	~keving/mpeg_encode ~keving/parallel.test
+#REMOTE cse.lbl.gov kevin	~kevin/mpeg_encode ~kevin/parallel.test
+#REMOTE roger-rabbit keving	~keving/src/encode/bin/sun/mpeg_encode ~keving/src/encode/ParamExamples/parallel.test
+END_PARALLEL
+
+
+# motion vector search parameters
+
+# MAD or MSE -- must be upper case
+ERROR		MAD
+
+# FULL or HALF -- must be upper case
+PIXEL		FULL
+
+# means +/- this many pixels
+RANGE		8
+
+PSEARCH_ALG	EXHAUSTIVE
+BSEARCH_ALG	SIMPLE
+
+IQSCALE		1
+PQSCALE		1
+BQSCALE		25
+
+REFERENCE_FRAME		DECODED
+#REFERENCE_FRAME		ORIGINAL

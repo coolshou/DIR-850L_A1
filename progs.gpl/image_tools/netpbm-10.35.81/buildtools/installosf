@@ -1,0 +1,31 @@
+#!/bin/sh
+
+# This program takes parameters as a Netpbm make file might pass to
+# its $(INSTALL) program and invokes OSF1 Install with the proper
+# parameters to effect what the make file wants.  If your system has
+# OSF1 Install on it, you can just set the INSTALL variable in
+# Makefile.config to "installosf" and 'make install' will work for
+# you.
+
+# Of course, you could also just install Ginstall and forget about this
+# program.
+
+PERMISSIONS=444
+while [ $# -gt 0 ]; do
+    if [ "$1" = "-c" ]; then x=x;
+    elif [ "$1" = "-s" ]; then x=x;
+    elif [ "$1" = "-m" ]; then 
+        shift
+        PERMISSIONS=$1
+    elif [ ${SOURCE_FILE}x == x ]; then
+        SOURCE_FILE=$1
+    else
+        TARGET_DIR=$1
+    fi
+    shift;
+done
+
+install -f $TARGET_DIR -m $PERMISSIONS $SOURCE_FILE
+
+
+

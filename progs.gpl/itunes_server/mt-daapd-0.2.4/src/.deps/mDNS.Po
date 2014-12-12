@@ -1,0 +1,72 @@
+mDNS.o: mDNS.c mDNSClientAPI.h \
+  /spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/include/stdarg.h \
+  mDNSDebug.h \
+  /spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/../../../../arm-linux-uclibc/sys-include/sys/types.h \
+  /spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/../../../../arm-linux-uclibc/sys-include/features.h \
+  /spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/../../../../arm-linux-uclibc/sys-include/bits/uClibc_config.h \
+  /spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/../../../../arm-linux-uclibc/sys-include/bits/uClibc_arch_features.h \
+  /spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/../../../../arm-linux-uclibc/sys-include/sys/cdefs.h \
+  /spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/../../../../arm-linux-uclibc/sys-include/bits/types.h \
+  /spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/../../../../arm-linux-uclibc/sys-include/bits/wordsize.h \
+  /spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/include/stddef.h \
+  /spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/../../../../arm-linux-uclibc/sys-include/bits/kernel_types.h \
+  /spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/../../../../arm-linux-uclibc/sys-include/bits/typesizes.h \
+  /spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/../../../../arm-linux-uclibc/sys-include/bits/pthreadtypes.h \
+  /spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/../../../../arm-linux-uclibc/sys-include/bits/sched.h \
+  /spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/../../../../arm-linux-uclibc/sys-include/time.h \
+  /spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/../../../../arm-linux-uclibc/sys-include/endian.h \
+  /spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/../../../../arm-linux-uclibc/sys-include/bits/endian.h \
+  /spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/../../../../arm-linux-uclibc/sys-include/sys/select.h \
+  /spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/../../../../arm-linux-uclibc/sys-include/bits/select.h \
+  /spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/../../../../arm-linux-uclibc/sys-include/bits/sigset.h \
+  /spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/../../../../arm-linux-uclibc/sys-include/bits/time.h \
+  /spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/../../../../arm-linux-uclibc/sys-include/sys/sysmacros.h \
+  mDNSPlatformFunctions.h
+
+mDNSClientAPI.h:
+
+/spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/include/stdarg.h:
+
+mDNSDebug.h:
+
+/spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/../../../../arm-linux-uclibc/sys-include/sys/types.h:
+
+/spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/../../../../arm-linux-uclibc/sys-include/features.h:
+
+/spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/../../../../arm-linux-uclibc/sys-include/bits/uClibc_config.h:
+
+/spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/../../../../arm-linux-uclibc/sys-include/bits/uClibc_arch_features.h:
+
+/spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/../../../../arm-linux-uclibc/sys-include/sys/cdefs.h:
+
+/spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/../../../../arm-linux-uclibc/sys-include/bits/types.h:
+
+/spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/../../../../arm-linux-uclibc/sys-include/bits/wordsize.h:
+
+/spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/include/stddef.h:
+
+/spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/../../../../arm-linux-uclibc/sys-include/bits/kernel_types.h:
+
+/spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/../../../../arm-linux-uclibc/sys-include/bits/typesizes.h:
+
+/spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/../../../../arm-linux-uclibc/sys-include/bits/pthreadtypes.h:
+
+/spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/../../../../arm-linux-uclibc/sys-include/bits/sched.h:
+
+/spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/../../../../arm-linux-uclibc/sys-include/time.h:
+
+/spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/../../../../arm-linux-uclibc/sys-include/endian.h:
+
+/spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/../../../../arm-linux-uclibc/sys-include/bits/endian.h:
+
+/spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/../../../../arm-linux-uclibc/sys-include/sys/select.h:
+
+/spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/../../../../arm-linux-uclibc/sys-include/bits/select.h:
+
+/spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/../../../../arm-linux-uclibc/sys-include/bits/sigset.h:
+
+/spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/../../../../arm-linux-uclibc/sys-include/bits/time.h:
+
+/spaces/opt/storlink_arm_920t_le_uclibc.old/bin/../lib/gcc/arm-linux-uclibc/3.4.6/../../../../arm-linux-uclibc/sys-include/sys/sysmacros.h:
+
+mDNSPlatformFunctions.h:

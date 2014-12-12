@@ -1,0 +1,107 @@
+# parameter file template
+#
+# any line beginning with '#' is a comment
+#
+# no line should be longer than 255 characters
+#
+#
+# general format of each line is:
+#	<option> <spaces and/or tabs> <value>
+#
+# lines can generally be in any order
+#
+# only exception is the option 'INPUT' which must be followed by input
+# files in the order in which they must appear, followed by 'END_INPUT'
+#
+# <option> MUST be in UPPER CASE
+#
+
+PATTERN		IBBPBBPBBPBBP
+OUTPUT		output/food
+
+# mpeg_encode really only accepts 2 different file formats, but using a
+# conversion statement it can effectively handle ANY file format
+#
+# you must specify whether you will convert to PPM or YUV format
+#	(must be upper case)
+#
+BASE_FILE_FORMAT	YUV
+
+#
+# if YUV format, must provide width and height
+# YUV_SIZE	width height
+# this option is ignored if BASE_FILE_FORMAT is PPM
+#
+YUV_SIZE	352x240
+
+# the conversion statement
+#
+# Each occurrence of '*' will be replaced by the input file
+#
+# e.g., if you have a bunch of GIF files, then this might be:
+#	INPUT_CONVERT	giftoppm *
+#
+# e.g., if you have a bunch of files like a.Y a.U a.V, etc., then:
+#	INPUT_CONVERT	cat *.Y *.U *.V
+#
+# e.g., if you are grabbing from laser disc you might have something like
+#	INPUT_CONVERT	goto frame *; grabppm
+# 'INPUT_CONVERT *' means the files are already in the base file format
+#
+INPUT_CONVERT	cat *.Y *.U *.V
+
+# number of frames in a GOP.
+#
+# since each GOP must have at least one I-frame, the encoder will find the
+# the first I-frame after GOP_SIZE frames to start the next GOP
+#
+# later, will add more flexible GOP signalling
+#
+GOP_SIZE	30
+
+# directory to get all input files from (makes this file easier to read)
+INPUT_DIR	links/payam
+
+INPUT
+# '*' is replaced by the numbers 01, 02, 03, 04
+# if I instead do [01-11], it would be 01, 02, ..., 09, 10, 11
+# if I instead do [1-11], it would be 1, 2, 3, ..., 9, 10, 11
+# the program assumes none of your input files has a name ending in ']'
+# if you do, too bad!!!
+#
+#
+stennis.*	[0-23]
+# can have more files here if you want...as many as you want
+END_INPUT
+
+
+
+# all of the remaining options have to do with the motion search and qscale
+#
+# change this only if you're unsatisfied with the CPU time or quality, or
+# are experimenting
+#
+
+# if this appears in the file, then in addition to testing luminance when
+# computing motion vectors, program will also take into account chrominance
+#
+# this option MUST appear before ERROR option, or it will be ignored
+#
+# CHROMINANCE
+
+# MAD or MSE -- must be upper case
+ERROR		MAD
+
+# FULL or HALF -- must be upper case
+PIXEL		FULL
+
+# means +/- this many pixels
+RANGE		8
+
+# YES or NO -- must be upper case
+SUBSAMPLE	NO
+
+IQSCALE		10
+PQSCALE		15
+BQSCALE		25
+

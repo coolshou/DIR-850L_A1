@@ -1,0 +1,46 @@
+# speed test parameter file
+
+PATTERN		ibbpbbpbbpbbpbb
+OUTPUT		/n/picasso/users/keving/encode/output/flowgard.mpg
+GOP_SIZE	30
+SLICES_PER_FRAME	1
+
+BASE_FILE_FORMAT	YUV
+YUV_SIZE	352x240
+
+INPUT_CONVERT	cat *.Y *.U *.V
+
+INPUT_DIR	/n/picasso/project/mm/mpeg/mpeg_encode/input/flowg
+
+INPUT
+sflowg.*	[0-149]
+END_INPUT
+
+PARALLEL_TEST_FRAMES	3
+PARALLEL_TIME_CHUNKS	15
+
+PARALLEL
+charlie-brown	keving	~keving/encode/bin/dec-alpha/mpeg_encode
+woodstock	keving	~keving/encode/bin/dec-alpha/mpeg_encode
+END_PARALLEL
+
+# motion vector search parameters
+
+# MAD or MSE -- must be upper case
+ERROR		MAD
+
+# FULL or HALF -- must be upper case
+PIXEL		FULL
+
+# means +/- this many pixels
+RANGE		8
+
+PSEARCH_ALG	LOGARITHMIC
+BSEARCH_ALG	SIMPLE
+
+IQSCALE		8
+PQSCALE		10
+BQSCALE		25
+
+REFERENCE_FRAME	ORIGINAL
+

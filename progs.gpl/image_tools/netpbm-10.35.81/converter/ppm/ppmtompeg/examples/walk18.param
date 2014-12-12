@@ -1,0 +1,35 @@
+# speed test parameter file
+
+PATTERN		IBBPBBPBBPBBPBB
+
+OUTPUT		/n/picasso/users/keving/encode/output/walk19.mpg
+GOP_SIZE	30
+SLICES_PER_FRAME	1
+
+BASE_FILE_FORMAT	PPM
+YUV_SIZE	320x240
+
+INPUT_CONVERT	zcat *
+
+INPUT_DIR	/n/zonker/cluster/keving/walk
+
+INPUT
+f.*.Z	[1-200]
+END_INPUT
+
+# quality parameters
+
+IQSCALE		8
+PQSCALE		10
+BQSCALE		25
+
+# motion vector search parameters
+
+PIXEL		HALF
+
+RANGE		10
+
+PSEARCH_ALG	LOGARITHMIC
+BSEARCH_ALG	CROSS2
+
+REFERENCE_FRAME	ORIGINAL

@@ -1,0 +1,11 @@
+genre.lo: genre.c config.h global.h id3tag.h ucs4.h genre.dat
+
+config.h:
+
+global.h:
+
+id3tag.h:
+
+ucs4.h:
+
+genre.dat:

@@ -1,0 +1,35 @@
+# speed test parameter file
+
+PATTERN		IBBPBBPBBPBBPBB
+
+OUTPUT		/n/picasso/users/keving/encode/output/flow.mpg
+GOP_SIZE	30
+SLICES_PER_FRAME	1
+
+BASE_FILE_FORMAT	YUV
+YUV_SIZE	352x240
+
+INPUT_CONVERT	*
+
+INPUT_DIR	../input/flowg
+
+INPUT
+sflowg.*.yuv	[0-149]
+END_INPUT
+
+# quality parameters
+
+IQSCALE		8
+PQSCALE		10
+BQSCALE		25
+
+# motion vector search parameters
+
+PIXEL		HALF
+
+RANGE		10
+
+PSEARCH_ALG	LOGARITHMIC
+BSEARCH_ALG	CROSS2
+
+REFERENCE_FRAME	DECODED

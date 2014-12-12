@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<SiGnAtUrE>
+	<runtime>
+		<device>
+			<wlandriver>RTL819x-SDK v3.2.2.1</wlandriver>
+			<modelname>DIR-602L</modelname>
+			<upnpvendor>D-Link Corporation</upnpvendor>
+			<producturl>http://www.dlink.com.tw</producturl>
+			<description>Wireless Router</description>
+			<conntrack_max>4096</conntrack_max>
+			<conntrack_min>4096</conntrack_min>
+		</device>
+	</runtime>
+</SiGnAtUrE>

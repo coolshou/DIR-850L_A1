@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<SiGnAtUrE>
+	<runtime>
+		<device>
+			<wlandriver>BGN band: BCM43217 + AC band: BCM4352</wlandriver>
+			<modelname>DIR-860</modelname>
+			<producturl>http://www.dlink.com</producturl>
+			<description>Wireless Broadband Router</description>
+		</device>
+	</runtime>
+</SiGnAtUrE>

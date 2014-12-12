@@ -1,0 +1,11 @@
+--- configure.org	2011-03-11 14:58:38.245927984 +0800
++++ ../configure	2011-03-11 14:56:50.661927980 +0800
+@@ -5053,7 +5053,7 @@
+     CC="$CC -traditional"
+   fi
+ fi
+-
++ac_cv_func_setpgrp_void=""
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether setpgrp takes no argument" >&5
+ $as_echo_n "checking whether setpgrp takes no argument... " >&6; }
+ if test "${ac_cv_func_setpgrp_void+set}" = set; then :

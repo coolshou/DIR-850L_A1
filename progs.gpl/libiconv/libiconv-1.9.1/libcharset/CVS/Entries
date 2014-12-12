@@ -1,0 +1,26 @@
+/.cvsignore/1.1.1.1/Thu Mar 10 07:36:55 2005//
+/AUTHORS/1.1.1.1/Thu Mar 10 07:36:55 2005//
+/COPYING.LIB/1.1.1.1/Thu Mar 10 07:36:55 2005//
+/ChangeLog/1.1.1.1/Thu Mar 10 07:36:55 2005//
+/INSTALL.generic/1.1.1.1/Thu Mar 10 07:36:55 2005//
+/INTEGRATE/1.1.1.1/Thu Mar 10 07:36:55 2005//
+/Makefile.devel/1.1.1.1/Thu Mar 10 07:36:55 2005//
+/Makefile.in/1.1.1.1/Thu Mar 10 07:36:55 2005//
+/Makefile.msvc/1.1.1.1/Thu Mar 10 07:36:55 2005//
+/Makefile.vms/1.1.1.1/Thu Mar 10 07:36:55 2005//
+/NEWS/1.1.1.1/Thu Mar 10 07:36:55 2005//
+/README/1.1.1.1/Thu Mar 10 07:36:55 2005//
+/README.djgpp/1.1.1.1/Thu Mar 10 07:36:55 2005//
+/README.woe32/1.1.1.1/Thu Mar 10 07:36:55 2005//
+/config.h.in/1.1.1.1/Thu Mar 10 07:36:55 2005//
+/config.h.msvc/1.1.1.1/Thu Mar 10 07:36:55 2005//
+/config.h_vms/1.1.1.1/Thu Mar 10 07:36:55 2005//
+/configure/1.1.1.1/Thu Mar 10 07:36:55 2005//
+/configure.in/1.1.1.1/Thu Mar 10 07:36:55 2005//
+D/autoconf////
+D/djgpp////
+D/include////
+D/lib////
+D/m4////
+D/tools////
+D/windows////

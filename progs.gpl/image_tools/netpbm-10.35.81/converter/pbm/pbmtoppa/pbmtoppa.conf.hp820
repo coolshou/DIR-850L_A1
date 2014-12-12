@@ -1,0 +1,18 @@
+# Sample configuration file for the HP820
+#
+# This file will be automatically read upon startup if it's placed in
+# /etc/pbm2ppa.conf
+#
+
+version  820
+
+papersize	us
+
+xoff      75 # \ Adjust these for your printer.
+yoff    -500 # / (see CALIBRATE)
+
+# 1/4 inch margins all around (at 600 DPI)
+top       80
+bottom   150
+left      80
+right     80

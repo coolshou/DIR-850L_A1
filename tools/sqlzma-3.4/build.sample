@@ -1,0 +1,49 @@
+#!/bin/bash
+#
+# LZMA support for SquashFS 3.4 in kernel 2.6.27.4
+#
+# How to use this script:
+# download all required files, copy them to current directory, run this script
+# it will unpack kernel sources and other archives, and will make .ko modules
+# as well as mksquashfs and unsquashfs binaries
+
+if [ ! -f linux-2.6.27.4.tar.bz2 -o ! -f squashfs3.4.tar.gz -o ! -f 7z457.tar.bz2 -o ! -f sqlzma3.4-457.tar.bz2 ]; then
+  echo "missing required file"
+  exit
+fi
+
+rm -rf linux-2.6.27.4 squashfs3.4 lzma457
+
+tar xjf sqlzma3.4-457.tar.bz2
+tar xzf squashfs3.4.tar.gz
+tar xjf linux-2.6.27.4.tar.bz2
+mkdir lzma457
+tar -C lzma457 -xjf 7z457.tar.bz2
+
+patch -d linux-2.6.27.4 -p1 < squashfs3.4/kernel-patches/linux-2.6.27-rc4/squashfs3.4-patch
+patch -d linux-2.6.27.4 -p1 < sqlzma2k-3.4.patch
+patch -d squashfs3.4 -p1 < sqlzma2u-3.4.patch
+patch -d lzma457 -p1 < sqlzma1-457.patch
+
+ln -s ../../linux-2.6.27.4 squashfs3.4/kernel-patches
+
+echo "cp .config linux-2.6.27.4"
+echo "cd linux-2.6.27.4"
+echo "make oldconfig"
+echo "make prepare"
+echo "make scripts"
+echo "cd -"
+
+echo "initialize kernel sources now, by using the commands mentioned above"
+echo "and then press ENTER..."
+read
+
+make
+
+mkdir BUILD
+cp ./linux-2.6.27.4/fs/squashfs/squashfs.ko BUILD
+cp ./lzma457/C/Compress/Lzma/kmod/sqlzma.ko BUILD
+cp ./lzma457/C/Compress/Lzma/kmod/unlzma.ko BUILD
+cp ./squashfs3.4/squashfs-tools/unsquashfs BUILD
+cp ./squashfs3.4/squashfs-tools/mksquashfs BUILD
+strip --strip-unneeded BUILD/mksquashfs BUILD/unsquashfs

@@ -1,0 +1,13 @@
+--- close.c.org	2011-04-26 11:30:23.000000000 +0800
++++ close.c	2011-04-26 11:31:08.000000000 +0800
+@@ -345,6 +345,10 @@
+ 
+ 	file_free(fsp);
+ 
++//+++ We want user can unplug USB disk immediately after copy, add by sam_pan 2011/4/26 10:51¤W¤È
++	sync();
++//--- add by sam_pan 2011/4/26 10:51¤W¤È
++
+ 	if (err == -1 || err1 == -1) {
+ 		errno = saved_errno;
+ 		return saved_errno;

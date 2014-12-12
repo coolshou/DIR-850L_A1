@@ -1,0 +1,187 @@
+Installation of ppa-0.8.5 with S.u.S.E. Linux
+(Special Installation with Hp820 and paper size A4)
+___________________________________________________
+
+
+0. Introduction
+
+This text describes how to use the package pbm2ppa written by Tim Norman
+with the S.u.S.E Linux System. This program allows the use of GDI (Winows
+only) printers with Linux. The program pbm2ppa is actually a converter
+between the two formats pbm (an output format from ghostscript) and the
+format understood by the HP printers 720, 820 and 1000. So anyway we have to
+use ghostscript to produce pbm (or faster: pbmraw) files. To print ascii
+files there is an extra step invoking enscript to convert the ascii to
+postscript files.  I rather constructed two new printer spoolers in printcap
+from scratch then using apsfilter: one for postscript files and another for
+ascii files. I welcome solutions in combination with the apsfilter script.
+The installation is quiet easy - after seven steps you should be ready to
+print postscript and ascii files, but it may take some time to adjust the
+constants properly, don't despair.
+
+0.1. Modifications
+
+This was modified on October 18, 1998 by Tim Norman to conform to the new
+A4 paper support in version 0.8.5.
+
+
+1. Installation of program package ppa-0.8.5
+
+Get the packate at http://www.rpi.edu/~normat/technical/ppa/ and compile it
+with
+
+# make 820
+
+or put in your printer number (720, 820 or 1000) (see also INSTALL and README
+file).
+
+
+2. To adjust the paper size to DIN A4, use the -s a4 option to pbm2ppa or
+change your pbm2ppa.conf file to read "papersize a4" (see step 5).
+
+
+3. You can now calibrate the printer with 
+
+For US size paper:
+# pbmtpg | pbm2ppa > /dev/lp1 ( as root )
+For A4 size paper:
+# pbmtpg -a4 | pbm2ppa -s a4 > /dev/lp1 ( as root )
+
+or you try first printing some sample files and calibrate in step 5.
+
+
+4. Now you can print (postscript) files with a shell script like this:
+
+Contents of print:
+
+cat $1 | gs -sDEVICE=pbmraw -q -dNOPAUSE -r600 -sOutputFile=- - | \
+pbm2ppa - - >/dev/lp1
+
+After changing the file modes (i.e. chmod 755 print) you are able to print
+a postscript file invoking the shell script print like:
+
+# print filename.ps
+
+
+To print ascii files just extend the script print with the use of enscript:
+
+Contents of printascii:
+
+enscript -2rj -p- $1 | \
+gs -sDEVICE=pbmraw -q -dNOPAUSE -r600 -sOutputFile=- - | \
+pbm2ppa - - >/dev/lp1
+
+
+Check the manpage for enscript to adjust the options to your flavour.
+Now you can also print ascii files with
+
+# printascii filename.ascii
+
+
+5. It may be possible that you have to recalibrate your printer (see 3.)
+
+Here follow the results from my calibration after printing ascii files with the
+shell script printascii (see 4.). The program pbm2ppa takes the arguments in the
+following order:
+
+1. shell arguments
+2. config file /etc/pbm2ppa.conf
+3. Compiled options from default.h
+
+So whenever you invoke pbm2ppa without arguments the program uses the options
+stored in the file /etc/pbm2ppa.conf, so I suggest to leave there a copy of
+this file.
+
+# Sample configuration file for the HP820 and DIN A4 paper size
+#
+# This file will be automatically read upon startup if it's placed in
+# /etc/pbm2ppa.conf
+#
+
+version  820
+
+papersize	a4
+
+xoff      0 # \ Adjust these for your printer.
+yoff    -600 # / (see CALIBRATE)
+
+# 1/4 inch margins all around (at 600 DPI)
+top       50
+bottom    50
+left      50
+right     50
+
+
+6. To integrate the converter into the Linux system we create two printer
+spooler in /etc/printcap. One to print postscript files and another to print
+plain ascii files.
+
+Contents of /etc/printcap:
+
+lp:\
+        :lp=/dev/lp1:\
+        :sd=/var/spool/lpd/lp:\
+        :lf=/var/spool/lpd/lp/log:\
+        :af=/var/spool/lpd/lp/acct:\
+        :if=/usr/local/bin/ps.if:\
+        :la:mx#0:\
+        :sh:sf:
+
+ascii:\
+        :lp=/dev/lp1:\
+        :sd=/var/spool/lpd/ascii:\
+        :lf=/var/spool/lpd/ascii/log:\
+        :af=/var/spool/lpd/ascii/acct:\
+        :if=/usr/local/bin/ascii.if:\
+        :la:mx#0:\
+        :sh:sf:
+
+
+Here follow some explanations (for more information consult the printcap
+manpage). We use the lp1 device, have two spool directories
+/var/spool/lpd/ascii and /var/spool/lpd/lp (better you create them now) a log
+file (lf) an accounting file (af), suppress form feeds (sf), suppress printing
+of burst page header (sh) and the maximum file size is unlimited (mx#0). To
+integrate the converter pbm2ppa into the system we use two input filters. Maybe
+you have a better solution in combination with apsfilter but until then try
+this way. Actually, the two input filter files are almost identical with the
+shell scripts print and printascii we created in step 4.
+
+File /usr/local/bin/ascii.if:
+
+#! /bin/sh
+enscript -2rj -p- | \
+gs -sDEVICE=pbmraw -q -dNOPAUSE -r600 -sOutputFile=- - | \
+/usr/local/bin/pbm2ppa - -
+
+
+File /usr/local/bin/ps.if:
+
+#! /bin/sh
+gs -sDEVICE=pbmraw -q -dNOPAUSE -r600 -sOutputFile=- - | \
+/usr/local/bin/pbm2ppa - -
+
+
+7. Place pbm2ppa in the directory /usr/local/bin. Now you are ready to print
+files with
+
+# lpr filename.ps
+
+and
+
+# lpr -P ascii filename.ascii
+
+like you are used to it.
+
+Enjoy
+
+
+19. May 1998
+
+Michael Buehlmann
+Badenerstrasse 285
+8003 Zuerich
+Switzerland
+
+mbuehlma@stud.ee.ethz.ch
+

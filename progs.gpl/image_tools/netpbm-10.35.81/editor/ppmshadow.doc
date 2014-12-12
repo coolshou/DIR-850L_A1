@@ -1,0 +1,627 @@
+<html>
+<head>
+<title>pnmshadow: How it Works</title>
+
+</head>
+
+<body>
+
+<center>
+<h1><img src="figures/how_title.jpg" width=417 height=116 alt="pnmshadow: How it Works"></h1>
+</center>
+
+<hr>
+<p>
+
+This document describes the process, including PBMplus commands
+and the intermediate images they create, by
+which <b><a href="./">pnmshadow</a></b>
+adds black shadows to source images.
+A <a href="how-t.html">companion document</a>
+describes how translucent shadows are created when the
+<b>-t</b> option is specified.
+
+<h3>The Starting Point</h3>
+
+Let's start with the following source image, 536 pixels wide and 141
+pixels high.  We convert the image from whatever form in which
+it was originally created (GIF, JPEG, etc.) to a PPM file before
+processing it with <b>pnmshadow</b>.
+
+<p>
+<center>
+<table border=5>
+<tr><td>
+<img src="figures/shadin.gif" width=536 height=141 alt="Input image">
+</table>
+</center>
+
+<h3>The Blank Background</h3>
+
+We start by determining the size of the input image with
+<b>pnmfile</b> and then constructing an image with the same
+size as the input image consisting entirely of the background
+color, which is defined as the color of the pixel at the upper
+left corner of the source image.  This is performed by the
+command:
+
+<p>
+<pre>
+    pnmcut 0 0 1 1 <em>ifile</em> | pnmscale -xsize <em>xsize</em> -ysize <em>ysize</em> &gt;<em>fname</em>-5.ppm
+</pre>
+<p>
+
+yielding the image:
+
+<p>
+<center>
+<table border=5>
+<tr><td>
+<img src="figures/shadt5.gif" width=536 height=141 alt="Blank background image">
+</table>
+</center>
+
+<h3>The Positive Mask</h3>
+
+A positive mask image is created in which all pixels of the background
+color are set to white and all other pixels are black.  This is accomplished
+by subtracting the blank background image from the input (using the
+<tt>-difference</tt> option on <b>pnmarith</b> to avoid clipping at
+zero or the maximum pixel value), then inverting the result and
+thresholding it to a monochrome bitmap.
+
+<p>
+<pre>
+    pnmarith -difference <em>ifile</em> <em>fname</em>-5.ppm | pnminvert | ppmtopgm | pgmtopbm -thresh -value 1.0 &gt;<em>fname</em>-1.ppm
+</pre>
+<p>
+
+This produces the following mask image.
+
+<p>
+<center>
+<table border=5>
+<tr><td>
+<img src="figures/shadt1.gif" width=536 height=141 alt="Positive mask image">
+</table>
+</center>
+
+<h3>The Blurred Image</h3>
+
+Since we wish to simulate a shadow from a nearby extended
+light source rather than a sharp shadow as cast by the
+Sun, we need to prepare a blurred version of the original
+image.  If the <b>-t</b> option is not specified on
+<b>pnmshadow</b> the shadow cast by an object of any color
+is always black, so the positive mask serves as the source image
+when preparing the shadow.  A convolution kernel which averages
+the number of pixels specified by the <b>-b</b> option
+(default 11), written into the temporary file <tt><em>fname</em>-2.ppm</tt>
+in ASCII PGM format, and then the blurred image is created with
+the command:
+
+<p>
+<pre>
+    pnmconvol <em>fname</em>-2.ppm <em>fname</em>-1.ppm &gt;<em>fname</em>-3.ppm
+</pre>
+<p>
+
+With the default blur setting of 11 pixels, the blurred image
+below is generated.
+
+<p>
+<center>
+<table border=5>
+<tr><td>
+<img src="figures/shadt3.jpg" width=536 height=141 alt="Blurred shadow">
+</table>
+</center>
+
+<h3>Shadow on Background Color</h3>
+
+Having generated the blurred shadow from the monochrome mask image,
+it will consist of pixels ranging from white to black on a white
+background.  In order to preserve the background color in the
+original image, we multiply the shadow by the blank background color
+image created previously.  White pixels take on the background color
+and pixels belonging to the shadow are scaled to be relative to the
+background.
+
+<p>
+<pre>
+    pnmarith -multiply <em>fname</em>-3.ppm <em>fname</em>-5.ppm &gt;<em>fname</em>-10.ppm
+</pre>
+<p>
+
+This yields the following shadow, with the background of the
+original image.
+
+<p>
+<center>
+<table border=5>
+<tr><td>
+<img src="figures/shadt10.jpg" width=536 height=141 alt="Shadow with background color">
+</table>
+</center>
+
+<h3>Offset Shadow Clip</h3>
+
+Shadows, even bogus ones like we're generating, usually look best when
+cast by a light source diagonally displaced from the centre of the
+shadow-casting object.  To achieve this effect, we first cut a
+rectangle from the blurred shadow image reduced in size by the
+the number of pixels specified by the <b>-b</b> option
+which default to half the blur (<b>-b</b>) setting.  The
+<em>xsize</em> and <em>ysize</em> arguments in the following
+command are the size of the input image in pixels less the shadow
+displacement in the respective axis.
+
+<p>
+<pre>
+    pnmcut 0 0 <em>xsize</em> <em>ysize</em> <em>fname</em>-10.ppm &gt;<em>fname</em>-4.ppm
+</pre>
+<p>
+
+The shadow clip is the identical to the shadow on background color, but
+smaller by the offset in each direction.
+
+<p>
+<center>
+<table border=5>
+<tr><td>
+<img src="figures/shadt4.jpg" width=531 height=136 alt="Offset shadow clip">
+</table>
+</center>
+
+<h3>Offset Shadow</h3>
+
+Now we're ready to assemble the shadow offset by the specified number
+of pixels.  We do this by pasting the image cut in the previous step
+into the blank background, yielding an image the same size as the
+source image with the blurred shadow displaced to the right and
+down.
+
+<p>
+<pre>
+    pnmpaste -replace <em>fname</em>-4.ppm <em>xoffset</em> <em>yoffset</em> <em>fname</em>-5.ppm &gt;<em>fname</em>-6.ppm
+</pre>
+<p>
+
+This gives the following result:
+
+<p>
+<center>
+<table border=5>
+<tr><td>
+<img src="figures/shadt6.jpg" width=536 height=141 alt="Offset shadow">
+</table>
+</center>
+
+<h3>Inverse Mask</h3>
+
+In order to stitch everything together, we need an inverse of the
+mask prepared earlier--one where black pixels represent the background
+and all other material is white.  This is easily accomplished by
+running the positive mask through <b>pnminvert</b>:
+
+<p>
+<pre>
+    pnminvert <em>fname</em>-1.ppm &gt;<em>fname</em>-7.ppm
+</pre>
+<p>
+
+yielding:
+
+<p>
+<center>
+<table border=5>
+<tr><td>
+<img src="figures/shadt7.gif" width=536 height=141 alt="Inverse mask">
+</table>
+</center>
+
+<h3>Masked Input Image</h3>
+
+Now we use the inverse mask prepared in the previous step to create
+an image containing all non-background pixels from the source image,
+with background pixels set to black.  We simply multiply the
+inverse mask by the source image:
+
+<p>
+<pre>
+    pnmarith -multiply <em>ifile</em> <em>fname</em>-7.ppm &gt;<em>fname</em>-8.ppm
+</pre>
+<p>
+
+<em>et voilà:</em>
+
+<p>
+<center>
+<table border=5>
+<tr><td>
+<img src="figures/shadt8.gif" width=536 height=141 alt="Masked Input Image">
+</table>
+</center>
+
+<h3>Shadow with Source Masked</h3>
+
+Our last intermediate step before joining the image with its
+shadow is preparing a shadow image with all non-background pixels
+in the source image set to black.  This ensures that when we add
+the image and the shadow, the shadow will not override any pixel
+in the source image.
+
+<p>
+<pre>
+    pnmarith -multiply <em>fname</em>-6.ppm <em>fname</em>-1.ppm &gt;<em>fname</em>-9.ppm
+</pre>
+<p>
+
+This is accomplished by multiplying the shadow by the positive
+mask image, which sets all non-background pixels in the source
+image to black:
+
+<p>
+<center>
+<table border=5>
+<tr><td>
+<img src="figures/shadt9.jpg" width=536 height=141 alt="Shadow with Source Masked">
+</table>
+</center>
+
+<h3>The Final Product</h3>
+
+At long last, we're ready to put together the pieces and deliver
+the result to our ever-patient user.  This amounts simply to 
+adding the masked input image (consisting solely of non-background
+pixels from the original image) to the shadow with source masked
+(in which all source pixels are black):
+
+<p>
+<pre>
+    pnmarith -add <em>fname</em>-8.ppm <em>fname</em>-9.ppm
+</pre>
+<p>
+
+The resulting image, with shadow, is as follows:
+
+<p>
+<center>
+<table border=5>
+<tr><td>
+<img src="figures/shadout.jpg" width=536 height=141 alt="Output: Image with shadow">
+</table>
+</center>
+
+<h3>Smooth Operator</h3>
+
+Since many computer graphics programs create sharp edges on
+text, it's often best to create an image at a greater resolution
+than that used for presentation, then scale it to the final
+resolution with a tool which resamples the image, thus
+minimising jagged edges by averaging adjacent
+pixels.  Using the output of <b>pnmshadow</b> as the starting
+point and scaling to half size with <b>pnmscale</b>, we arrive at
+the following smoothed image, with shadow, ready to adorn a
+Web page:
+
+<p>
+<center>
+<table border=5>
+<tr><td>
+<img src="figures/shadout2.jpg" width=268 height=71 alt="Half scale image with shadow">
+</table>
+</center>
+
+<h4><a href="how-t.html">How it works with translucent shadows</a></h4>
+<h4><a href="./"><b>pnmshadow</b> main page</a></h4>
+
+<p>
+<hr>
+<p>
+<address>
+by <a href="/">John Walker</a><br>
+August 8th, 1997
+</address>
+
+</body>
+</html>
+<html>
+<head>
+<title>pnmshadow: How it Works in Translucent Mode</title>
+
+</head>
+
+<body>
+
+<center>
+<h1><img src="figures/how_title-t.jpg" width=421 height=159 alt="pnmshadow: How it Works in Translucent Mode"></h1>
+</center>
+
+<hr>
+
+<p>
+
+This document describes the process, including PBMplus commands
+and the intermediate images they create, by
+which <b><a href="./">pnmshadow</a></b>
+adds translucent shadows when the <b>-t</b> command line
+option is specified.  A <a href="how.html">companion document</a>
+describes how the default black shadows are generated.
+
+<h3>The Starting Point</h3>
+
+Let's start with the following source image, 536 pixels wide and 141
+pixels high.  We convert the image from whatever form in which
+it was originally created (GIF, JPEG, etc.) to a PPM file before
+processing it with <b>pnmshadow</b>.
+
+<p>
+<center>
+<table border=5>
+<tr><td>
+<img src="figures/shadin.gif" width=536 height=141 alt="Input image">
+</table>
+</center>
+
+<h3>The Blank Background</h3>
+
+We start by determining the size of the input image with
+<b>pnmfile</b> and then constructing an image with the same
+size as the input image consisting entirely of the background
+color, which is defined as the color of the pixel at the upper
+left corner of the source image.  This is performed by the
+command:
+
+<p>
+<pre>
+    pnmcut 0 0 1 1 <em>ifile</em> | pnmscale -xsize <em>xsize</em> -ysize <em>ysize</em> &gt;<em>fname</em>-5.ppm
+</pre>
+<p>
+
+yielding the image:
+
+<p>
+<center>
+<table border=5>
+<tr><td>
+<img src="figures/shadt5.gif" width=536 height=141 alt="Blank background image">
+</table>
+</center>
+
+<h3>The Positive Mask</h3>
+
+A positive mask image is created in which all pixels of the background
+color are set to white and all other pixels are black.  This is accomplished
+by subtracting the blank background image from the input (using the
+<tt>-difference</tt> option on <b>pnmarith</b> to avoid clipping at
+zero or the maximum pixel value), then inverting the result and
+thresholding it to a monochrome bitmap.
+
+<p>
+<pre>
+    pnmarith -difference <em>ifile</em> <em>fname</em>-5.ppm | pnminvert | ppmtopgm | pgmtopbm -thresh -value 1.0 &gt;<em>fname</em>-1.ppm
+</pre>
+<p>
+
+This produces the following mask image.
+
+<p>
+<center>
+<table border=5>
+<tr><td>
+<img src="figures/shadt1.gif" width=536 height=141 alt="Positive mask image">
+</table>
+</center>
+
+<h3>The Blurred Image</h3>
+
+Since we wish to simulate a shadow from a nearby extended
+light source rather than a sharp shadow as cast by the
+Sun, we need to prepare a blurred version of the original
+image.
+A convolution kernel which averages
+the number of pixels specified by the <b>-b</b> option
+(default 11), written into the temporary file <tt><em>fname</em>-2.ppm</tt>
+in ASCII PGM format, and then the blurred image is created with
+the command:
+
+<p>
+<pre>
+    pnmconvol <em>fname</em>-2.ppm <em>ifile</em> &gt;<em>fname</em>-10.ppm
+</pre>
+<p>
+
+With the default blur setting of 11 pixels, the blurred image
+below is generated.
+
+<p>
+<center>
+<table border=5>
+<tr><td>
+<img src="figures/shadt10-t.jpg" width=536 height=141 alt="Blurred shadow">
+</table>
+</center>
+
+<h3>Offset Shadow Clip</h3>
+
+Shadows, even bogus ones like we're generating, usually look best when
+cast by a light source diagonally displaced from the centre of the
+shadow-casting object.  To achieve this effect, we first cut a
+rectangle from the blurred shadow image reduced in size by the
+the number of pixels specified by the <b>-b</b> option
+which default to half the blur (<b>-b</b>) setting.  The
+<em>xsize</em> and <em>ysize</em> arguments in the following
+command are the size of the input image in pixels less the shadow
+displacement in the respective axis.
+
+<p>
+<pre>
+    pnmcut 0 0 <em>xsize</em> <em>ysize</em> <em>fname</em>-10.ppm &gt;<em>fname</em>-4.ppm
+</pre>
+<p>
+
+The shadow clip is the identical to the shadow on background color, but
+smaller by the offset in each direction.
+
+<p>
+<center>
+<table border=5>
+<tr><td>
+<img src="figures/shadt4-t.jpg" width=531 height=136 alt="Offset shadow clip">
+</table>
+</center>
+
+<h3>Offset Shadow</h3>
+
+Now we're ready to assemble the shadow offset by the specified number
+of pixels.  We do this by pasting the image cut in the previous step
+into the blank background, yielding an image the same size as the
+source image with the blurred shadow displaced to the right and
+down.
+
+<p>
+<pre>
+    pnmpaste -replace <em>fname</em>-4.ppm <em>xoffset</em> <em>yoffset</em> <em>fname</em>-5.ppm &gt;<em>fname</em>-6.ppm
+</pre>
+<p>
+
+This gives the following result:
+
+<p>
+<center>
+<table border=5>
+<tr><td>
+<img src="figures/shadt6-t.jpg" width=536 height=141 alt="Offset shadow">
+</table>
+</center>
+
+<h3>Inverse Mask</h3>
+
+In order to stitch everything together, we need an inverse of the
+mask prepared earlier--one where black pixels represent the background
+and all other material is white.  This is easily accomplished by
+running the positive mask through <b>pnminvert</b>:
+
+<p>
+<pre>
+    pnminvert <em>fname</em>-1.ppm &gt;<em>fname</em>-7.ppm
+</pre>
+<p>
+
+yielding:
+
+<p>
+<center>
+<table border=5>
+<tr><td>
+<img src="figures/shadt7.gif" width=536 height=141 alt="Inverse mask">
+</table>
+</center>
+
+<h3>Masked Input Image</h3>
+
+Now we use the inverse mask prepared in the previous step to create
+an image containing all non-background pixels from the source image,
+with background pixels set to black.  We simply multiply the
+inverse mask by the source image:
+
+<p>
+<pre>
+    pnmarith -multiply <em>ifile</em> <em>fname</em>-7.ppm &gt;<em>fname</em>-8.ppm
+</pre>
+<p>
+
+<em>et voilà:</em>
+
+<p>
+<center>
+<table border=5>
+<tr><td>
+<img src="figures/shadt8.gif" width=536 height=141 alt="Masked Input Image">
+</table>
+</center>
+
+<h3>Shadow with Source Masked</h3>
+
+Our last intermediate step before joining the image with its
+shadow is preparing a shadow image with all non-background pixels
+in the source image set to black.  This ensures that when we add
+the image and the shadow, the shadow will not override any pixel
+in the source image.
+
+<p>
+<pre>
+    pnmarith -multiply <em>fname</em>-6.ppm <em>fname</em>-1.ppm &gt;<em>fname</em>-9.ppm
+</pre>
+<p>
+
+This is accomplished by multiplying the shadow by the positive
+mask image, which sets all non-background pixels in the source
+image to black:
+
+<p>
+<center>
+<table border=5>
+<tr><td>
+<img src="figures/shadt9-t.jpg" width=536 height=141 alt="Shadow with Source Masked">
+</table>
+</center>
+
+<h3>The Final Product</h3>
+
+At long last, we're ready to put together the pieces and deliver
+the image to our ever-patient user.  This amounts simply to 
+adding the masked input image (consisting solely of non-background
+pixels from the original image) to the shadow with source masked
+(in which all source pixels are black):
+
+<p>
+<pre>
+    pnmarith -add <em>fname</em>-8.ppm <em>fname</em>-9.ppm
+</pre>
+<p>
+
+The resulting image, with shadow, is as follows:
+
+<p>
+<center>
+<table border=5>
+<tr><td>
+<img src="figures/shadout-t.jpg" width=536 height=141 alt="Output: Image with translucent shadow">
+</table>
+</center>
+
+<h3>Smooth Operator</h3>
+
+Since many computer graphics programs create sharp edges on
+text, it's often best to create an image at a greater resolution
+than that used for presentation, then scale it to the final
+resolution with a tool which resamples the image, thus
+minimising jagged edges by averaging adjacent
+pixels.  Using the output of <b>pnmshadow</b> as the starting
+point and scaling to half size with <b>pnmscale</b>, we arrive at
+the following smoothed image, with shadow, ready to adorn a
+Web page:
+
+<p>
+<center>
+<table border=5>
+<tr><td>
+<img src="figures/shadout2-t.jpg" width=268 height=71 alt="Half scale image with translucent shadow">
+</table>
+</center>
+
+<h4><a href="how.html">How it works with black shadows</a></h4>
+<h4><a href="./"><b>pnmshadow</b> main page</a></h4>
+
+<p>
+<hr>
+<p>
+<address>
+by <a href="/">John Walker</a><br>
+August 8th, 1997
+</address>
+
+</body>
+</html>

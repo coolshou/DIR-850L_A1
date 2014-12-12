@@ -1,0 +1,16 @@
+--- build/samba-3.0.24/source/nmbd/nmbd.c	2007-02-05 02:59:23.000000000 +0800
++++ build_final/samba-3.0.24/source/nmbd/nmbd.c	2011-03-08 17:06:40.504087000 +0800
+@@ -621,7 +621,12 @@
+ /**************************************************************************** **
+  main program
+  **************************************************************************** */
+- int main(int argc, const char *argv[])
++//sam_pan add
++#ifdef SAMBA_LINK_ALL
++int nmbd_main(int argc, const char *argv[])
++#else 
++int main(int argc, const char *argv[])
++#endif
+ {
+ 	pstring logfile;
+ 	static BOOL opt_interactive;

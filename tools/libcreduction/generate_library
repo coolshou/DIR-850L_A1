@@ -1,0 +1,61 @@
+#!/bin/sh
+set -e
+# set -v
+# set -x
+
+if [ $# -lt 4 ]; then
+	echo "Usage: $0 soname /usr/lib/library_pic.a output.so.x file [file ...]" 1>&2
+	echo
+	echo "	Generate a subset shared library to resolve symbols in the"
+	echo "	executable programs given on the command line."
+	exit -1
+fi
+
+# Kludge because __llseek is loaded only if needed.
+required_symbols="-u __llseek -u llseek -u __srandom"
+
+arch=`dpkg --print-architecture`
+
+emulation=""
+case $arch in
+i386)
+	emulation="-m elf_i386";;
+m68k)
+	emulation="-m m68kelf";;
+esac
+
+t=/var/tmp
+soname=$1
+shift
+input_library=$1
+shift
+output=$1
+shift
+
+EXEC1=`file $* | grep ELF | sed 's/:.*$//'`
+EXECUTABLES=""
+for i in $EXEC1; do {
+	if { file $i | grep -q shared ; }; then
+		EXECUTABLES=$EXECUTABLES" "$i
+	elif ! { ldd $i | grep -q static ; }; then
+		EXECUTABLES=$EXECUTABLES" "$i
+	fi
+}; done
+EXEC1=""
+
+command="ld -o /var/tmp/lib.$$ $emulation -shared -soname $soname -s \
+ $required_symbols "
+
+for i in `nm -Dp $EXECUTABLES | sed \
+  -e '/:$/d' -e '/^$/d' -e 's/^.* //' -e '/^_DYNAMIC$/d' \
+  -e '/^_GLOBAL_OFFSET_TABLE_$/d' -e '/^__bss_start$/d' -e '/^_edata$/d' \
+  -e '/^_end$/d' -e '/^_etext$/d' | sort -u`; do
+	command=$command" -u "$i" "
+done
+input="/usr/lib/crtbeginS.o $input_library /usr/lib/crtendS.o"
+command=$command" "$input
+$command
+strip --remove-section=.note --remove-section=.comment --remove-section=.debug \
+ /var/tmp/lib.$$
+mv /var/tmp/lib.$$ $output
+exit 0

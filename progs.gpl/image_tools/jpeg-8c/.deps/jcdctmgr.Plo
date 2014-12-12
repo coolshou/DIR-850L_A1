@@ -1,0 +1,133 @@
+jcdctmgr.lo: jcdctmgr.c jinclude.h jconfig.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/gcc/stddef.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/stdlib.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/features.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/uClibc_config.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/uClibc_arch_features.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sys/cdefs.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sys/types.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/types.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/wordsize.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/kernel_types.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/typesizes.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/pthreadtypes.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/sched.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/time.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/endian.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/endian.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/byteswap.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/byteswap.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sys/select.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/select.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/sigset.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/time.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sys/sysmacros.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/alloca.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/stdio.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/uClibc_stdio.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/wchar.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/wchar.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/uClibc_mutex.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/pthread.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sched.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/uClibc_clk_tck.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/signal.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/initspin.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/sigthread.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/uClibc_pthread.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/gcc/stdarg.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/stdio_lim.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/string.h \
+ jpeglib.h jmorecfg.h jpegint.h jerror.h jdct.h
+
+jinclude.h:
+
+jconfig.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/gcc/stddef.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/stdlib.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/features.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/uClibc_config.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/uClibc_arch_features.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sys/cdefs.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sys/types.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/types.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/wordsize.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/kernel_types.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/typesizes.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/pthreadtypes.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/sched.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/time.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/endian.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/endian.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/byteswap.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/byteswap.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sys/select.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/select.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/sigset.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/time.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sys/sysmacros.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/alloca.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/stdio.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/uClibc_stdio.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/wchar.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/wchar.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/uClibc_mutex.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/pthread.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sched.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/uClibc_clk_tck.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/signal.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/initspin.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/sigthread.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/uClibc_pthread.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/gcc/stdarg.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/stdio_lim.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/string.h:
+
+jpeglib.h:
+
+jmorecfg.h:
+
+jpegint.h:
+
+jerror.h:
+
+jdct.h:

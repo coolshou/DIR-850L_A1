@@ -1,0 +1,85 @@
+// Tx Power Limit Table - beta 03
+// Format:
+// table index->      table        <index>
+// channel limmit->   channel    <limit (in dBm)>  <target power (in dBm)>
+// (optional)         start:end    <limit (in dBm)>  <target power (in dBm)>
+
+// Note: The order of the tables MUST match the definition
+//       in WLAN driver.
+//===========================================
+// Table 1: FCC, CCK (1M,2M,5.5M,11M)
+// start from here
+table	1
+1	20	22// band edge
+11	20	22// band edge
+
+
+//===========================================
+// Table 2: FCC, OFDM (6M,9M,12M,18M,24M,36M,48M,54M)
+// start from here
+table	2
+1	15	15// band edge
+11	15	15// band edge
+
+// 5G band 1 & 2
+36	13.5	18// band edge
+
+//===========================================
+// Table 3: FCC, 20M 1T (MCS0~MCS7)
+// start from here
+table	3
+1	13.5	15// band edge
+11	13.5	15// band edge
+
+// 5G band 1 & 2
+36	13.5	19// band edge
+
+
+
+//===========================================
+// Table 4: FCC, 20M 2T (MCS8~MCS15)
+// start from here
+table	4
+1	13.5	15// band edge
+11	13.5	15// band edge
+
+// 5G band 1 & 2
+
+// 5G band 3
+
+
+//===========================================
+// Table 5: FCC, 40M 1T (MCS0~MCS7)
+// start from here
+table	5
+3	13	15// band edge
+4	15	15
+5	15	15
+6	15	15
+7	15	15
+8	15	15
+9	13	15// band edge
+
+// 5G band 1 & 2
+38	13.5	18// band edge
+
+
+//===========================================
+// Table 6: FCC, 40M 2T (MCS8~MCS15)
+// start from here
+table	6
+3	13	15// band edge
+4	15	15
+5	15	15
+6	15	15
+7	15	15
+8	15	15
+9	13	15// band edge
+
+// 5G band 1 & 2
+
+// 5G band 3
+
+
+
+

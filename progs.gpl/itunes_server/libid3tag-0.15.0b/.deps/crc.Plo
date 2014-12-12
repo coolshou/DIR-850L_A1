@@ -1,0 +1,9 @@
+crc.lo: crc.c config.h global.h id3tag.h crc.h
+
+config.h:
+
+global.h:
+
+id3tag.h:
+
+crc.h:

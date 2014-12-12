@@ -1,0 +1,6 @@
+# This will print nothing if successful (diff will find no difference)
+ppmmake black 20 20 | ppmdraw -script="line 5 2 15 17" | pamtosvg | \
+  diff testline.svg -
+
+# This will print nothing if successful (diff will find no difference)
+pamtosvg ../../../../testgrid.pbm | diff testgrid.svg -

@@ -1,0 +1,11 @@
+--- config.h.org	2011-02-17 16:39:36.569622399 +0800
++++ config.h	2011-02-17 16:40:12.357624651 +0800
+@@ -104,7 +104,7 @@
+ #define RETSIGTYPE void
+ 
+ /* Define to 1 if the `setpgrp' function takes no argument. */
+-/* #undef SETPGRP_VOID */
++#define SETPGRP_VOID 1
+ 
+ /* Define to 1 if you have the ANSI C header files. */
+ #define STDC_HEADERS 1

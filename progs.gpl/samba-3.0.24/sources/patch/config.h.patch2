@@ -1,0 +1,4 @@
+1064c1064
+< /* #undef HAVE_OFF64_T */
+---
+> #define HAVE_OFF64_T 1

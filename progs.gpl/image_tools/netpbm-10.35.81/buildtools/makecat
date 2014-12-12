@@ -1,0 +1,18 @@
+#!/usr/bin/perl -w
+
+use strict;
+
+my $TRUE=1; my $FALSE = 0;
+
+foreach my $htmlfilename (@ARGV) {
+    if ($htmlfilename =~ m{ (.*) \.html $ }x) {
+        my $basename = $1;
+
+        my $catfilename = "$basename.1";
+
+        print ("Converting $htmlfilename to $catfilename...\n");
+        system("lynx -dump $htmlfilename >$catfilename");
+    } else {
+        print ("Filename '$htmlfilename' doesn't end in 'html'.  Skipping.\n");
+    }
+}

@@ -1,0 +1,20 @@
+--- build/samba-3.0.24/source/include/config.h	2011-05-04 12:57:15.000000000 +0800
++++ build2/samba-3.0.24/source/include/config.h	2011-05-04 11:17:31.000000000 +0800
+@@ -595,7 +595,7 @@
+ /* #undef HAVE_IFACE_AIX */
+ 
+ /* Whether iface ifconf is available */
+-/* #undef HAVE_IFACE_IFCONF */
++#define HAVE_IFACE_IFCONF 1
+ 
+ /* Whether iface ifreq is available */
+ /* #undef HAVE_IFACE_IFREQ */
+@@ -944,7 +944,7 @@
+ #define HAVE_LOCALE_H 1
+ 
+ /* Whether the host supports long long's */
+-/* #undef HAVE_LONGLONG */
++#define HAVE_LONGLONG 1
+ 
+ /* Define to 1 if you have the `lremoveea' function. */
+ /* #undef HAVE_LREMOVEEA */

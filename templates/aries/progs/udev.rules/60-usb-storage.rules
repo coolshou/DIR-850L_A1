@@ -1,0 +1,2 @@
+ACTION=="add", KERNEL=="sd*", SUBSYSTEM=="block", RUN+="/usr/sbin/usbmount add %k"
+ACTION=="remove", KERNEL=="sd*", RUN+="/usr/sbin/usbmount remove %k"

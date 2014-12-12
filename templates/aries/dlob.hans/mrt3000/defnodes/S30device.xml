@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<SiGnAtUrE>
+	<runtime>
+		<device>
+			<vendor>miiiCasa</vendor>
+			<fwinfosrv>api.miiicasa.com</fwinfosrv>
+			<fwinfopath>/service/firmware</fwinfopath>
+			<upnpmodelname>miiiCasa Router</upnpmodelname>
+		</device>
+	</runtime>
+</SiGnAtUrE>

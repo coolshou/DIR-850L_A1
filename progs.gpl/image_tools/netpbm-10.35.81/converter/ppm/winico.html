@@ -1,0 +1,701 @@
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<BASE HREF="http://www.oreilly.com/centers/gff/formats/miccur/"><table border=1 width=100%><tr><td><table border=1 bgcolor=#ffffff cellpadding=10 cellspacing=0 width=100% color=#ffffff><tr><td><font face=arial,sans-serif color=black size=-1>This is <b><font color=#0039b6>G</font> <font color=#c41200>o</font> <font color=#f3c518>o</font> <font color=#0039b6>g</font> <font color=#30a72f>l</font> <font color=#c41200>e</font></b>'s <a href="http://www.google.com/help/features.html#cached"><font color=blue>cache</font></a> of <A HREF="http://www.oreilly.com/centers/gff/formats/miccur/"><font color=blue>http://www.oreilly.com/centers/gff/formats/miccur/</font></a>.<br>
+<b><font color=#0039b6>G</font> <font color=#c41200>o</font> <font color=#f3c518>o</font> <font color=#0039b6>g</font> <font color=#30a72f>l</font> <font color=#c41200>e</font></b>'s cache is the snapshot that we took of the page as we crawled the web.<br>
+The page may have changed since that time.  Click here for the <A HREF="http://www.oreilly.com/centers/gff/formats/miccur/"><font color=blue>current page</font></a> without highlighting.<br>To link to or bookmark this page, use the following url: <code>http://www.google.com/search?q=cache:dgpSCZ8_GJwC:www.oreilly.com/centers/gff/formats/miccur/+windows++icon+transparent&amp;hl=en&amp;ie=UTF-8</code></font><br><br><center><font size=-2><i>Google is not affiliated with the authors of this page nor responsible for its content.</i></font></center></td></tr>
+<tr><td>
+<table border=0 cellpadding=0 cellspacing=0><tr><td><font face=arial,sans-serif color=black size=-1>These search terms have been highlighted:&nbsp;</font></td><td bgcolor=#ffff66><B><font face=arial,sans-serif color=black size=-1>windows&nbsp;</font></B></td><td bgcolor=#A0FFFF><B><font face=arial,sans-serif color=black size=-1>icon&nbsp;</font></B></td><td bgcolor=#99ff99><B><font face=arial,sans-serif color=black size=-1>transparent&nbsp;</font></B></td></tr></table>
+</td></tr></table></td></tr></table>
+<hr>
+<html>
+<head>
+<title>GFF Format Summary: Microsoft Windows Cursor and Icon</title>
+</head>
+<body>
+<h1><A NAME="SPEC-MICCUR">Microsoft <B style="color:black;background-color:#ffff66">Windows</B> Cursor and <B style="color:black;background-color:#A0FFFF">Icon</B></A></h1>
+<p>
+<b>Also Known As:</b> CUR, ICO
+<p>
+<hr>
+<p>
+
+<p>
+<table border=0>
+<tr valign=top>
+  <td align=left><b>Type</b></td>
+  <td align=left>Bitmap</td>
+</tr>
+<tr valign=top>
+  <td align=left><b>Colors</b></td>
+  <td align=left>1-bit and 4-bit</td>
+</tr>
+<tr valign=top>
+  <td align=left><b>Compression</b></td>
+  <td align=left>None</td>
+</tr>
+<tr valign=top>
+  <td align=left><b>Maximum Image Size</b></td>
+  <td align=left>4Gx4G pixels</td>
+</tr>
+<tr valign=top>
+  <td align=left><b>Multiple Images Per File</b></td>
+  <td align=left>Yes</td>
+</tr>
+<tr valign=top>
+  <td align=left><b>Numerical Format</b></td>
+  <td align=left>Little-endian</td>
+</tr>
+<tr valign=top>
+  <td align=left><b>Originator</b></td>
+  <td align=left>Microsoft</td>
+</tr>
+<tr valign=top>
+  <td align=left><b>Platform</b></td>
+  <td align=left>Microsoft <B style="color:black;background-color:#ffff66">Windows</B></td>
+</tr>
+<tr valign=top>
+  <td align=left><b>Supporting Applications</b></td>
+  <td align=left>Microsoft <B style="color:black;background-color:#ffff66">Windows</B></td>
+</tr>
+<tr valign=top>
+  <td align=left><b>See Also</b></td>
+  <td align=left><A HREF="gffse:/format.micbmp">Microsoft Bitmap</A>, <A HREF="gffse:/format.os2bmp">OS/2 Bitmap</A>, <A HREF="gffse:/format.micriff">Microsoft RIFF</A></td>
+</tr>
+</table>
+<p>
+<b>Usage</b><br>
+The <B style="color:black;background-color:#ffff66">Windows</B> environment uses icons as graphical links to objects
+(data files and executable programs). Cursors are used by the pointing device
+as graphical indications of the current state of the <B style="color:black;background-color:#ffff66">Windows</B> environment.
+<p>
+<b>Comments</b><br>
+<B style="color:black;background-color:#ffff66">Windows</B> icons and cursors are almost identical in format.
+In fact, cursor and <B style="color:black;background-color:#A0FFFF">icon</B> bitmaps can be used interchangeably.
+<p>
+<hr>
+<p>
+<A NAME="MICCUR-DMYID.1"><!-- Overview anchor --></A>
+<p>
+In an object-oriented graphical user interface--as Microsoft
+<B style="color:black;background-color:#ffff66">Windows</B> is sometimes described--icons are small bitmaps containing an
+iconographic picture that makes an object accessible to the user. The
+"objects" made available by icons are: collections of data (files);
+executable programs (more files); and peripheral devices (the toys
+you have hooked up to your computer). Rather than typing a file or
+program name on a command line, applications are started and files
+manipulated by clicking on an <B style="color:black;background-color:#A0FFFF">icon</B>, or "dragging and dropping" an
+<B style="color:black;background-color:#A0FFFF">icon</B> on to a window or another <B style="color:black;background-color:#A0FFFF">icon</B>. 
+<p>
+A cursor, or pointer as they are also called, is a special type of
+<B style="color:black;background-color:#A0FFFF">icon</B> that is used to track the location of the pointing device on the
+user interface. The cursor changes its appearance to indicate the
+state of the system and the user interface. Such states include that
+a search is in progress, an application is starting or stopping, or a
+user-initiated action is being processed. The appearance of the
+cursor also indicates what action may be performed based on the
+current position of the pointer on the display. For example, actions
+such as resizing a window or entering text may only be performed at
+specific locations within a window.
+<p>
+Although a wide variety of physical pointing devices (mouse,
+joystick, trackball, touch pad, light pen, pointing stick, etc.) are
+typically supported by a user interface, the input received by
+<B style="color:black;background-color:#ffff66">Windows</B> is identical from all types of pointing devices.
+<p>
+<P>
+<B>Contents:</B><br>
+<A HREF="#MICCUR-DMYID.2">File Organization</A><br>
+<A HREF="#MICCUR-DMYID.3">File Details</A><br>
+<A HREF="#MICCUR-DMYID.4">For Further Information</A><br>
+<p>
+Icons and cursors themselves are types of resources available in the
+<B style="color:black;background-color:#ffff66">Windows</B> environment. When an application makes a request for <B style="color:black;background-color:#ffff66">Windows</B>
+to display an <B style="color:black;background-color:#A0FFFF">icon</B> or cursor, <B style="color:black;background-color:#ffff66">Windows</B> must locate the appropriate
+file and choose which of the bitmaps stored in the file best fits the
+resolution and color depth of the display. 
+<p>
+The <B style="color:black;background-color:#A0FFFF">icon</B> displayed is chosen based on its size and number of colors.
+For example, a two-color <B style="color:black;background-color:#A0FFFF">icon</B> 16x16 pixels in size might look good on
+a monochrome display at 640x480 resolution, but the same <B style="color:black;background-color:#A0FFFF">icon</B> bitmap
+will probably look terrible on a 256-color, 1024x768 display. For
+such a high-resolution display, the choice of the 16-color, 64x64
+pixel version of the <B style="color:black;background-color:#A0FFFF">icon</B> would look much better.  However, if the
+<B style="color:black;background-color:#A0FFFF">icon</B> file only contains one bitmap, then that is the <B style="color:black;background-color:#A0FFFF">icon</B> bitmap that
+will be displayed.
+<p>
+<B style="color:black;background-color:#A0FFFF">Icon</B> and cursor bitmaps are typically very small. Under the 16-bit
+<B style="color:black;background-color:#ffff66">Windows</B> environment (Win16) icons are traditionally square (16x16,
+32x32, or 64x64 pixels in size) and have 16 or fewer colors. The
+32-bit <B style="color:black;background-color:#ffff66">Windows</B> (Win32) environment allows icons to be larger and have
+a greater pixel depth, such as 72x72 pixels with 256 colors. Win32 is
+also tolerant of rectangular <B style="color:black;background-color:#A0FFFF">icon</B> formats.
+<p>
+Cursors under <B style="color:black;background-color:#ffff66">Windows</B> 3.<i>x</i> are two-color (1-bit) bitmaps. Under
+<B style="color:black;background-color:#ffff66">Windows</B> 4.<i>x</i> cursors with 8, 16, or more colors are possible. Cursors
+are also not limited to a specific range of sizes as are icons,
+although most cursors are 32x32 pixels in size.
+<p>
+Both cursor and <B style="color:black;background-color:#A0FFFF">icon</B> data may be stored in separate file formats
+(<i>*.ico</i> and <i>*.cur</i>) on disk, or be stored as a <B style="color:black;background-color:#ffff66">Windows</B>
+resource file (<i>*.res</i>) and embedded directly into a <B style="color:black;background-color:#ffff66">Windows</B>
+executable file (<i>*.exe</i>), Dynamic Link Library (<i>*.dll</i>),
+Visual Basic control (<i>*.vbx</i>), or OLE
+control (<i>*.ocx</i>). (This article only discusses the ICO and CUR file
+formats and will leave the <B style="color:black;background-color:#ffff66">Windows</B> Resource format to a future
+article.)
+<p>
+Simple animations may be created by the sequential display of several
+<B style="color:black;background-color:#A0FFFF">icon</B> or cursor bitmaps in a continuous loop. These "flipbook"
+animations are not directly supported by the Win16 environment, but
+they do appear in some <B style="color:black;background-color:#ffff66">Windows</B> applications.
+<p>
+A true animated cursor format was defined by Microsoft in 1992 as part
+of the RIFF multimedia specification. Animated cursors are the
+<i>*.ani</i> files you might have noticed on your hard drive if you
+use <B style="color:black;background-color:#ffff66">Windows</B> 95 or <B style="color:black;background-color:#ffff66">Windows</B> NT. They are actually little more than a
+collection of ICO files stored in a single ANI file. For more
+information on the format of <B style="color:black;background-color:#ffff66">Windows</B> animated icons, see the
+<a href="gffse:/format.micriff">Microsoft RIFF</a> article.
+<p>
+If you are interested in the <B style="color:black;background-color:#A0FFFF">icon</B> and pointer file formats used by
+OS/2, then have a look at the <a href="gffse:/format.os2bmp">OS/2
+Bitmap</a> article. OS/2 uses its own flavor of the BMP format to
+store <B style="color:black;background-color:#A0FFFF">icon</B> and pointer data.
+<p>
+It should also be noted that there is no formal specification for
+either the <B style="color:black;background-color:#ffff66">Windows </B><B style="color:black;background-color:#A0FFFF">icon</B> or cursor file formats. In fact, there are no
+definitions for these file formats in the <B style="color:black;background-color:#ffff66">Windows</B> Software Development
+Kit (SDK) header files. What information that can be found must be
+scraped up from <B style="color:black;background-color:#ffff66">Windows</B> SDK manuals, Knowledge Base articles, and
+several sample applications. See the <a href="#MICCUR-DMYID.4">For
+Further Information</a> section in this article for more details on
+additional reference material for <B style="color:black;background-color:#ffff66">Windows</B> icons and cursors.
+<p>
+
+<h2><A NAME="MICCUR-DMYID.2">File Organization</A></h2>
+<p>
+The <B style="color:black;background-color:#ffff66">Windows </B><B style="color:black;background-color:#A0FFFF">icon</B> (ICO) and cursor (CUR) file formats are identical.
+Only the interpretation of the file data differs slightly. In fact,
+<B style="color:black;background-color:#A0FFFF">icon</B> and cursor files may be used interchangeably by applications that
+realize this fact.
+<p>
+Every ICO and CUR file contains a header, a directory of bitmap
+entries, and one or more bitmaps that describes the appearance of an
+<B style="color:black;background-color:#A0FFFF">icon</B> or cursor (shown below).
+<p>
+<table border=1>
+<tr valign=center>
+  <td align=center>Header</td>
+</tr>
+<tr valign=center>
+  <td align=center>Bitmap Directory</td>
+</tr>
+<tr valign=center>
+  <td align=center>Bitmap 1</td>
+</tr>
+<tr valign=center>
+  <td align=center>Bitmap 2</td>
+</tr>
+<tr valign=center>
+  <td align=center>...</td>
+</tr>
+<tr valign=center>
+  <td align=center>Bitmap N</td>
+</tr>
+</table>
+<p>
+The header stores information that is used to determine how many
+bitmaps are in the file. ICO and CUR files will contain one or more
+uncompressed bitmaps. Each entry in the bitmap directory will contain
+information that describes one of the bitmaps stored in the file. The
+directory will contain one entry per bitmap.
+<p>
+
+<h3><A NAME="MICCUR-DMYID.3">File Details</A></h3>
+<p>
+As <B style="color:black;background-color:#ffff66">Windows</B> ICO and CUR files are nearly identical, we will first look
+at the ICO format and then discuss the differences between the ICO
+and CUR formats.
+<p>
+The ICO header contains only a <B style="color:black;background-color:#ffff66">Windows</B> resource identification value
+and the count of the number of icons stored in the file. The header
+is immediately followed by a directory that contains information for
+all the icons stored in the ICO file. The directory is followed by
+the <B style="color:black;background-color:#A0FFFF">icon</B> bitmaps themselves.
+<p>
+The following structure illustrates the entire format of an ICO
+(or CUR) file:
+<pre>
+typedef struct _IconFile
+{
+    WORD      Reserved;      /* Reserved (always 0) */
+    WORD      ResourceType;  /* Resource ID (always 1) */
+    WORD      IconCount;     /* Number of <B style="color:black;background-color:#A0FFFF">icon</B> bitmaps in file */
+    ICONENTRY IconDir[];     /* Directory of <B style="color:black;background-color:#A0FFFF">icon</B> entries */
+    ICONDATA  IconData[];    /* Listing of ICO bitmaps */
+} ICONFILE;
+</pre>
+<p>
+Reserved is a two-byte value that is always zero in all ICO files.
+<p>
+ResourceType is the <B style="color:black;background-color:#ffff66">Windows</B> resource identifier type value. For icons
+this value is always 1.
+<p>
+IconCount is the number of icons stored in the ICO file. It is also
+the number of elements in the Icons array.
+<p>
+IconDir is an array of directory entries that describe the icons stored
+in the ICO file. There will be one entry per <B style="color:black;background-color:#A0FFFF">icon</B> stored. The number
+of entries will also equal the value of the IconCount field. Each
+ICONENTRY element has the following format:
+<pre>
+typedef struct _IconEntry
+{
+    BYTE  Width;        /* Width of <B style="color:black;background-color:#A0FFFF">icon</B> in pixels */
+    BYTE  Height;       /* Height of <B style="color:black;background-color:#A0FFFF">icon</B> in pixels */
+    BYTE  NumColors;    /* Maximum number of colors */
+    BYTE  Reserved;     /* Not used (always 0) */
+    WORD  NumPlanes;    /* Not used (always 0) */
+    WORD  BitsPerPixel; /* Not used (always 0) */
+    DWORD DataSize;     /* Length of <B style="color:black;background-color:#A0FFFF">icon</B> bitmap in bytes */
+    DWORD DataOffset;   /* Offset position of <B style="color:black;background-color:#A0FFFF">icon</B> bitmap in file */
+} ICONENTRY;
+</pre>
+<p>
+Width and Height are the size of the <B style="color:black;background-color:#A0FFFF">icon</B> in pixels. Only the values
+of 16, 32, and 64 for these fields are accepted by Win16.  Other
+values are also accepted by Win32. And as square icons are the most
+common, both of these fields will typically store the same value
+(although 32x16 icons were commonly used for the now antiquated
+300x200 CGA display mode).
+<p>
+NumColors is the maximum number of colors that may appear in the
+<B style="color:black;background-color:#A0FFFF">icon</B>. The values 2, 8, and 16 are the only values accepted by Win16.
+Other values are accepted by Win32. If the bitmap contains 256 or
+more colors the value of NumColors will be 0.
+<p>
+Reserved is not used and is always zero. This field was probably
+included as an element-alignment padding structure.
+<p>
+NumPlanes and BitsPerPixel are not used and are always 0. Earlier
+revisions of the ICO format may have used these fields, but in the
+current revision of ICO this information is now stored in the <B style="color:black;background-color:#A0FFFF">icon</B>
+data itself.
+<p>
+DataSize is the length of the <B style="color:black;background-color:#A0FFFF">icon</B> data in bytes for this entry.
+This value is the total size of both bitmaps used to render
+the <B style="color:black;background-color:#A0FFFF">icon</B> (explained below).
+<p>
+DataOffset is the location of the <B style="color:black;background-color:#A0FFFF">icon</B> data for this entry. The
+offset is measured in bytes from the start of the ICO file.
+<p>
+Following the <B style="color:black;background-color:#A0FFFF">icon</B> directory is the data for the <B style="color:black;background-color:#A0FFFF">icon</B>(s) themselves
+(the IconData array in the ICONFILE structure). Each <B style="color:black;background-color:#A0FFFF">icon</B> stored in
+an ICO file is actually an independent file format in itself, and
+contains a header, a color palette, <B style="color:black;background-color:#A0FFFF">icon</B> bitmap data, and a display
+bit mask. 
+<p>
+The start of each section of <B style="color:black;background-color:#A0FFFF">icon</B> data is specified by the IconOffset
+field in each <B style="color:black;background-color:#A0FFFF">icon</B> directory entry. Each section of <B style="color:black;background-color:#A0FFFF">icon</B> data has the
+following format:
+<pre>
+typedef struct _IconData
+{
+    WIN3XBITMAPHEADER   Header;         /* Bitmap header data */
+    WIN3XPALETTEELEMENT Palette[];      /* Color palette */
+    BYTE                XorMap[];       /* <B style="color:black;background-color:#A0FFFF">Icon</B> bitmap */
+    BYTE                AndMap[];       /* Display bit mask */
+} ICONDATA;
+</pre>
+<p>
+Header is a 40-byte <B style="color:black;background-color:#ffff66">Windows</B> 3.<i>x</i> BMP file header structure. Only the
+Size, Width, Height, Planes, BitsPerPixel, and SizeOfBitmap fields of
+this header are actually used. All other fields in this structure
+(Compression, SizeOfBitmap, HorzResolution, VertResolution,
+ColorsUsed, and ColorsImportant) are set to zero. Refer to the
+<a href="gffse:/format.micbmp">Microsoft <B style="color:black;background-color:#ffff66">Windows</B> Bitmap</a> article
+for more information on this header structure.
+<p>
+Palette is the color palette for the data in the XorMap array. The
+BitsPerPixel field of the Header is used to determine the number of
+elements in the Palette array (BitsPerPixel >= 1). For two-color
+icons there will be two palette entries; for 8- and 16-color icons
+there will be 16 entries. Each palette element is a four-byte RGB
+structure as described in the <a href="gffse:/format.micbmp">Microsoft
+<B style="color:black;background-color:#ffff66">Windows</B> Bitmap</a> article.
+<p>
+XorMap contains the <B style="color:black;background-color:#A0FFFF">icon's</B> foreground bitmap. The size of the pixels
+is indicated by the BitsPerPixel values in the header. Two-color
+(monochrome) bitmaps are stored as one bit per pixel; 8- and 16-color
+bitmap data is stored as 4 bits per pixel. Each pixel value is
+actually an index into the Palette color map.
+<p>
+AndMap is the <B style="color:black;background-color:#A0FFFF">icon's</B> background bit mask. This is a 1-bit-per-pixel
+mask that is the same size (in pixels) as the XorMap. This mask is
+used to map the visible area of the <B style="color:black;background-color:#A0FFFF">icon</B> on the screen before the
+<B style="color:black;background-color:#A0FFFF">icon</B> is actually displayed.
+<p>
+At first it may seem redundant to have Height and Width fields in
+both the <B style="color:black;background-color:#A0FFFF">icon</B> entry (ICONENTRY) and the <B style="color:black;background-color:#A0FFFF">icon</B> header
+(WIN3XBITMAPHEADER) structures. In fact, the Height and Width values
+stored in the <B style="color:black;background-color:#A0FFFF">icon</B> header are the combined size of the XorMap and
+AndMap bitmaps.  The Width values in the two structures will be the
+same, but the Height value in the <B style="color:black;background-color:#A0FFFF">icon</B> header will be double that of
+the Height value in the <B style="color:black;background-color:#A0FFFF">icon</B> directory entry. The <B style="color:black;background-color:#A0FFFF">icon</B> directory
+specifies the actual size of the <B style="color:black;background-color:#A0FFFF">icon</B> as it appears on the display,
+and the <B style="color:black;background-color:#A0FFFF">icon</B> header specifies the size of the data used to create the
+<B style="color:black;background-color:#A0FFFF">icon</B>.
+<p>
+Under the <B style="color:black;background-color:#ffff66">Windows</B> environment an <B style="color:black;background-color:#A0FFFF">icon</B> is displayed by first looking
+through an ICO file and determining which <B style="color:black;background-color:#A0FFFF">icon</B> bitmap best matches
+the number of colors and resolution of the display. The AND bit mask
+for the chosen <B style="color:black;background-color:#A0FFFF">icon</B> is bitwise ANDed with the pixels on the display
+where the <B style="color:black;background-color:#A0FFFF">icon</B> will appear. This removes the pixels from the display
+and leaves a virtual "hole" in the display where the non-<B style="color:black;background-color:#99ff99">transparent</B>
+parts of the <B style="color:black;background-color:#A0FFFF">icon</B> will appear.  Finally, the XOR map is bitwise XORed
+to the same pixels on the display. This operation adds the <B style="color:black;background-color:#A0FFFF">icon's</B>
+color to the display.
+<p>
+Let's look at this process in more detail.  Assume we have an ICO
+file that contains several "happy face" <B style="color:black;background-color:#A0FFFF">icon</B> bitmaps.  The ICO file
+actually stores four different bitmap variations of the same happy
+face:
+<p>
+<table border=0>
+<tr>
+  <th align=left>Width</th>
+  <th align=left>Height</th>
+  <th align=left>Number of Colors</th>
+  <th align=left>BitsPerPixel</th>
+</tr>
+<tr>
+  <td align=left>8</td>
+  <td align=left>8</td>
+  <td align=left>16</td>
+  <td align=left>4</td>
+</tr>
+<tr>
+  <td align=left>16</td>
+  <td align=left>16</td>
+  <td align=left>16</td>
+  <td align=left>4</td>
+</tr>
+<tr>
+  <td align=left>32</td>
+  <td align=left>32</td>
+  <td align=left>16</td>
+  <td align=left>4</td>
+</tr>
+<tr>
+  <td align=left>48</td>
+  <td align=left>48</td>
+  <td align=left>64</td>
+  <td align=left>8</td>
+</tr>
+</table>
+<p>
+When <i>happyfac.ico</i> is loaded, one of the <B style="color:black;background-color:#A0FFFF">icon</B> bitmaps must be chosen 
+that matches resolution of the display. The ICO reader searches each
+ICO directory entry for a "best fit" <B style="color:black;background-color:#A0FFFF">icon</B> bitmap.  For a 320x240x16
+display the 8x8, 16-color "happy face" <B style="color:black;background-color:#A0FFFF">icon</B> would probably look best.
+The reader then seeks to the offset of the selected <B style="color:black;background-color:#A0FFFF">icon</B> data.
+<p>
+Next, the AndMap bitmap must be loaded and ANDed to proper location
+on the display. The AndMap data follows the XorMap data, so the ICO
+reader must skip past the XorMap data to read the AndMap data. It is
+important to note that the scan lines of data in the AndMap and
+XorMap bitmaps are stored from the bottom up (the origin is in the
+lower left-hand corner). That is, the first scan line of the bitmap
+is actually the last scan line of the <B style="color:black;background-color:#A0FFFF">icon</B>.
+<p>
+In the 8x8x16 bitmap chosen, the AndMap contains only eight bytes
+of data (8 rows x 8 columns):
+<pre>
+FF 99 99 E7 66 BD C3 FF
+</pre>
+<p>
+In this form the data looks meaningless.  Looking at the AndMap as an
+array of bits we can see our happy face more clearly:
+<pre>
+1 1 1 1 1 1 1 1
+1 0 0 1 1 0 0 1
+1 0 0 1 1 0 0 1
+1 1 1 0 0 1 1 1
+0 1 1 0 0 1 1 0
+1 0 1 1 1 1 0 1
+1 1 0 0 0 0 1 1
+1 1 1 1 1 1 1 1
+</pre>
+<p>
+If we ANDed this bitmap to a location on the display that was all the
+same color we would see this result:
+<pre>
+C C C C C C C C     1 1 1 1 1 1 1 1     C C C C C C C C
+C C C C C C C C     1 0 0 1 1 0 0 1     C 0 0 C C 0 0 C
+C C C C C C C C     1 0 0 1 1 0 0 1     C 0 0 C C 0 0 C
+C C C C C C C C  +  1 1 1 0 0 1 1 1  =  C C C 0 0 C C C
+C C C C C C C C     0 1 1 0 0 1 1 0     0 C C 0 0 C C 0
+C C C C C C C C     1 0 1 1 1 1 0 1     C 0 C C C C 0 C
+C C C C C C C C     1 1 0 0 0 0 1 1     C C 0 0 0 0 C C
+C C C C C C C C     1 1 1 1 1 1 1 1     C C C C C C C C
+   Display              AndMap           ANDed Display
+</pre>
+<p>
+Each 1 bit in the AndMap preserved a display pixel (the <B style="color:black;background-color:#99ff99">transparent</B>
+portion of the <B style="color:black;background-color:#A0FFFF">icon</B>) and each 0 bit removed a display pixel (the
+opaque portion of the <B style="color:black;background-color:#A0FFFF">icon</B>).
+<p>
+Finally, we need to XOR the XorMap <B style="color:black;background-color:#A0FFFF">icon</B> pixel values into the hole we
+punched into the display. Remember that the actual pixel color values
+are stored in the color palette, and the bitmap data is only an index
+map that indicates where the pixel colors should be written.
+<p>
+In our happy face <B style="color:black;background-color:#A0FFFF">icon</B> each pixel in the bitmap is four bits in size
+and packed two pixels per byte. The XorMap bitmap data appears as
+such:
+<pre>
+00 00 00 00
+04 40 04 40
+04 40 04 40
+00 0F F0 00
+90 0F F0 09
+09 00 00 90
+00 99 99 00
+00 00 00 00
+</pre>
+<p>
+In case you can't see the happy face, the eyes are the value 0x4,
+the nose 0xF, and the smile 0x9. We now need to map the bitmap
+index values to color values in the palette. Let's assume that
+index 0x04 maps to color value 0x1, 0xF to 0xF, and 0x9 to 0x07.
+<p>
+With the color values determined, we XOR the pixel values to the same
+region we applied the AndMap mask. The 0 bits on the display (the
+black regions) indicate the non-<B style="color:black;background-color:#99ff99">transparent</B> pixels of the <B style="color:black;background-color:#A0FFFF">icon</B>. It is
+the pixel represented by the 0 bits that will have their color
+changed to that of the <B style="color:black;background-color:#A0FFFF">icon</B>. The <B style="color:black;background-color:#99ff99">transparent</B> pixels will retain the
+original color of the display:
+<pre>
+C C C C C C C C     0 0 0 0 0 0 0 0     C C C C C C C C
+C 0 0 C C 0 0 C     0 1 1 0 0 1 1 0     C 1 1 C C 1 1 C
+C 0 0 C C 0 0 C     0 1 1 0 0 1 1 0     C 1 1 C C 1 1 C
+C C C 0 0 C C C  +  0 0 0 F F 0 0 0  =  C C C F F C C C
+0 C C 0 0 C C 0     7 0 0 F F 0 0 7     7 C C F F C C 7
+C 0 C C C C 0 C     0 7 0 0 0 0 7 0     C 7 C C C C 7 C
+C C 0 0 0 0 C C     0 0 7 7 7 7 0 0     C C 7 7 7 7 C C
+C C C C C C C C     0 0 0 0 0 0 0 0     C C C C C C C C
+ ANDed Display       XORed values       <B style="color:black;background-color:#A0FFFF">Icon</B> on Display
+</pre>
+<p>
+A monochrome (1-bit) <B style="color:black;background-color:#A0FFFF">icon</B> or cursor will contain only four possible 
+pixels values: black, white, <B style="color:black;background-color:#99ff99">transparent</B>, and inverted. A <B style="color:black;background-color:#99ff99">transparent</B>
+or inverted pixel may be either black or white in color. The color
+palette will contain only two colors, which are black (entry zero)
+and white (entry one). The <B style="color:black;background-color:#99ff99">transparent</B> color is the original color of
+the display pixels. Inverted is the inverse color of the display
+pixels. Inverted pixels are responsible for the shadowy or shimmering
+effect you may have noticed when some cursors are moved across the
+display.
+<p>
+The possible combined bitmaps values are shown in Table Microsoft
+<B style="color:black;background-color:#ffff66">Windows</B> Cursor and <B style="color:black;background-color:#A0FFFF">Icon</B>-1.
+<p>
+<table border=0>
+<caption>Table Microsoft <B style="color:black;background-color:#ffff66">Windows</B> and Cursor <B style="color:black;background-color:#A0FFFF">Icon</B>-1. Monochrome <B style="color:black;background-color:#A0FFFF">icon</B> and cursor mask value combinations</caption>
+<tr valign=center>
+  <th></th>
+  <th align=left>AndMap Value</th>
+  <th align=left>XorMap Value</th>
+  <th align=left>Display Pixel Value</th>
+  <th align=left>Resulting Color</th>
+</tr>
+<tr>
+  <td align=left>Black</td>
+  <td align=left>0</td>
+  <td align=left>0</td>
+  <td align=left>0 or 1</td>
+  <td align=left>0</td>
+</tr>
+<tr>
+  <td align=left>White</td>
+  <td align=left>0</td>
+  <td align=left>1</td>
+  <td align=left>0 or 1</td>
+  <td align=left>1</td>
+</tr>
+<tr>
+  <td align=left><B style="color:black;background-color:#99ff99">Transparent</B></td>
+  <td align=left>1</td>
+  <td align=left>0</td>
+  <td align=left>0</td>
+  <td align=left>0</td>
+</tr>
+<tr>
+  <td></td>
+  <td align=left>1</td>
+  <td align=left>0</td>
+  <td align=left>1</td>
+  <td align=left>1</td>
+</tr>
+<tr>
+  <td align=left>Inverted</td>
+  <td align=left>1</td>
+  <td align=left>1</td>
+  <td align=left>0</td>
+  <td align=left>1</td>
+</tr>
+<tr>
+  <td></td>
+  <td align=left>1</td>
+  <td align=left>1</td>
+  <td align=left>1</td>
+  <td align=left>0</td>
+</tr>
+</table>
+<p>
+
+<h3><A NAME="MICCUR-DMYID.3.1">CUR File Format</A></h3>
+<p>
+Everything we have covered for the ICO format also applies to the
+CUR format with only a few exceptions:
+<p>
+The value of the ResourceType field in the header (ICONFILE) is 2,
+indicating the file contains cursor bitmap data.
+<p>
+The cursor directory entry redefines two unused fields to store hot
+spot information and modifies the possible values of two additional
+fields:
+<pre>
+typedef struct _IconEntry
+{
+    BYTE  Width;        /* Width of cursor in pixels */
+    BYTE  Height;       /* Height of cursor in pixels */
+    BYTE  NumColors;    /* Maximum number of colors */
+    BYTE  Reserved;     /* Not used (always 0) */
+    WORD  XHotSpot;     /* X location of cursor's hot spot */
+    WORD  YHotSpot;     /* Y location of cursor's hot spot */
+    DWORD DataSize;     /* Length of cursor bitmap in bytes */
+    DWORD DataOffset;   /* Offset position of cursor bitmap in file */
+} ICONENTRY;
+</pre>
+<p>
+Width and Height values in the <B style="color:black;background-color:#A0FFFF">icon</B> directory may be any size,
+although 32x32 pixels is the most common size for <B style="color:black;background-color:#ffff66">Windows</B> cursors.
+<p>
+NumColors is always 2 (1-bit, black and white) in a Win16 cursor
+file. Win32 cursors have the same color ranges as icons.
+<p>
+XHotSpot and YHotSpot store the coordinates of the cursor's hot spot.
+The X coordinate is relative to the cursor bitmap's left edge; the Y
+coordinate is relative to the cursor's top edge. Both coordinates are
+measured in pixels.
+<p>
+The hot spot is a single pixel in size. When the user clicks the
+pointing device, the coordinates of the hot spot are sent to <B style="color:black;background-color:#ffff66">Windows</B>.
+<B style="color:black;background-color:#ffff66">Windows</B> then performs an action based on where the hot spot is on the
+display and on the current state of <B style="color:black;background-color:#ffff66">Windows</B> itself. 
+<p>
+And finally, ICO and CUR files do not contain any type of
+identification signature or "magic number". A file reader may assume
+that all <i>.ico</i> files are <B style="color:black;background-color:#ffff66">Windows</B> icons and all <i>.cur</i>
+files are <B style="color:black;background-color:#ffff66">Windows</B>
+cursors, but it would haphazard to do so. If we assume instead that
+all ICO files will never contain more than 256 bitmaps (a very safe
+assumption) then an ICO file will begin with the byte sequence 00 00
+01 00 XX 00, where XX may be any byte value. Making the same
+assumption for cursors, all CUR files will begin with the byte
+sequence 00 00 02 00 XX 00.
+<p>
+
+<h2><A NAME="MICCUR-DMYID.4">For Further Information</A></h2>
+<p>
+The primary sources of ICO and CUR information are the Microsoft
+Win16 and Win32 Software Development Kits (SDK) and the Microsoft
+Developer Network Library (MSDN) CD-ROMs.
+<p>
+The Win16 and Win32 SDKs are distributed with the Microsoft Visual
+C++ compiler and the MSDN CD-ROMs. The following SDK references and
+Knowledge Base articles discuss the ICO, CUR, and DIB bitmap formats:
+<p>
+<blockquote>
+<p>
+<i>Microsoft <B style="color:black;background-color:#ffff66">Windows</B> Software Development Kit, Programmers'
+Reference, Volume 4: Resources</i>
+<p>
+Win32 SDK on-line help for the BITMAPINFO structure
+<p>  
+Q81498 SAMPLE: DIBs and Their Uses
+<p>
+Q94326 SAMPLE: 16 and 32 Bits-Per-Pel Bitmap Formats
+<p>
+Specs: Icons in Win32
+<p>
+Technical Articles: Win32 Binary Resource Formats
+<p>
+</blockquote>
+<p>
+You can find the SDK documents on the MSDN Library CD-ROMs. The MSDN
+Library is only available by subscription. However, Microsoft has made
+the October 1995 MSDN library available at:
+<p>
+<blockquote>
+<p>
+<i>ftp://ftp.microsoft.com/developr/MSDN/OctCD/</i>
+</blockquote>
+<p>
+One other MSDN Library file of interest is:
+<p>
+<blockquote>
+MSDN Frequently Asked Questions (FAQ)<br>
+PSS ID Number: Q116437, 02-16-1996<br>
+<i>ftp://ftp.microsoft.com/developr/MSDN/kb/Q116/4/37.txt</i><br>
+<i>http://www.microsoft.com/msdn/msdnfaq.htm</i>
+</blockquote>
+<p>
+The Win32 SDK also contains two sample applications that are necessary
+for understanding icons and cursors. They are <i>IconPro</i> and
+<i>imagedit</i> (an <B style="color:black;background-color:#A0FFFF">icon</B> and cursor bitmap editor). Both of these
+sample applications are distributed with complete source code, but no
+compiled binaries. The binaries are only distributed with the <B style="color:black;background-color:#ffff66">Windows</B>
+95 and <B style="color:black;background-color:#ffff66">Windows</B> NT Resource Kits.
+<p>
+You can contact the Microsoft MSDN group at:
+<p>
+<blockquote>
+Microsoft Developers Network<br>
+Voice: 206-936-2490<br>
+Email: <i>msdn@microsoft.com</i><br>
+WWW: <i>http://www.microsoft.com/msdn/</i>
+</blockquote>
+<p>
+And here's the addresses of Microsoft. Try getting what you need from
+their FTP and web sites first:
+<p>
+<blockquote>
+Microsoft Corporation<br>
+One Microsoft Way<br>
+Redmond, WA 98052-6399<br>
+FTP: <i>ftp://ftp.microsoft.com/</i><br>
+WWW: <i>http://www.microsoft.com/</i><br>
+CIS: WINSDK and MSWIN32 forums
+</blockquote>
+<p>
+
+<hr>
+<p>
+<A HREF="gffse:/format.micclip"><img src="../../images/txtpreva.gif"></A>
+<A HREF="gffse:/format.micmeta"><img src="../../images/txtnexta.gif"></A>
+<A HREF="../book.htm"><img src="../../images/txtupa.gif"></A>
+<a href="../bookidx.htm"><img src="../../images/txttoidx.gif"></a>
+<br>
+<a href="../booktoc.htm"><img src="../../images/btntoc.gif"></a>
+<a href="../book/glossary.htm"><img src="../../images/btnglos.gif"></a>
+<a href="../main.htm"><img src="../../images/btnmain.gif"></a>
+<a href="gffse:/page.formats"><img src="../../images/btnfmt.gif"></a>
+<a href="../software.htm"><img src="../../images/btnsoft.gif"></a>
+<a href="../internet.htm"><img src="../../images/btninet.gif"></a>
+<a href="../book.htm"><img src="../../images/btnbook.gif"></a>
+<P>
+Copyright &copy; 1996, 1994 O'Reilly &amp; Associates, Inc.  All Rights Reserved.
+<p>
+</body>
+</html>

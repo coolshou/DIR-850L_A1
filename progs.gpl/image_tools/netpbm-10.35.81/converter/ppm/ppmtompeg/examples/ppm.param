@@ -1,0 +1,37 @@
+# speed test parameter file
+
+PATTERN		I
+OUTPUT		output/food
+GOP_SIZE	30
+SLICES_PER_FRAME	1
+
+BASE_FILE_FORMAT	PPM
+YUV_SIZE	352x240
+
+INPUT_CONVERT	*
+
+INPUT_DIR	links/flowg
+
+INPUT
+sflowg.*.ppm	[01-10]
+END_INPUT
+
+
+# motion vector search parameters
+
+# MAD or MSE -- must be upper case
+ERROR		MAD
+
+# FULL or HALF -- must be upper case
+PIXEL		FULL
+
+# means +/- this many pixels
+RANGE		8
+
+PSEARCH_ALG	EXHAUSTIVE
+BSEARCH_ALG	SIMPLE
+
+IQSCALE		31
+PQSCALE		10
+BQSCALE		25
+

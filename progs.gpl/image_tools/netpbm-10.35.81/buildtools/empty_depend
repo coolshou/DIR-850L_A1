@@ -1,0 +1,19 @@
+#!/usr/bin/perl -w
+
+use strict;
+
+# This program turns every Makefile.depend file into an empty file,
+# so that dependencies in there can't make trouble for users trying to
+# build Netpbm.  They don't need dependencies anyway, since they're 
+# building everything and not modifying anything.
+
+# Developers should do 'make dep' to create real Makefile.depend files
+# before building
+
+my $mf_list = `find . -name Makefile.depend`;
+my @mf_list = split(/\s/, $mf_list);
+foreach (@mf_list) {
+    print "Emptying $_\n";
+    open(MF, ">$_");
+    close(MF);
+}

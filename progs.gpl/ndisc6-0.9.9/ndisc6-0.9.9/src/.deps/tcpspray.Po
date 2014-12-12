@@ -1,0 +1,286 @@
+tcpspray.o: tcpspray.c ../config.h ../compat/fixups.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/sys/types.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/features.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/uClibc_config.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/uClibc_arch_features.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/sys/cdefs.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/types.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/wordsize.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/bin/../lib/gcc/mipsel-linux-uclibc/4.3.3/include/stddef.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/kernel_types.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/typesizes.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/pthreadtypes.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/sched.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/time.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/endian.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/endian.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/sys/select.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/select.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/sigset.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/time.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/sys/sysmacros.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/sys/socket.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/sys/uio.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/uio.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/socket.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/bin/../lib/gcc/mipsel-linux-uclibc/4.3.3/include-fixed/limits.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/bin/../lib/gcc/mipsel-linux-uclibc/4.3.3/include-fixed/syslimits.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/limits.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/posix1_lim.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/local_lim.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/linux/limits.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/uClibc_local_lim.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/posix2_lim.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/xopen_lim.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/stdio_lim.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/sockaddr.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/asm/socket.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/asm/sockios.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/asm/ioctl.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/netinet/in.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/stdint.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/in.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/byteswap.h \
+  ../include/gettext.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/string.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/stdlib.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/waitflags.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/waitstatus.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/alloca.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/bin/../lib/gcc/mipsel-linux-uclibc/4.3.3/include/stdbool.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/stdio.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/uClibc_stdio.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/uClibc_mutex.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/pthread.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/sched.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/uClibc_clk_tck.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/signal.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/initspin.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/sigthread.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/uClibc_pthread.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/bin/../lib/gcc/mipsel-linux-uclibc/4.3.3/include/stdarg.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/unistd.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/posix_opt.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/environments.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/confname.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/getopt.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/errno.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/errno.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/linux/errno.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/asm/errno.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/asm-generic/errno-base.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/sys/time.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/sys/wait.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/signum.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/siginfo.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/sigaction.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/sigcontext.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/sgidefs.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/sigstack.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/ucontext.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/sys/ucontext.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/sys/resource.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/resource.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/fcntl.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/fcntl.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/sys/stat.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/stat.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/netdb.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/rpc/netdb.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/netdb.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/locale.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/uClibc_locale.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/getopt.h gettime.h \
+  /opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/sys/times.h
+
+../config.h:
+
+../compat/fixups.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/sys/types.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/features.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/uClibc_config.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/uClibc_arch_features.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/sys/cdefs.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/types.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/wordsize.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/bin/../lib/gcc/mipsel-linux-uclibc/4.3.3/include/stddef.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/kernel_types.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/typesizes.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/pthreadtypes.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/sched.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/time.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/endian.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/endian.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/sys/select.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/select.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/sigset.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/time.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/sys/sysmacros.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/sys/socket.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/sys/uio.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/uio.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/socket.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/bin/../lib/gcc/mipsel-linux-uclibc/4.3.3/include-fixed/limits.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/bin/../lib/gcc/mipsel-linux-uclibc/4.3.3/include-fixed/syslimits.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/limits.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/posix1_lim.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/local_lim.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/linux/limits.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/uClibc_local_lim.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/posix2_lim.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/xopen_lim.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/stdio_lim.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/sockaddr.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/asm/socket.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/asm/sockios.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/asm/ioctl.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/netinet/in.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/stdint.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/in.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/byteswap.h:
+
+../include/gettext.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/string.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/stdlib.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/waitflags.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/waitstatus.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/alloca.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/bin/../lib/gcc/mipsel-linux-uclibc/4.3.3/include/stdbool.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/stdio.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/uClibc_stdio.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/uClibc_mutex.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/pthread.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/sched.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/uClibc_clk_tck.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/signal.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/initspin.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/sigthread.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/uClibc_pthread.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/bin/../lib/gcc/mipsel-linux-uclibc/4.3.3/include/stdarg.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/unistd.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/posix_opt.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/environments.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/confname.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/getopt.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/errno.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/errno.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/linux/errno.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/asm/errno.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/asm-generic/errno-base.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/sys/time.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/sys/wait.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/signum.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/siginfo.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/sigaction.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/sigcontext.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/sgidefs.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/sigstack.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/ucontext.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/sys/ucontext.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/sys/resource.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/resource.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/fcntl.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/fcntl.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/sys/stat.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/stat.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/netdb.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/rpc/netdb.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/netdb.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/locale.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/bits/uClibc_locale.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/getopt.h:
+
+gettime.h:
+
+/opt/mipsel_gcc-4.3.3_uclibc-0.9.30.1/usr/include/sys/times.h:

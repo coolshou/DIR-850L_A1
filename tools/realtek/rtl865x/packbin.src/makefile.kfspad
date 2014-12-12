@@ -1,0 +1,9 @@
+CFLAGS =  -Wall -I. -g
+SRCS = kfspad.c
+CC = gcc
+OD = ../
+
+all:   kfspad
+
+kfspad:  $(SRCS)
+	$(CC) $(CFLAGS) -o $(OD)$@ $<

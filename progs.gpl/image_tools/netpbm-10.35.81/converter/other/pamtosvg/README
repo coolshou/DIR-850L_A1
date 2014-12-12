@@ -1,0 +1,109 @@
+The core of this program is derived from Martin Weber's
+(martweb@gmx.net) Autotrace.  Bryan Henderson adapted it to Netpbm in 
+February 2006.
+
+Much of the Autotrace code has been rewritten to be easier to read and match
+Netpbm coding style.
+
+Pieces of Autotrace that duplicate other Netpbm programs or just don't fit
+the Netpbm philosophy have been removed.  In particular, Autotrace has the
+ability to take formats other than Netpbm formats for input, to despeckle
+the image before tracing, and to quantize colors before tracing.  Pamtosvg
+has none of that.
+
+Pamtosvg uses libnetpbm to read the input image, process the command line,
+manage memory, and do several other minor things.  Autotrace has its own
+code for those things.
+
+Autotrace uses a shmaltzy trick to deal with open outlines.  There is a
+piece of the program that divides an outline at its corners and then creates
+a curve for the pieces between every two corners.  For an open outline,
+there are segments of the outline at each end that are not between two
+corners.  One piece of code finds the corners, and another computes the
+curves between them.  
+
+In order to use the closed outline code for the open outline case,
+Autotrace includes a dummy corner at the start of the outline in the
+list of corners.  The curve-finding code then has a special case for
+the segment after the last corner.  Pamtosvg uses a cleaner approach.
+The corner list is an actual list of corners -- there is no dummy
+corner.  The curve-finding code has two special cases for open
+outlines -- one for the segment before the first corner, and one for
+the segment after the last corner.
+
+
+STRATEGY
+--------
+
+Autotrace is capable of many more vector graphics output formats
+besides SVG.  The basic curve tracing is the same for all; it just has
+output formatting modules.  Netpbm ought to be able to generate those
+formats as well.  SVG is just the beginning.
+
+Of course, having a program that generates multiple output formats based
+on command line options is not the Netpbm way to approach it.  A pure
+traditional Netpbm approach would be to have a converter between PAM
+and each of the vector graphics formats.
+
+That isn't practical because of the information that gets lost when you
+convert from vector to raster form, and also because 99% of the logic
+in converting between PAM and a vector graphics format is the same for
+all the vector graphics formats.
+
+Therefore, the strategy is to adopt a single vector graphics format
+and use it as the common intermediate format.  Right now, it looks
+like SVG would be a good choice for that.  However, it may turn out to
+be better to create a vector graphics format specially for Netpbm.
+The reason for that is that an intermediate Netpbm format has a rather
+different requirement from all these other formats -- it isn't meant
+to be transmitted or stored, but it is meant to be easy for a
+programmer to work with.
+
+We need a program to go the other way -- to convert from SVG to PAM.
+I.e. a curve drawing program.  The Ppmdraw program does this kind of
+curve drawing (in fact, a Ppmdraw script can be considered a vector
+graphics format).  Ppmdraw itself might not be adaptable, but the
+library routines it uses are probably all we need to convert SVG to
+PAM.
+
+The Pamtosvg code should be reworked to use a libnetpbm tuple array
+instead of its at_bitmap_type for the raster.
+
+Nobody has any plans to do any of this work.  I document the strategy
+only so that if someone decides to do some work, he can go in the
+right direction.
+
+
+COPYRIGHT CONSIDERATIONS
+------------------------
+
+Bryan took the code and has distributed it under a copyright license
+granted to him, as a member of the public, by the authors.  That
+license is the GNU Lesser Public License Version 2.1.  All the authors
+offer that same license for Pamtosvg to the public.  A copy of it is
+in the Netpbm doc/ directory.
+
+
+CREDITS
+-------
+
+Autotrace's source code listed the following as contributors to it:
+
+Martin Weber <martweb@gmx.net>
+Bernhard Herzog (Postscript, svg and sk export filter) 
+Ian MacPhedran (xfig export filter) 
+Martin Kroeker (bugfixes) 
+Tobias Polzin (bugfixes) 
+Kevin O'Gorman (Shockwave support) 
+MenTaLguY (png import filter)
+Peter Cucka (bugfixes)
+Enrico Persiani (emf export) 
+Johannes Schindelin (Magick import filter)
+Masatake YAMATO (library, help with cvs)
+Steffen Politzky (dxf export)
+David A. Bartold (part of despeckle)
+Han-Wen Nienhuys (rpm-spec file)
+R. P. C. Rodgers (man page)
+Allen Barnett (improved emf export)
+Andrew Elia (dr2d export filter)
+Ralf Stubner (bugfixes about pstoedit usage)

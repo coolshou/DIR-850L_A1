@@ -1,0 +1,47 @@
+A ephp sample....
+<?ephp
+
+/* you can add commet here. */
+// or here....
+
+/* internal function */
+anchor("/wan/rg/inf:1");
+query("mode"); echo "\n";
+query("/wan/rg/inf:1/mode"); echo "\n";
+set("/wan/rg/inf:1/mode", 0);
+set("/wan/rg/inf:1/static/ip","192.168.1.1");
+
+query("/wan/rg/inf:1/static/ip"); echo "\n";
+
+/* variable assignment */
+$wanmode = query("/wan/rg/inf:1/mode");
+echo $wanmode."\n";
+
+$msg = "message string ...";
+echo "Message head [".$wanmode."] message tail\n";
+
+/* if block */
+if ($wanmode == "0") {
+	echo "WAN mode is static. (value=".$wanmode.")\n";
+} else if ($wanmode == "1") {
+	echo "WAN mode is PPPoE. (value=".$wanmode.")\n";
+}
+
+/* for loop */
+for ("/nat/porttrigger/entry")
+{
+	if	($# == "1")	{echo "1\n";}
+	else if	($# == "2")	{echo "2\n";}
+	else if	($# == "3")	{echo "3\n";}
+	else			{echo "\\\"\'\$\n";}
+}
+
+require("/www/Home/index.php");
+
+?>
+
+Nothing else.....
+
+<? require(echo_test.php); ?>
+<? require(if_test.php); ?>
+

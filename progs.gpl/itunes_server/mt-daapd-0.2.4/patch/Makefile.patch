@@ -1,0 +1,11 @@
+--- Makefile	2011-03-11 16:57:32.305927936 +0800
++++ Makefile.org	2011-03-11 16:56:27.085927981 +0800
+@@ -116,7 +116,7 @@
+ 	cd $(top_builddir) && $(SHELL) ./config.status $@ $(am__depfiles_maybe)
+ 
+ $(top_builddir)/config.status: $(srcdir)/configure $(CONFIG_STATUS_DEPENDENCIES)
+-	$(SHELL) ./config.status --recheck
++#	$(SHELL) ./config.status --recheck
+ $(srcdir)/configure:  $(srcdir)/configure.in $(ACLOCAL_M4) $(CONFIGURE_DEPENDENCIES)
+ 	cd $(srcdir) && $(AUTOCONF)
+ 

@@ -1,0 +1,23 @@
+echo Test 1.  Should print 3697098186 144
+./pbmtog3 ../../testgrid.pbm | cksum
+echo Test 2.  Should print 1248301383 122
+./pbmtog3 -nofixedwidth ../../testgrid.pbm | cksum
+echo Test 3.  Should print 686713716 144
+./pbmtog3 -reverse ../../testgrid.pbm | cksum
+echo Test 4.  Should print 215463240 122
+./pbmtog3 -nofixedwidth -reverse ../../testgrid.pbm | cksum
+echo Test 5.  Should print 28792587 47
+pbmmake -w 10 10 | ./pbmtog3 | cksum
+echo Test 6.  Should print 277456854 32
+pbmmake -w 10 10 | ./pbmtog3 -nofixedwidth | cksum
+echo Test 7.  Should print 28792587 47
+pbmmake -w 10000 10 | ./pbmtog3 | cksum
+echo Test 8.  Should print 871281767 162
+pbmmake -w 10000 10 | ./pbmtog3 -nofixedwidth | cksum
+echo Test 9.  Should print 3736247115 62
+pbmmake -b 10 10 | ./pbmtog3 | cksum
+echo Test 10.  Should print 2820255307 2191856
+pbmmake -g 1700 2286 | ./pbmtog3 | cksum
+echo Test 11.  Should print 4159089282 2226575
+pbmmake -g 1800 2286 | ./pbmtog3 | cksum
+echo Tests done.

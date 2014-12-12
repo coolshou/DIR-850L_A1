@@ -1,0 +1,53 @@
+##############################################################################
+# Makefile for SQLite
+# Created by Yi-hung <yi_hung@alphanetworks.com>
+##############################################################################
+sqlite_APPLET = sqlite
+sqlite_VERSION = autoconf-3070400
+sqlite_TARBALL = $(SOURCES)/$(sqlite_APPLET)-$(sqlite_VERSION).tar.gz
+sqlite_SRC = $(BUILDDIR)/$(sqlite_APPLET)-$(sqlite_VERSION)
+sqlite_OSRC = $(ORIGDIR)/$(sqlite_APPLET)-$(sqlite_VERSION)
+sqlite_PATCH = $(sqlite_TARBALL).diff
+
+CPPFLAGS += $(CFLAGS) $(LDFLAGS)
+
+sqlite_CONFS = --build=$(shell uname -m)-unknown-linux-gnu
+sqlite_CONFS += --host=$(HOST_TYPE)
+sqlite_CONFS += --prefix=$(ROOTFS)
+sqlite_CONFS += CFLAGS="$(CFLAGS)"
+sqlite_CONFS += LDFLAGS="$(LDFLAGS)"
+sqlite_CONFS += --enable-shared
+sqlite_CONFS += --disable-static
+sqlite_CONFS += --enable-threadsafe
+sqlite_CONFS += --enable-dynamic-extensions
+
+prepare_sqlite:
+	$(call Banner,Prepare sqlite)
+	$(call CheckDir,$(BUILDDIR))
+	$(call PrepareSource,$(sqlite_TARBALL),$(BUILDDIR),$(sqlite_PATCH),$(sqlite_SRC))
+
+config_sqlite: prepare_sqlite
+	$(call Banner,Configure sqlite)
+	$(call DoConfig,$(MYTOP)/$(sqlite_SRC),$(sqlite_CONFS))
+
+build_sqlite: config_sqlite
+	$(call Banner,Build sqlite)
+	$(call BuildApplet,$(sqlite_SRC))
+	$(call Banner,Install sqlite)
+	$(call BuildApplet,$(sqlite_SRC),install)
+
+clear_sqlite:
+	$(call Banner,Clear sqlite)
+	$(call BuildApplet,$(sqlite_SRC),clean)
+
+clean_sqlite:
+	$(call RemoveFileOrDir,$(sqlite_SRC))
+	$(call RemoveFileOrDir,$(sqlite_OSRC))
+
+diff_sqlite:
+	$(call Banner,Gen patch file for sqlite)
+	$(call CheckDir,$(ORIGDIR))
+	$(Q)tar axf $(sqlite_TARBALL) -C $(ORIGDIR)
+	$(call BuildApplet,$(sqlite_SRC),distclean)
+	$(call MKDIFF,$(sqlite_OSRC),$(sqlite_SRC),$(sqlite_PATCH))
+	$(call RemoveFileOrDir,$(sqlite_OSRC))

@@ -1,0 +1,101 @@
+Pnmtopng and Pngtopnm are based on programs of the same name in the 
+Pnmtopng package owned by Alexander Lehmann and Willem Van Schaik,
+available at http://www.libpng.org/pub/png/src on 2001.07.14.
+
+I added it to and adapted it to Netpbm on 2000.03.02 to make it more
+easily available to people.  I applied a patch on 2000.06.03 to bring
+it up the 2.37.4 release of that package.  I updated it again on
+2001.07.14 to bring it up to Release 2.37.5.  There is no process in
+place to bring improvements to the base package into the Netpbm
+version, but there hasn't been a lot of update activity anyway.
+
+Attached below is the file README from Release 2.37.5 of the base
+package.
+
+Here are the differences between the base and the Netpbm version:
+
+  I added an "unsigned" to make formal and actual arguments to png_sig_cmp()
+  match and quiet a compiler warning.
+
+  I fixed an "include" statement so the dependencies work out right.
+
+  I removed the BIGGRAYS stuff, which became obsolete in Netpbm 9.0
+
+  I replaced a PPM_MAXVAL with PPM_OVERALLMAXAL to handle the new 16 bits
+  formats.
+
+  macro VERSION is defined directly in pngtopnm.c and pnmtopng.c instead
+  of being included via file version.h.
+
+  Pnmtopng, since June 2001, reads one row at a time instead of holding 
+  the entire image in memory.  That makes it work with large bitmaps
+  where it would otherwise run out of memory.  It also works faster with
+  bitmaps since a bit takes up only a bit of memory in a cached input 
+  file, but 96 bits of memory after reading it into a Netpbm data 
+  structure.
+
+  The base Pnmtopng ignores -transparent if it specifies a color that
+  isn't in the image.  Netpbm's Pnmtopng selects a nearby color that _is_
+  in the image, which is what base Pnmtopng did before October 2000.
+  Netpbm's Pnmtopng lets you put an '=' sign before the color to specify
+  that you don't want a nearby color to be chosen, i.e. you want the
+  base Pnmtopng function.  This is consistent with Pnmtogif.
+
+There were some other changes necessary before Netpbm 9.0, but the change
+of the xelval type from 1 byte to 4 made them unnecessary.
+
+
+** PNMTOPNG / PNGTOPNM
+** version 2.37.5 - 24 October 2000
+
+[This is a semi-official bug-fix and enhancement release; I sort of took over
+ maintenance of this package while Willem was on an extended bike trip, and
+ for now I'm continuing with periodic, small updates.  Version 2.37 (March
+ 1998) was never publicly released, partly because Willem had hoped to quiet
+ gcc's "<var> might be clobbered by `longjmp'" warnings.  Those are fixed in
+ 2.37.2; under Solaris, they resulted in stack corruption even when there was
+ no error in the image files or libraries.  Version 2.37.3 fixes a minor bug
+ w.r.t. error exits and generally does cleaner error exits (close files, etc.)
+ Version 2.37.4 fixes a bug that caused 16-shade grayscale images to be written
+ as 8-bit grayscale instead of (smaller) 4-bit colormapped images (bug report,
+ analysis and fix by Rafal Rzeczkowski), and it supports the new/upcoming
+ pbmplus release.  Version 2.37.5 fixes a bug in -transparent handling (pnmtopng
+ no longer chooses an approximate color if the specified one isn't present) and
+ quiets a gcc warning in the non-16-bit version.
+ --Greg Roelofs]
+
+The utilities pnmtopng and pngtopnm are based on other pbm tools and require
+the libraries included in the pbmplus/netpbm package. Also required are the
+png library and the zlib compression library.
+
+These can be found at:
+	ftp://swrinde.nde.swri.edu/pub/png/src/libpng-*
+	ftp://swrinde.nde.swri.edu/pub/png/src/zlib-*
+	ftp://ftp.x.org/contrib/utilities/netpbm-1mar1994*
+or see
+	http://www.libpng.org/pub/png/apps/pnmtopng.html
+	http://netpbm.sourceforge.net/
+	http://www.acme.com/software/pbmplus/		[update coming soon?]
+
+To compile and install a makefile is provided. Do check the directories
+where you have put the required libraries. Then either accommodate the 
+makefile or make links from generic names (e.g., zlib) to version-specific
+directories (e.g., zlib-1.1.3), which is the recommended way.
+
+For testing purposes, have a look at the test-set PngSuite.tar.gz, which
+contains a small test-image for every PNG color type and for most PNG chunk
+types. It can be found at:
+	http://www.schaik.com/pngsuite/pngsuite.html
+	ftp://swrinde.nde.swri.edu/pub/png/images/suite/
+
+Other web pages with PNG images are at:
+	http://www.libpng.org/pub/png/png-textures.html
+	http://www.libpng.org/pub/png/pngs-img.html
+	http://www.libpng.org/pub/png/pngpic2.html
+	http://www.libpng.org/pub/png/colorcube/
+	http://www.libpng.org/pub/png/pngmisc.html#images
+
+------
+Alexander Lehmann <lehmann@usa.net>
+Willem van Schaik <willem@schaik.com>
+Greg Roelofs <newt@pobox.com>

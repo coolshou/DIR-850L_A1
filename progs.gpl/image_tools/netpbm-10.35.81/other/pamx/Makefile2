@@ -1,0 +1,51 @@
+# C compiler to use, including special flags.
+CC=gcc
+
+WARNINGS = -Wall -Wmissing-declarations -Wundef -Wimplicit -Wwrite-strings \
+	-Winline \
+	-Wstrict-prototypes -Wmissing-prototypes \
+	-Werror
+
+CFLAGS = $(WARNINGS) -fno-common -g
+INCLUDES = -I /home/bryanh/netpbm/other/importinc
+
+# X11 include and library information.
+X11_LIB_DIR=-L/subsysx/X11R6/lib
+X11_LIB_NAME=-lX11
+NETPBMLIB = /home/bryanh/netpbm/lib/libnetpbm.so
+
+LIBS=$(X11_LIB_DIR) $(X11_LIB_NAME) -lm
+
+default: pamx
+
+# files for the image library
+IMAGE_SRCS= image.c
+IMAGE_OBJS= ${IMAGE_SRCS:.c=.o}
+
+# files for the image processing library
+PROCESS_HDRS=
+# no image processing.
+PROCESS_SRCS= fill.c
+PROCESS_OBJS= ${PROCESS_SRCS:.c=.o}
+
+X_SRCS= send.c window.c pamx.c
+X_OBJS= ${X_SRCS:.c=.o}
+
+OBJS= $(IMAGE_OBJS) $(PROCESS_OBJS) $(X_OBJS) $(NETPBMLIB)
+
+.c.o: $*.c
+	$(CC) -c $(CFLAGS) $(INCLUDES) $*.c $(CADD)
+
+pamx: $(OBJS) $(OPTIONAL_LIBS)
+	$(CC) -o $@ $(OBJS) $(OPTIONAL_LIBS) $(LIBS)
+
+clean::
+	rm -f *.o pamx
+
+dep:
+	$(CC) -MM -MG $(INCLUDES) *.c >Makefile.depend
+
+include Makefile.depend
+
+Makefile.depend:
+	>$@

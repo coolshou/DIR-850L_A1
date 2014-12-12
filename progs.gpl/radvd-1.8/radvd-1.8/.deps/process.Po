@@ -1,0 +1,348 @@
+process.o: process.c config.h includes.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/string.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/features.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/uClibc_config.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/uClibc_arch_features.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sys/cdefs.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/gcc/stddef.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/stdio.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/types.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/wordsize.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/kernel_types.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/typesizes.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/pthreadtypes.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/sched.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/uClibc_stdio.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/wchar.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/wchar.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/uClibc_mutex.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/pthread.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sched.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/time.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/time.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/uClibc_clk_tck.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/signal.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/sigset.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/initspin.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/sigthread.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/uClibc_pthread.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/gcc/stdarg.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/stdio_lim.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/stdlib.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/waitflags.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/waitstatus.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/endian.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/endian.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/byteswap.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/byteswap.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sys/types.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sys/select.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/select.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sys/sysmacros.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/alloca.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/syslog.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sys/syslog.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/unistd.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/posix_opt.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/environments.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/confname.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/getopt.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/errno.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/errno.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/linux/errno.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/asm/errno.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/asm-generic/errno-base.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/signum.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/siginfo.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/sigaction.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/sigcontext.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sgidefs.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/sigstack.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/ucontext.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sys/ucontext.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/netdb.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/netinet/in.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/stdint.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sys/socket.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sys/uio.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/uio.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/socket.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/limits.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/gcc/limits.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/posix1_lim.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/local_lim.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/linux/limits.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/uClibc_local_lim.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/posix2_lim.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/xopen_lim.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/sockaddr.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/asm/socket.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/asm/sockios.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/asm/ioctl.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/asm-generic/ioctl.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/in.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/rpc/netdb.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/netdb.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/pwd.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/grp.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/inttypes.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sys/param.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/linux/param.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/asm/param.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sys/time.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sys/ioctl.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/ioctls.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/asm/ioctls.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/ioctl-types.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sys/ttydefaults.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sys/stat.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/stat.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/fcntl.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/fcntl.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/netinet/ip6.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/netinet/icmp6.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/arpa/inet.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sys/sysctl.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/linux/sysctl.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/linux/kernel.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/linux/types.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/net/if.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/net/if_arp.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/getopt.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/ifaddrs.h radvd.h \
+ defaults.h log.h \
+ /opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/linux/version.h
+
+config.h:
+
+includes.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/string.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/features.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/uClibc_config.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/uClibc_arch_features.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sys/cdefs.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/gcc/stddef.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/stdio.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/types.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/wordsize.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/kernel_types.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/typesizes.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/pthreadtypes.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/sched.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/uClibc_stdio.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/wchar.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/wchar.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/uClibc_mutex.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/pthread.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sched.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/time.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/time.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/uClibc_clk_tck.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/signal.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/sigset.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/initspin.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/sigthread.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/uClibc_pthread.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/gcc/stdarg.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/stdio_lim.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/stdlib.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/waitflags.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/waitstatus.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/endian.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/endian.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/byteswap.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/byteswap.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sys/types.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sys/select.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/select.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sys/sysmacros.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/alloca.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/syslog.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sys/syslog.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/unistd.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/posix_opt.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/environments.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/confname.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/getopt.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/errno.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/errno.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/linux/errno.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/asm/errno.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/asm-generic/errno-base.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/signum.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/siginfo.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/sigaction.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/sigcontext.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sgidefs.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/sigstack.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/ucontext.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sys/ucontext.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/netdb.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/netinet/in.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/stdint.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sys/socket.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sys/uio.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/uio.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/socket.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/limits.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/gcc/limits.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/posix1_lim.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/local_lim.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/linux/limits.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/uClibc_local_lim.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/posix2_lim.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/xopen_lim.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/sockaddr.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/asm/socket.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/asm/sockios.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/asm/ioctl.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/asm-generic/ioctl.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/in.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/rpc/netdb.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/netdb.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/pwd.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/grp.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/inttypes.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sys/param.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/linux/param.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/asm/param.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sys/time.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sys/ioctl.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/ioctls.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/asm/ioctls.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/ioctl-types.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sys/ttydefaults.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sys/stat.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/stat.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/fcntl.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/bits/fcntl.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/netinet/ip6.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/netinet/icmp6.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/arpa/inet.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/sys/sysctl.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/linux/sysctl.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/linux/kernel.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/linux/types.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/net/if.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/net/if_arp.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/getopt.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/ifaddrs.h:
+
+radvd.h:
+
+defaults.h:
+
+log.h:
+
+/opt/rsdk-1.5.5-5281-EB-2.6.30-0.9.30.3-110714/include/linux/version.h:

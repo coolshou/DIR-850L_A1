@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<SiGnAtUrE>
+	<runtime>
+		<device>
+			<wlandriver>BGN band: RT5592 + AN band: RT5592</wlandriver>
+			<modelname>DIR-845L</modelname>
+			<producturl>http://www.dlink.com</producturl>
+			<description>Wireless Broadband Router</description>
+		</device>
+	</runtime>
+</SiGnAtUrE>

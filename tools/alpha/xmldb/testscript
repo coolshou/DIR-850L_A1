@@ -1,0 +1,46 @@
+#!/bin/sh
+
+RGDB=./rgdb
+RGDBOPT=
+
+$RGDB $RGDBOPT -s /test/node/case1/mode 1
+$RGDB $RGDBOPT -s /test/node/case2/mode 2
+$RGDB $RGDBOPT -s /test/node/case3/mode 3
+$RGDB $RGDBOPT -s /test/node/case4/mode 4
+$RGDB $RGDBOPT -s /test/node/case5/mode 5
+
+echo "test: get value of /test/node/case1/mode should show 1"
+$RGDB $RGDBOPT -g /test/node/case1/mode
+echo "test: get value of /test/node/case2/mode should show 2"
+$RGDB $RGDBOPT -g /test/node/case2/mode
+echo "test: get value of /test/node/case1/mode should show testcase1"
+$RGDB $RGDBOPT -g /test/node/case1/mode,1:testcase1,2:testcase2
+echo "test: get value of /test/node/case2/mode should show testcase2"
+$RGDB $RGDBOPT -g /test/node/case2/mode,1:testcase1,2:testcase2
+echo "test: get value of /test/node/case3/mode should show 3"
+$RGDB $RGDBOPT -g /test/node/case3/mode,1:testcase1,2:testcase2
+echo "test: get value of /test/node/case4/mode should show default"
+$RGDB $RGDBOPT -g /test/node/case4/mode,1:testcase1,2:testcase2,*:default
+
+$RGDB $RGDBOPT -s /test/node/entry:1/node1 node1@entry1
+$RGDB $RGDBOPT -s /test/node/entry:1/node2 node2@entry1
+$RGDB $RGDBOPT -s /test/node/entry:2/node1 node1@entry2
+$RGDB $RGDBOPT -s /test/node/entry:2/node2 node2@entry2
+$RGDB $RGDBOPT -s /test/node/entry:3/node1 node1@entry3
+$RGDB $RGDBOPT -s /test/node/entry:3/node2 node2@entry3
+$RGDB $RGDBOPT -s /test/node/entry:4/node1 node1@entry4
+$RGDB $RGDBOPT -s /test/node/entry:4/node2 node2@entry4
+$RGDB $RGDBOPT -s /test/node/entry:5/node1 node1@entry5
+$RGDB $RGDBOPT -s /test/node/entry:5/node2 node2@entry5
+$RGDB $RGDBOPT -s /test/node/entry:6/node1 node1@entry6
+$RGDB $RGDBOPT -s /test/node/entry:6/node2 node2@entry6
+
+$RGDB $RGDBOPT -D ./test.xml
+
+echo "test: get entry count of /test/node/entry should show 6"
+$RGDB $RGDBOPT -g /test/node/entry#
+
+$RGDB $RGDBOPT -p ./temp.txt
+$RGDB $RGDBOPT -p ./temparray.txt
+
+

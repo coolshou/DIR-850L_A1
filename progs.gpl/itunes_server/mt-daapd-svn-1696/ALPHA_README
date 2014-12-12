@@ -1,0 +1,6 @@
+1. Copy mt-daapd-svn-1693 to DNS-345/module/ and zconf.h zlib.h to DNS-345/module/include
+
+2. ./build.sh ; make
+
+3. add -lmipc in /src/Makefile LIBS
+

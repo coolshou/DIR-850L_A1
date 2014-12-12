@@ -1,0 +1,47 @@
+# test suite parameter file
+
+PATTERN		IIIIIIIII
+OUTPUT		ts.mpg
+
+BASE_FILE_FORMAT	PPM
+INPUT_CONVERT	giftoppm *
+GOP_SIZE		1
+SLICES_PER_FRAME	170000
+
+INPUT_DIR	ts
+
+INPUT
+med*.gif	[030-034]
+END_INPUT
+
+
+
+# all of the remaining options have to do with the motion search and qscale
+#
+# change this only if you're unsatisfied with the CPU time or quality, or
+# are experimenting
+#
+
+# if this appears in the file, then in addition to testing luminance when
+# computing motion vectors, program will also take into account chrominance
+#
+# this option MUST appear before ERROR option, or it will be ignored
+#
+# CHROMINANCE
+
+# MAD or MSE -- must be upper case
+ERROR		MAD
+
+# FULL or HALF -- must be upper case
+PIXEL		HALF
+
+# means +/- this many pixels
+RANGE		4
+
+# YES or NO -- must be upper case
+SUBSAMPLE	NO
+
+IQSCALE		31
+PQSCALE		10
+BQSCALE		25
+

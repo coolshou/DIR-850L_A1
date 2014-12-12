@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# You may be wondering why we have this shell script instead of just
+# naming buildtools/configure.pl 'configure' and letting the user
+# invoke it with a 'configure' command directly.  The reason is that
+# that would depend upon the user having a suitable perl interpreter
+# in /usr/bin/perl, which is nowhere near as dependable as that he has
+# a suitable Bourne shell interpreter at /bin/sh.  (An alternative that
+# has been suggested is to code "#!/usr/bin/env perl" in configure.pl,
+# but even the /usr/bin/env assumption is shakier than the /bin/sh
+# assumption).
+
+# We have had reports of Netpbm builders who do not have a suitable 
+# Perl interpreter at /usr/bin/perl.  They have a downlevel version that
+# came with their operating system and can't run configure.pl at
+# /usr/bin/perl, and a good Perl interpreter in /usr/local/bin/perl.
+
+perl `dirname $0`/buildtools/configure.pl $*

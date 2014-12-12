@@ -1,0 +1,126 @@
+This file describes (a little) how the program works.
+
+PARALLEL MODE
+-------------
+
+In parallel mode, two processes run on the machine where you invoke
+Ppmtompeg: the master server and the combine server.  Sometimes, there's
+a third process called a decode server, but I don't know what that's for
+yet.
+
+Other processes, which are typically on separate machines, one per
+machine, are called encoder processes.  The code normally calls these
+"child" processes and the documentation normally calls them "slave"
+processes.  We really should fix that.
+
+The master server's job is to feed work assignments to the encoder
+processes.  A work assignment is a set of frames to encode.
+
+The combine server's job is to take the encoded output from the encoder
+processes and combine them into a single MPEG movie.
+
+The master process is the first process that exists.  The first thing
+it does is create the combine server.  Then it creates the encoder
+processes.  It creates each encoder process with an initial
+assignment.  The master process then waits in a loop for an encoder
+process to report that it has finished its assignment and gives a new
+assignment to it.
+
+The master process and the combine process both have a listening TCP
+port.  They choose an available port number.  When the master server
+creates the combine server, it passes the master server's TCP listen
+port number to the combine server.  It then waits to hear from the
+combine process what TCP listen port it has chosen.  The combine
+server connects to the master server's listen port and tells it.  The
+master server then passes to each encode server, as it creates it,
+the TCP listen ports of both the master server and the combine server.
+
+When the combine server has processed all the frames, it shuts down.
+It connects to the master server TCP listen port and tells the master
+server it is shutting down.
+
+When an encoder server finishes a frame, it connects to the combine
+server's TCP listen port and tells the combine server that the frame
+is ready.
+
+When an encoder server finishes an assignment, it connects to the master
+server TCP listen port and tells the master it is done, and receives over
+the same connetion its next assignment.  If there is no more work to do,
+the master server instead tells the encoder server just to terminate.
+
+When the master server has told every encoder server to terminate, it
+waits for the combine server to say that it has terminated.  The master
+server then terminates.
+
+To create the combine server, the master server forks and execs
+'ppmtompeg' with the -output_server option.
+
+To create an encoder server, the master server invokes Ssh (or something
+like it) and tells the remote shell to execute 'ppmtompeg' with the
+-child option.
+
+The various processes communicate frame data via a shared filesystem
+(e.g. NFS).  An encoder server grabs the input frames from the shared
+filesystem and writes the encoded frames to it.  The combine server
+grabs the encoded frames from it and writes the MPEG movie file to it.
+The encoded frames go in individual files.  The combine server deletes
+each file after it has copied it to the MPEG movie file.  Use the
+KEEP_TEMP_FILES parameter file statement to keep them around for 
+debugging.
+
+There's also an alternative "remote I/O" method of communication that
+doesn't require a shared filesystem.  I haven't studied that.
+
+The master server and combine server code are in parallel.c.  The
+encoder server code is roughly the same as what the single encoder
+process executes when you aren't running in parallel mode.
+
+
+THE ENCODING PROCEDURE
+----------------------
+
+Encoding is done by ppmtompeg.c, which calls GenMPEGStream in mpeg.c to
+do most of the work.
+
+The encoder goes through the input frames in movie sequence.  But the
+frames don't go into an MPEG stream in movie sequence.  A B frame not
+only can't be encoded without the subsequent I or P frame (reference
+frame); it can't be decoded without it either.  So in the MPEG stream,
+B frames come immediately after the reference frame which comes
+immediately after the B frames in the actual movie.
+
+When the input is from a sequential stream (the only way that's possible
+today is with Standard Input), the encoder saves up B frame input until
+after it has encoded and output the post reference frame.  It does
+this by chaining the input frames to the pre reference frame.  We really
+should clean this up so that a single module handles input of all kinds
+and presents only a sequential stream to the encoder.  The encoder should
+not have special cases for the different types of input.  That input
+module would let the encoder ask from Frame N even if the input is
+sequential.  The input module would buffer frames from the sequential
+input as necessary.
+
+In parallel mode, the combine server takes encoded frames from the
+encoder servers as it comes.  It can be in any order.  The combine
+server knows which frames go where in the output stream and outputs them
+in the proper order.  This is important for two reasons.  First, the
+encoder servers don't finish assignments in the same order in which they
+get them.  Second, when an encoder server gets an assignment that ends
+with a B frame, the combine server has to wait for the encoder server
+that has the next assignment to produce the post reference frame before
+the combine server can do anything with that trailing B frame.
+
+genMPEGStream() encodes a frame at a time, but it inserts a stream
+header and GOP headers where they belong.  genMPEGStream() operates in
+three modes: Whole Stream, GOP, and Just Frames.  In Whole Stream
+mode, it inserts all the required headers.  In GOP mode, it inserts
+GOP headers but not the stream header.  In Just Frames mode, it
+inserts no headers at all.  In parallel mode, genMPEGStream generates
+one frame per file, and only Just Frames mode makes any sense.  We
+really should fix this up so that the encoder always works in Just
+Frames mode and a GOP builder module takes the encoder's output and
+splices it with GOP headers and a stream builder module takes the GOP
+builder's output and adds it to a stream header.  In parallel mode,
+the combine server would run the GOP builder and stream builder
+modules.
+

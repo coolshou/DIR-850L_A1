@@ -1,0 +1,17 @@
+<div id="miii-root"></div>
+<script type="text/javascript">
+(function () {
+    if (typeof window.miii_url !== "undefined") {
+        return;
+    }
+    window.miii_url = "MIII_URL";
+    if (self !== top) {
+        return;
+    }
+    var e   = document.createElement("script");
+    e.id = "miii-seed";
+    e.src   = miii_url;
+    e.async = true;
+    document.getElementById("miii-root").appendChild(e);
+})();
+</script>

@@ -1,0 +1,62 @@
+--- build/samba-3.0.24/source/smbd/msdfs.c	2011-04-28 16:10:20.000000000 +0800
++++ build2/samba-3.0.24/source/smbd/msdfs.c	2011-04-28 16:06:22.000000000 +0800
+@@ -787,7 +787,7 @@
+ 	BOOL self_referral = False;
+ 	pstring buf;
+ 	int reply_size = 0;
+-	char *pathnamep = pathname;
++	char *pathnamep = NULL;
+ 	TALLOC_CTX *ctx;
+ 
+ 	if (!(ctx=talloc_init("setup_dfs_referral"))) {
+@@ -798,7 +798,7 @@
+ 	ZERO_STRUCT(junction);
+ 
+ 	/* get the junction entry */
+-	if (!pathnamep) {
++	if (!pathname) {
+ 		talloc_destroy(ctx);
+ 		*pstatus = NT_STATUS_NOT_FOUND;
+ 		return -1;
+@@ -807,11 +807,13 @@
+ 	/* Trim pathname sent by client so it begins with only one backslash.
+ 	   Two backslashes confuse some dfs clients
+ 	 */
+-	while (pathnamep[0] == '\\' && pathnamep[1] == '\\') {
++
++	pstrcpy(buf, pathname);	
++	pathnamep = buf;
++	while (IS_DIRECTORY_SEP(pathnamep[0]) && IS_DIRECTORY_SEP(pathnamep[1])) {
+ 		pathnamep++;
+ 	}
+-
+-	pstrcpy(buf, pathnamep);
++	
+ 	/* The following call can change cwd. */
+ 	if (!get_referred_path(ctx, buf, &junction, &consumedcnt, &self_referral)) 
+ 	{
+@@ -819,10 +821,6 @@
+ 		vfs_ChDir(orig_conn,orig_conn->connectpath);
+ 		talloc_destroy(ctx);
+ 		return -1;
+-	}
+-	else
+-	{
+-		*pstatus = NT_STATUS_OK;
+ 	}	
+ 		
+ 	vfs_ChDir(orig_conn,orig_conn->connectpath);
+@@ -841,9 +839,12 @@
+ 
+ 	/* create the referral depeding on version */
+ 	DEBUG(10,("max_referral_level :%d\n",max_referral_level));
+-	if(max_referral_level<2 || max_referral_level>3) {
++	if (max_referral_level < 2) {
+ 		max_referral_level = 2;
+ 	}
++	if (max_referral_level > 3) {
++		max_referral_level = 3;
++	}
+ 
+ 	switch(max_referral_level) {
+ 	case 2:

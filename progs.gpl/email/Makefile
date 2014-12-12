@@ -1,0 +1,49 @@
+-include ../arch.mk
+-include ../../path.mk
+-include $(TOPDIR)/.config
+-include /tmp/$(USER)/$(shell echo $(ELBOX_MODEL_NAME))_path.mk
+
+
+MAKE = make
+VERSION = 3.1.2
+SRCDIR = src/
+DESTDIR = 
+EMAILPATH = $(TOPDIR)/progs.gpl/email
+CFLAGS += -g -O2 -Wall -W -I$(OPENSSLDIR)/include -DUSE_GNU_STRFTIME -I$(EMAILPATH) -I$(EMAILPATH)/src -I$(EMAILPATH)/include -I../include -I$(EMAILPATH)/dlib/include -I../dlib/include -DEMAIL_VERSION='"3.1.2"' -DCOMPILE_DATE='"01/04/2009-03:11:58PM_EST"' -DEMAIL_DIR='"$(TARGET)/etc/email"' -DHAVE_CONFIG_H
+ifeq ($(strip $(ELBOX_PROGS_PRIV_CYASSL)),y)
+CFLAGS += -DUSE_CYASSL
+endif
+LDFLAGS += -L$(OPENSSLDIR) 
+LIBS = -lcrypto -lssl -lm 
+DLIB = dlib/
+
+prefix = /usr/local
+exec_prefix = ${prefix}
+bindir = ${exec_prefix}/bin
+sbindir = ${exec_prefix}/sbin
+mandir = ${datarootdir}/man
+docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
+sysconfdir = ${prefix}/etc
+datarootdir = ${prefix}/share
+
+bin_suffix = 
+
+.PHONY: all clean-all clean distclean install uninstall
+
+all:
+	cd $(DLIB) && $(MAKE)
+	cd $(SRCDIR) && $(MAKE)
+
+install:
+	$(STRIP) -g $(SRCDIR)email
+	cp $(SRCDIR)email $(TARGET)/usr/sbin
+distclean:
+
+clean:
+	cd $(SRCDIR) && $(MAKE) clean
+	cd $(DLIB) && $(MAKE) clean
+
+clean-all:
+
+uninstall:
+

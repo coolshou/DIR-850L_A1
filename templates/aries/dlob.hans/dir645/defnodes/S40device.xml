@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<SiGnAtUrE>
+	<runtime>
+		<device>
+			<wlandriver>BGN band: RT3883</wlandriver>
+			<modelname>DIR-645</modelname>
+			<upnpmodelname>D-Link Router</upnpmodelname>
+			<upnpvendor>D-Link Corporation</upnpvendor>
+			<producturl>http://www.dlink.com</producturl>
+			<description>Wireless Broadband Router</description>
+			<conntrack_max>16000</conntrack_max>
+			<conntrack_min>4096</conntrack_min>
+		</device>
+	</runtime>
+</SiGnAtUrE>

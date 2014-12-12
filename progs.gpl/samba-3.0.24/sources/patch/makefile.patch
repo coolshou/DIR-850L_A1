@@ -1,0 +1,40 @@
+--- build_old/samba-3.0.24/source/Makefile	2011-03-09 11:13:10.525877346 +0800
++++ build/samba-3.0.24/source/Makefile	2011-03-09 11:16:54.925877347 +0800
+@@ -153,6 +153,11 @@
+ 
+ BIN_PROGS = $(BIN_PROGS1) $(BIN_PROGS2) $(BIN_PROGS3) 
+ 
++#sam_pan
++CFLAGS+= -DSAMBA_LINK_ALL
++BIN_PROGS = 
++SBIN_PROGS = bin/smbd
++
+ EVERYTHING_PROGS = bin/debug2html bin/smbfilter bin/talloctort \
+ 	bin/log2pcap
+ 
+@@ -395,7 +400,7 @@
+ 
+ MANGLE_OBJ = smbd/mangle.o smbd/mangle_hash.o smbd/mangle_map.o smbd/mangle_hash2.o
+ 
+-SMBD_OBJ_MAIN = smbd/server.o
++SMBD_OBJ_MAIN = smbd/server.o 
+ 
+ BUILDOPT_OBJ = smbd/build_options.o
+ 
+@@ -918,11 +923,13 @@
+ 	  dir=bin $(MAKEDIR); fi
+ 	@: >> $@ || : > $@ # what a fancy emoticon!
+ 
+-bin/smbd: $(SMBD_OBJ) $(POPT_OBJS) bin/.dummy
++#sam_pan add
++SMBD_OBJ += utils/smbpasswd.o libsmb/passchange.o utils/passwd_util.o
++bin/smbd: $(SMBD_OBJ) $(NMBD_OBJ) $(POPT_OBJS) bin/.dummy
+ 	@echo Linking $@
+-	@$(CC) $(FLAGS)  -o $@ $(SMBD_OBJ) $(LDFLAGS) $(LDAP_LIBS) \
++	@$(CC) $(FLAGS)  -o $@ $(SMBD_OBJ) $(NMBD_OBJ1) $(LDFLAGS) $(LDAP_LIBS) \
+ 		$(KRB5LIBS) $(DYNEXP) $(PRINT_LIBS) $(AUTH_LIBS) \
+-		$(ACL_LIBS) $(PASSDB_LIBS) $(LIBS) $(POPT_OBJS)   
++		$(ACL_LIBS) $(PASSDB_LIBS) $(LIBS) $(POPT_OBJS)
+ 
+ bin/nmbd: $(NMBD_OBJ) $(POPT_OBJS) bin/.dummy
+ 	@echo Linking $@

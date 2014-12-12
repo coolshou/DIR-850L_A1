@@ -1,0 +1,36 @@
+# 'med' parameter file
+
+PATTERN		IBBPBBPBBPBBPBBI
+OUTPUT		output/med.mpg
+GOP_SIZE	20
+SLICES_PER_FRAME	1
+
+BASE_FILE_FORMAT	PPM
+INPUT_CONVERT	giftoppm *
+
+INPUT_DIR	links/gcmovie
+
+INPUT
+med*.gif	[001-073]
+END_INPUT
+
+
+# motion vector search parameters
+
+# MAD or MSE -- must be upper case
+ERROR		MAD
+
+# FULL or HALF -- must be upper case
+PIXEL		HALF
+
+# means +/- this many pixels
+RANGE		8
+
+PSEARCH_ALG	EXHAUSTIVE
+BSEARCH_ALG	CROSS2
+
+
+IQSCALE		13
+PQSCALE		16
+BQSCALE		26
+

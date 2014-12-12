@@ -1,0 +1,60 @@
+# speed test parameter file
+
+PATTERN		IBBPBBPBBPBBPBB
+OUTPUT		/n/picasso/users/keving/encode/output/hello.mpg
+GOP_SIZE	30
+SLICES_PER_FRAME	1
+
+BASE_FILE_FORMAT	YUV
+YUV_SIZE	352x240
+
+INPUT_CONVERT	*
+
+INPUT_DIR	/n/picasso/users/keving/encode/input/flowg
+
+INPUT
+sflowg.*.yuv	[0-49]
+END_INPUT
+
+# quality parameters
+
+IQSCALE		8
+PQSCALE		10
+BQSCALE		25
+
+# motion vector search parameters
+
+PIXEL		FULL
+
+RANGE		10
+
+PSEARCH_ALG	LOGARITHMIC
+BSEARCH_ALG	SIMPLE
+
+#REFERENCE_FRAME	DECODED
+REFERENCE_FRAME	ORIGINAL
+
+PARALLEL_TEST_FRAMES	3
+
+# number of seconds per chunk thereafter
+PARALLEL_TIME_CHUNKS	30
+
+PARALLEL
+#big-bird	keving	~keving/encode/bin/hp/mpeg_encode
+#gumby		keving	~keving/encode/bin/hp/mpeg_encode
+charlie-brown	keving	~keving/encode/bin/dec-alpha/mpeg_encode
+#woodstock	keving	~keving/encode/bin/dec-alpha/mpeg_encode
+#REMOTE cory keving ~keving/bin/mpeg_encode ~keving/hello.param
+REMOTE scorpius.EECS.Berkeley.EDU keving ~keving/bin/mpeg_encode ~keving/hello.param
+REMOTE monoceros.EECS.Berkeley.EDU keving ~keving/bin/mpeg_encode ~keving/hello.param
+REMOTE lepus.EECS.Berkeley.EDU keving ~keving/bin/mpeg_encode ~keving/hello.param
+REMOTE fornax.EECS.Berkeley.EDU keving ~keving/bin/mpeg_encode ~keving/hello.param
+REMOTE delphinus.EECS.Berkeley.EDU keving ~keving/bin/mpeg_encode ~keving/hello.param
+REMOTE cephus.EECS.Berkeley.EDU keving ~keving/bin/mpeg_encode ~keving/hello.param
+REMOTE carina.EECS.Berkeley.EDU keving ~keving/bin/mpeg_encode ~keving/hello.param
+REMOTE bootes.EECS.Berkeley.EDU keving ~keving/bin/mpeg_encode ~keving/hello.param
+REMOTE aquila.EECS.Berkeley.EDU keving ~keving/bin/mpeg_encode ~keving/hello.param
+#
+END_PARALLEL
+
+# FORCE_I_ALIGN

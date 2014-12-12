@@ -1,0 +1,9 @@
+echo Test 1.  Should print 3892756435 12
+./pbmmake -white 16 2 | cksum
+echo Test 2.  Should print 1576602925 8
+./pbmmake -black 1 1  | cksum
+echo Test 3.  Should print 4272952448 14
+./pbmmake -gray 7 7   | cksum
+echo Test 4.  Should print 1634688086 15
+./pbmmake -grey 8 8   | cksum
+echo Tests done.

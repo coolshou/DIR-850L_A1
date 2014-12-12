@@ -1,0 +1,16 @@
+Begin3
+Title:		shhopt - library for parsing command line options.
+Version:	1.1.6
+Entered-date:	10MAR00
+Description:	C-functions for parsing command line options, both
+                traditional one-character options, and GNU'ish
+                --long-options.
+Keywords:	programming, library, lib, commandline, options
+Author: 	sverrehu@online.no (Sverre H. Huseby)
+Primary-site:	http://home.sol.no/~sverrehu/pub-unix/
+Alternate-site:	sunsite.unc.edu /pub/Linux/libs
+		shhopt-1.1.6.tar.gz
+Platforms:	Requires ANSI C-compiler.
+Copying-policy:	Artistic License
+		http://www.opensource.org/licenses/artistic-license.html
+End

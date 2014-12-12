@@ -1,0 +1,34 @@
+# parameter file for payam's images
+
+PATTERN		IBBPBBPBBPBBPBB
+OUTPUT		/n/picasso/users/keving/encode/output/payam18.mpg
+GOP_SIZE	30
+SLICES_PER_FRAME	1
+
+BASE_FILE_FORMAT	PNM
+
+INPUT_CONVERT *
+INPUT_DIR	/n/picasso/users/keving/encode/input/payam
+
+INPUT
+kh*.pnm	[1-39]
+END_INPUT
+
+
+# motion vector search paramters
+
+# FULL or HALF -- must be upper case
+PIXEL		HALF
+
+# means +/- this many pixels
+RANGE		10
+
+PSEARCH_ALG	LOGARITHMIC
+BSEARCH_ALG	SIMPLE
+
+
+IQSCALE		8
+PQSCALE		10
+BQSCALE		25
+
+REFERENCE_FRAME	ORIGINAL

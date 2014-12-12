@@ -1,0 +1,11 @@
+--- build/samba-3.0.24/source/Makefile	2011-04-13 10:19:54.000000000 +0800
++++ build_big/samba-3.0.24/source/Makefile	2011-04-12 19:19:09.000000000 +0800
+@@ -115,7 +115,7 @@
+ LIBSMBSHAREMODES_MAJOR=0
+ LIBSMBSHAREMODES_MINOR=2
+ 
+-FLAGS1 = $(CFLAGS) -I$(srcdir)/popt -I$(srcdir)/iniparser/src -Iinclude -I$(srcdir)/include -I$(srcdir)/tdb  -I. $(CPPFLAGS) -I$(srcdir) -D_SAMBA_BUILD_
++FLAGS1 = $(CFLAGS) -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 -I$(srcdir)/popt -I$(srcdir)/iniparser/src -Iinclude -I$(srcdir)/include -I$(srcdir)/tdb  -I. $(CPPFLAGS) -I$(srcdir) -D_SAMBA_BUILD_
+ FLAGS2 =
+ FLAGS3 = 
+ FLAGS4 = 

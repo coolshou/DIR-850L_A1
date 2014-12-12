@@ -1,0 +1,21 @@
+--- build2/samba-3.0.24/source/smbd/trans2.c	2007-02-05 03:09:01.000000000 +0800
++++ build/samba-3.0.24/source/smbd/trans2.c	2011-04-26 16:57:44.000000000 +0800
+@@ -4934,6 +4934,7 @@
+   	pstring pathname;
+ 	int reply_size = 0;
+ 	int max_referral_level;
++	NTSTATUS status = NT_STATUS_OK;
+ 
+ 	DEBUG(10,("call_trans2getdfsreferral\n"));
+ 
+@@ -4947,8 +4948,8 @@
+ 		return ERROR_DOS(ERRDOS,ERRbadfunc);
+ 
+ 	srvstr_pull(inbuf, pathname, &params[2], sizeof(pathname), -1, STR_TERMINATE);
+-	if((reply_size = setup_dfs_referral(conn, pathname,max_referral_level,ppdata)) < 0)
+-		return UNIXERROR(ERRDOS,ERRbadfile);
++	if((reply_size = setup_dfs_referral(conn, pathname,max_referral_level,ppdata,&status)) < 0)
++		return ERROR_NT(status);
+     
+ 	SSVAL(outbuf,smb_flg2,SVAL(outbuf,smb_flg2) | FLAGS2_DFS_PATHNAMES);
+ 	send_trans2_replies(outbuf,bufsize,0,0,*ppdata,reply_size);

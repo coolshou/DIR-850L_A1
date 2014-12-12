@@ -1,0 +1,11 @@
+# speed test parameter file
+
+OUTPUT		output/gop.mpg
+
+YUV_SIZE	352x240
+
+INPUT_DIR	.
+
+INPUT
+output/food.gop.*	[0-2]
+END_INPUT

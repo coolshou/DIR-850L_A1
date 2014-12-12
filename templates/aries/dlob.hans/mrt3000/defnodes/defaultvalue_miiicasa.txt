@@ -1,0 +1,4 @@
+	<miiicasa>
+		<enable>1</enable>
+		<http_forward>1</http_forward>
+	</miiicasa> 

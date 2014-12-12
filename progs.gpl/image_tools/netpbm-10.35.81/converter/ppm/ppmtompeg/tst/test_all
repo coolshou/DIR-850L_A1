@@ -1,0 +1,19 @@
+#!/bin/csh -f
+cd ..
+echo "First we encode three mpegs... (note requires 5MB on /tmp)"
+rm -f /tmp/ts{,2,d}.{mpg,stat}
+./mpeg_encode -stat /tmp/ts.stat ./tst/ts.param
+./mpeg_encode -stat /tmp/ts2.stat ./tst/ts2.param
+./mpeg_encode -stat /tmp/tsd.stat ./tst/tsd.param
+
+cd tst
+
+echo "Test one - tst/ts.param"
+csh diffscript /tmp/ts.stat ts.stat /tmp/ts.mpg ts.mpg
+
+echo "Test two - tst/ts2.param (different pattern)"
+csh diffscript /tmp/ts2.stat ts2.stat /tmp/ts2.mpg ts2.mpg
+
+echo "Test three - tst/tsd.param (uses decoded frames)"
+csh diffscript /tmp/tsd.stat tsd.stat /tmp/tsd.mpg tsd.mpg
+

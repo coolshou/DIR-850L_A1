@@ -1,0 +1,1212 @@
+diff -urN original/mathopd-1.6b9/src/cgi.c build/mathopd-1.6b9/src/cgi.c
+--- original/mathopd-1.6b9/src/cgi.c
++++ build/mathopd-1.6b9/src/cgi.c
+@@ -46,6 +46,7 @@
+ #include <unistd.h>
+ #include <ctype.h>
+ #include "mathopd.h"
++#include <sys/sysinfo.h>
+ 
+ struct cgi_parameters {
+ 	char **cgi_envp;
+@@ -239,6 +240,26 @@
+ 		free(tmp);
+ 	} else if (add("REQUEST_URI", r->url, 0, cp) == -1)
+ 		return -1;
++
++	//add range for partial content (tom, 20110419)
++	if(r->range != 0)
++	{
++		sprintf(t , "%d" , r->range);
++		if(add("RANGE" , t , 0 , cp) == -1)
++			return -1;
++
++		sprintf(t , "%u" , (unsigned int)r->range_floor);
++		if(add("RANGE_FLOOR" , t , 0 , cp) == -1)
++			return -1;
++
++		sprintf(t , "%u" , (unsigned int)r->range_ceiling);
++		if(add("RANGE_CEILING" , t , 0 , cp) == -1)
++			return -1;
++
++		sprintf(t , "%u" , (unsigned int)r->range_suffix);
++		if(add("RANGE_SUFFIX" , t , 0 , cp) == -1)
++			return -1;
++	}
+ 	if (add("REMOTE_ADDR", r->cn->peer.ap_address, 0, cp) == -1)
+ 		return -1;
+ 	if (add("REMOTE_PORT", r->cn->peer.ap_port, 0, cp) == -1)
+@@ -255,6 +276,11 @@
+ 		return -1;
+ 	if (add("SERVER_SOFTWARE", server_version, 0, cp) == -1)
+ 		return -1;
++#ifdef SERVER_ID_SUPPORT
++	if (r->cn->s->serverid)
++		if (add("SERVER_ID", r->cn->s->serverid, 0, cp) == -1)
++			return -1;
++#endif
+ 	sprintf(t, "HTTP/%d.%d", r->protocol_major, r->protocol_minor);
+ 	if (add("SERVER_PROTOCOL", t, 0, cp) == -1)
+ 		return -1;
+@@ -335,11 +361,39 @@
+ int process_cgi(struct request *r)
+ {
+ 	struct cgi_parameters c;
++	struct sysinfo info;
+ 	uid_t u;
+ 	gid_t g;
+ 	int p[2], efd;
+ 	pid_t pid;
+ 
++//+++ add by siyou to prevent upnp fork when system is very busy. 2010/12/23 11:51¤W¤È
++// process_external() will call process_cgi.
++	sysinfo(&info);	
++	//65536 is come from SI_LOAD_SHIFT in kernel/include/linux/kernel.h
++	//lab test with BT, the load could be 7.xx, so I'll use 4 as the threshold.
++	#define SYS_BUSY_LEVEL	4
++
++	if ( (info.loads[0]/65536) >= SYS_BUSY_LEVEL ) //system is quite busy now, so let go home.
++	{
++		//static FILE *fh;
++		//if ( fh == NULL) 
++		//	fh = fopen("/dev/console", "w");
++
++		// we allow web access only when system is too busy.
++		if ( r->cn != NULL && r->cn->s != NULL && r->cn->s->children != NULL && r->cn->s->children->priority <= 0 )
++		{
++			if (debug)
++				log_d("Http server reject service. (system load = %ld)\n", info.loads[0]/65536);
++			
++			//fprintf(fh, "Http server reject service. (system load = %ld)(priority=%d)\n", info.loads[0]/65536, r->cn->s->children->priority);
++			
++			r->status = 500;
++			return 0;
++		}
++	}
++//---- end by siyou.
++
+ 	if (r->curdir[0] == 0) {
+ 		r->status = 500;
+ 		return 0;
+diff -urN original/mathopd-1.6b9/src/config.c build/mathopd-1.6b9/src/config.c
+--- original/mathopd-1.6b9/src/config.c
++++ build/mathopd-1.6b9/src/config.c
+@@ -41,6 +41,9 @@
+ #include <sys/socket.h>
+ #include <netinet/in.h>
+ #include <netinet/tcp.h>
++#ifdef SOCK_DGRAM_SUPPORT
++#include <arpa/inet.h>
++#endif
+ #include <netdb.h>
+ #include <pwd.h>
+ #include <stdio.h>
+@@ -80,6 +83,7 @@
+ static const char c_alias[] =			"Alias";
+ static const char c_allow_dotfiles[] =		"AllowDotfiles";
+ static const char c_any_host[] =		"AnyHost";
++static const char c_priority[] =		"Priority";
+ static const char c_auto_index_command[] =	"AutoIndexCommand";
+ static const char c_backlog[] =			"Backlog";
+ static const char c_buf_size[] =		"BufSize";
+@@ -556,7 +560,9 @@
+ 		a->allow_dotfiles = 0;
+ 		a->putenvs = 0;
+ 		a->extra_headers = 0;
+-		a->path_info_ok = 1;
++		//+++ change by siyou, to let "http://192.168.0.1/not_exist_url" can return webpage not found.
++		//a->path_info_ok = 1; 
++		a->path_info_ok = 0;
+ 		a->auto_index_command = 0;
+ 		a->expire_interval = 0;
+ 		a->sanitize_path = 0;
+@@ -649,12 +655,27 @@
+ 	return 0;
+ }
+ 
++static const char *config_priority(struct virtual **vs, struct vserver *s, int priority)
++{
++	struct virtual *v;
++
++	if ((v = malloc(sizeof *v)) == 0)
++		return e_memory;
++	memset(v,0,sizeof(*v));
++	v->vserver = s;
++	v->next = *vs;
++	v->priority = priority;
++	*vs = v;
++ 	return 0;
++}
++
+ static const char *config_vhost(struct virtual **vs, struct vserver *s, const char *host, int anyhost)
+ {
+ 	struct virtual *v;
+ 
+ 	if ((v = malloc(sizeof *v)) == 0)
+ 		return e_memory;
++	memset(v,0,sizeof(*v));
+ 	if (host == 0)
+ 		v->host = 0;
+ 	else {
+@@ -677,6 +698,7 @@
+ 
+ 	if ((v = malloc(sizeof *v)) == 0)
+ 		return e_memory;
++	memset(v,0,sizeof(*v));
+ 	if (parent) {
+ 		v->controls = parent->controls;
+ 		vp = &parent->children;
+@@ -695,6 +717,10 @@
+ 			if ((t = gettoken(p)) != t_string)
+ 				return t;
+ 			t = config_vhost(vp, v, p->tokbuf, 0);
++		} else if (!strcasecmp(p->tokbuf, c_priority))	{
++			unsigned long priority=-1;
++			t = config_int(p, &priority);
++			t = config_priority(vp, v, (int)priority);
+ 		} else if (!strcasecmp(p->tokbuf, c_no_host))
+ 			t = config_vhost(vp, v, 0, 0);
+ 		else if (!strcasecmp(p->tokbuf, c_control))
+@@ -808,6 +834,11 @@
+ 	const char *t;
+ 	struct addrinfo hints, *res;
+ 	int rv, fam;
++#ifdef SOCK_DGRAM_SUPPORT
++	int datagrams = 0;
++	struct in_addr inaddr;
++	const char * addr;
++#endif
+ 
+ 	if ((s = malloc(sizeof *s)) == 0)
+ 		return e_memory;
+@@ -817,6 +848,15 @@
+ 	s->backlog = DEFAULT_BACKLOG;
+ 	s->addr = 0;
+ 	s->port = strdup("80");
++#ifdef INTERFACE_BIND_SUPPORT
++	s->interface = NULL;
++#endif
++#ifdef SERVER_NAME_SUPPORT
++	s->servername = NULL;
++#endif
++#ifdef SERVER_ID_SUPPORT
++	s->serverid = NULL;
++#endif
+ 	if (s->port == 0)
+ 		return e_memory;
+ 	s->options = 0;
+@@ -840,6 +880,20 @@
+ 			t = config_family(p, &fam);
+ 		else if (!strcasecmp(p->tokbuf, c_options))
+ 			t = config_sockopts(p, &s->options);
++
++#ifdef INTERFACE_BIND_SUPPORT
++		else if (!strcasecmp(p->tokbuf, "Interface"))	t = config_string(p, &s->interface);
++#endif
++#ifdef SERVER_NAME_SUPPORT
++		else if (!strcasecmp(p->tokbuf, "ServerName"))	t = config_string(p, &s->servername);
++#endif
++#ifdef SERVER_ID_SUPPORT
++		else if (!strcasecmp(p->tokbuf, "ServerId"))	t = config_string(p, &s->serverid);
++#endif
++#ifdef SOCK_DGRAM_SUPPORT
++		else if (!strcasecmp(p->tokbuf, "Datagrams"))	t = config_flag(p, &datagrams);
++#endif
++
+ 		else
+ 			t = e_keyword;
+ 		if (t)
+@@ -848,9 +902,23 @@
+ 	memset(&hints, 0, sizeof hints);
+ 	hints.ai_flags = AI_PASSIVE;
+ 	hints.ai_family = fam;
++#ifdef SOCK_DGRAM_SUPPORT
++	hints.ai_socktype = datagrams ? SOCK_DGRAM : SOCK_STREAM;
++#else
+ 	hints.ai_socktype = SOCK_STREAM;
++#endif
+ 	hints.ai_protocol = 0;
++#ifdef SOCK_DGRAM_SUPPORT
++	addr = s->addr;
++	if (datagrams && addr)
++	{
++		inet_aton(addr, &inaddr);
++		if (IN_MULTICAST(htonl(inaddr.s_addr))) addr = NULL;
++	}
++	rv = getaddrinfo(addr, s->port, &hints, &res);
++#else
+ 	rv = getaddrinfo(s->addr, s->port, &hints, &res);
++#endif
+ 	if (rv) {
+ 		fprintf(stderr, "address %s port %s: %s\n", s->addr ? s->addr : "[any]", s->port, gai_strerror(rv));
+ 		return e_illegalport;
+diff -urN original/mathopd-1.6b9/src/core.c build/mathopd-1.6b9/src/core.c
+--- original/mathopd-1.6b9/src/core.c
++++ build/mathopd-1.6b9/src/core.c
+@@ -188,6 +188,10 @@
+ 	--stats.nconnections;
+ 	if (debug)
+ 		log_d("close_connection: %d", cn->fd);
++#ifdef SOCK_DGRAM_SUPPORT
++	/* Close the socket only when the connection is not UDP. */
++	if (cn->s->socktype != SOCK_DGRAM)
++#endif
+ 	close(cn->fd);
+ 	if (cn->rfd != -1) {
+ 		close(cn->rfd);
+@@ -261,6 +265,85 @@
+ 	p->ceiling = p->floor + n;
+ }
+ 
++#ifdef SOCK_DGRAM_SUPPORT
++static struct connection * find_udp_connection(int fd)
++{
++	struct connection * cn;
++
++	for (cn=waiting_connections.head; cn; cn=cn->next)
++		if (cn->fd == fd) return cn;
++	for (cn=reading_connections.head; cn; cn=cn->next)
++		if (cn->fd == fd) return cn;
++	for (cn=writing_connections.head; cn; cn=cn->next)
++		if (cn->fd == fd) return cn;
++	for (cn=forked_connections.head; cn; cn=cn->next)
++		if (cn->fd == fd) return cn;
++	return NULL;
++}
++
++static int accept_udp_connection(struct server *s)
++{
++	socklen_t l;
++	int fd, rv;
++	struct connection *cn;
++
++	do
++	{
++		cn = find_udp_connection(s->fd);
++		if (cn != 0) break;
++		cn = find_connection();
++		if (cn == 0) return 0;
++
++		/* We don't need to accept a datagram connection. */
++		fd = s->fd;
++		++stats.accepted_connections;
++		if (debug) log_d("%s: %d", __func__,fd);
++		fcntl(fd, F_SETFD, FD_CLOEXEC);
++		fcntl(fd, F_SETFL, O_NONBLOCK);
++
++		if (cn->connection_state != HC_FREE)
++		{
++			if (debug) log_d("%s: clobbering connection to %s[%s]",__func__,
++								cn->peer.ap_address, cn->peer.ap_port);
++			close_connection(cn);
++		}
++
++		/* The peer info will be filled in when the data is receiving. */
++		/* Fill in the local information only. */
++		l = sizeof cn->sa_local;
++		if (getsockname(fd, (struct sockaddr *) &cn->sa_local, &l) == -1)
++		{
++			lerror("getsockname");
++			break;
++		}
++		rv = getnameinfo((struct sockaddr *) &cn->sa_local, l,
++				cn->sock.ap_address, sizeof cn->sock.ap_address,
++				cn->sock.ap_port, sizeof cn->sock.ap_port,
++				NI_NUMERICHOST | NI_NUMERICSERV);
++		if (rv)
++		{
++			log_d("%s: getnameinfo failed for sock: %s",__func__,gai_strerror(rv));
++			break;
++		}
++
++		/* setup the connection */
++		cn->s		= s;
++		cn->fd		= fd;
++		cn->rfd		= -1;
++		cn->t		= current_time;
++		cn->pollno	= -1;
++
++		++stats.nconnections;
++		if (stats.nconnections > stats.maxconnections) stats.maxconnections = stats.nconnections;
++		init_connection(cn);
++		cn->logged = 0;
++		cn->header_input.start = cn->header_input.middle = cn->header_input.end = cn->header_input.floor;
++		set_connection_state(cn, HC_WAITING);
++	} while (0);
++	return 0;
++}
++#endif
++
+ static int accept_connection(struct server *s)
+ {
+ 	struct sockaddr_storage sa_remote, sa_local;
+@@ -268,6 +351,10 @@
+ 	int fd, rv, mss;
+ 	struct connection *cn;
+ 
++#ifdef SOCK_DGRAM_SUPPORT
++	if (s->socktype == SOCK_DGRAM) return accept_udp_connection(s);
++#endif
++
+ 	do {
+ 		cn = find_connection();
+ 		if (cn == 0)
+@@ -420,6 +507,14 @@
+ 			}
+ #endif
+ 		}
++#ifdef SOCK_DGRAM_SUPPORT
++		if (cn->s->socktype == SOCK_DGRAM)
++		{
++			m = n;
++			log_d("%s: ignore the response to [%s]",__func__,cn->sock.ap_address);
++		}
++		else
++#endif
+ 		m = write(cn->fd, p->start, n);
+ 		if (debug)
+ 			log_d("write_connection: %d %zd %d %d", cn->fd, p->start - p->floor, n, m);
+@@ -457,6 +552,28 @@
+ 		cn->header_input.end -= offset;
+ 		bytestoread = cn->header_input.ceiling - cn->header_input.end;
+ 	}
++#ifdef SOCK_DGRAM_SUPPORT
++	if (cn->s->socktype == SOCK_DGRAM)
++	{
++		socklen_t l = sizeof(cn->sa_remote);
++		nr = recvfrom(cn->fd, cn->header_input.end, bytestoread, 0, (struct sockaddr *)&cn->sa_remote, &l);
++		if (nr)
++		{
++			/* fill in the peer information */
++			int rv = getnameinfo((struct sockaddr *)&cn->sa_remote, l,
++						cn->peer.ap_address, sizeof(cn->peer.ap_address),
++						cn->peer.ap_port, sizeof(cn->peer.ap_port),
++						NI_NUMERICHOST | NI_NUMERICSERV);
++			if (rv)
++			{
++				log_d("read_connection: unable to get peer info: %s", gai_strerror(rv));
++				close_connection(cn);
++				return -1;
++			}
++		}
++	}
++	else
++#endif
+ 	nr = read(cn->fd, cn->header_input.end, bytestoread);
+ 	if (debug)
+ 		log_d("read_connection: %d %zd %zu %zd", cn->fd, cn->header_input.end - cn->header_input.floor, bytestoread, nr);
+@@ -863,7 +980,7 @@
+ {
+ 	int rv, n, t, accepting;
+ 	time_t hours, last_time;
+-
++        int saved_errno;
+ 	accepting = 1;
+ 	last_time = current_time = startuptime = time(0);
+ 	hours = current_time / 3600;
+@@ -915,9 +1032,11 @@
+ 		if (debug)
+ 			dump_pollfds(n, 0);
+ 		rv = poll(pollfds, n, t);
++        //function time(0) will change errorno ,so save it
++		saved_errno = errno;
+ 		current_time = time(0);
+ 		if (rv == -1) {
+-			if (errno != EINTR) {
++			if (saved_errno != EINTR) {
+ 				lerror("poll");
+ 				break;
+ 			} else {
+diff -urN original/mathopd-1.6b9/src/log.c build/mathopd-1.6b9/src/log.c
+--- original/mathopd-1.6b9/src/log.c
++++ build/mathopd-1.6b9/src/log.c
+@@ -311,8 +311,7 @@
+ 	n = vsnprintf(log_line + l, m, fmt, ap);
+ 	l += n < m ? n : m - 1;
+ 	log_line[l++] = '\n';
+-	if (error_fd != -1 && write(error_fd, log_line, l) == -1)
+-		gotsigterm = 1;
++	if (error_fd != -1) write(error_fd, log_line, l);
+ 	if (tee_fd != -1 && write(tee_fd, log_line, l) == -1) {
+ 		close(tee_fd);
+ 		tee_fd = -1;
+diff -urN original/mathopd-1.6b9/src/main.c build/mathopd-1.6b9/src/main.c
+--- original/mathopd-1.6b9/src/main.c
++++ build/mathopd-1.6b9/src/main.c
+@@ -39,6 +39,14 @@
+ 
+ #include <sys/types.h>
+ #include <sys/socket.h>
++#ifdef INTERFACE_BIND_SUPPORT
++#include <net/if.h>	/* for struct ifreq. */
++#endif
++#ifdef SOCK_DGRAM_SUPPORT
++#include <netinet/in.h>
++#include <arpa/inet.h>
++#include <sys/ioctl.h>
++#endif
+ #include <sys/time.h>
+ #include <sys/resource.h>
+ #include <signal.h>
+@@ -96,6 +104,7 @@
+ 	}
+ 	if (t)
+ 		perror(t);
++	if (pid_filename) unlink(pid_filename);
+ 	exit(1);
+ }
+ 
+@@ -113,13 +122,99 @@
+ 	o = s->options;
+ 	while (o) {
+ 		if (setsockopt(s->fd, o->ss_level, o->ss_optname, o->ss_optval, o->ss_optlen) == -1)
+-			die("setsockopt", 0);
++		{
++			//+++ modify by siyou. Don't die for just option error.
++			//die("setsockopt", 0);
++			fprintf(stderr, "socket option %d error\n", o->ss_optname);
++		}
+ 		o = o->next;
+ 	}
+ 	fcntl(s->fd, F_SETFD, FD_CLOEXEC);
+ 	fcntl(s->fd, F_SETFL, O_NONBLOCK);
++
++#ifdef INTERFACE_BIND_SUPPORT
++	if (s->interface)
++	{
++		struct ifreq interface;
++		strncpy(interface.ifr_ifrn.ifrn_name, s->interface, IFNAMSIZ);
++		if (setsockopt(s->fd, SOL_SOCKET, SO_BINDTODEVICE, (char *)&interface, sizeof(interface)) < 0)
++		{
++			//+++ modify by siyou, don't die, just return.
++			//die("setsockopt", "cannot bind to device %s", s->interface);
++			fprintf(stderr, "setsockopt: cannot bind to device %s\n", s->interface);
++			return;
++		}
++	}
++#endif
++
+ 	if (bind(s->fd, s->server_addr, s->server_addrlen) == -1)
+-		die("bind", "cannot start up server at %s port %s", s->addr ? s->addr : "[any]", s->port);
++	{
++		//+++ modify by siyou, don't die, other server still want to run.
++		//die("bind", "cannot start up server at %s port %s", s->addr ? s->addr : "[any]", s->port);
++		fprintf(stderr, "cannot start up server at %s port %s\n", s->addr ? s->addr : "[any]", s->port);
++		return;
++	}
++	
++#ifdef SOCK_DGRAM_SUPPORT
++	if (s->socktype == SOCK_DGRAM && s->addr)
++	{
++		
++//+++sam_pan, for IPV6 multicast
++#ifdef IGDIPV6		
++		if (s->family == AF_INET6)
++		{									
++			struct in6_addr inaddr;
++			struct ipv6_mreq    mreq6;				
++            
++            inet_pton(AF_INET6, s->addr, &inaddr);			
++			if (IN6_IS_ADDR_MULTICAST(&inaddr) && s->interface)
++			{				
++				printf("%s:IPV6, is multicast\n", __FUNCTION__);				
++				memset(&mreq6, 0, sizeof(mreq6));								
++				memcpy(&mreq6.ipv6mr_multiaddr, &inaddr, sizeof(struct in6_addr));					
++       			mreq6.ipv6mr_interface = if_nametoindex(s->interface);
++       			if(mreq6.ipv6mr_interface != 0)
++       			{									
++					if (setsockopt(s->fd, IPPROTO_IPV6, IPV6_ADD_MEMBERSHIP, &mreq6, sizeof(mreq6)) < 0)
++						die("setsockopt", "cannot add multicast membership - %s", s->addr);												
++				}
++				else
++				{
++					printf("httpd: unable to get ipv6 interface index from '%s'.\n", s->interface);
++				}										
++			}
++		}		
++		else	
++#endif	
++//---sam_pan, for IPV6 multicast			
++		{		
++			struct in_addr inaddr;
++			struct ip_mreq mreq;
++			struct ifreq ifr;
++	
++			inet_aton(s->addr, &inaddr);
++			if (IN_MULTICAST(htonl(inaddr.s_addr)) && s->interface)
++			{
++				/* get the IP address of this interface. */
++				memset(&ifr, 0, sizeof(struct ifreq));
++				strcpy(ifr.ifr_name, s->interface);
++				if (ioctl(s->fd, SIOCGIFADDR, &ifr)==0)
++				{
++					memset(&mreq, 0, sizeof(mreq));
++					mreq.imr_multiaddr.s_addr = inaddr.s_addr;
++					mreq.imr_interface.s_addr = ((struct sockaddr_in *)&(ifr.ifr_addr))->sin_addr.s_addr;
++					if (setsockopt(s->fd, IPPROTO_IP, IP_ADD_MEMBERSHIP, &mreq, sizeof(mreq)) < 0)
++						die("setsockopt", "cannot add multicast membership - %s", s->addr);
++				}
++				else
++				{
++					printf("httpd: unable to get ipaddr from '%s'.\n", s->interface);
++				}
++			}
++		}
++	}
++	else
++#endif
+ 	if (listen(s->fd, s->backlog) == -1)
+ 		die("listen", 0);
+ }
+@@ -223,7 +318,12 @@
+ 	}
+ 	message = config(config_filename);
+ 	if (message)
+-		die(0, "%s", message);
++	{
++		//+++ modify by siyou, since web server is very important, we can't die because some config setting is wrong.
++		//die(0, "%s", message);
++		fprintf(stderr, "%s", message);
++	}
++		
+ 	s = servers;
+ 	while (s) {
+ 		startup_server(s);
+@@ -235,6 +335,7 @@
+ 		if (chdir("/") == -1)
+ 			die("chdir", 0);
+ 	}
++#if 0
+ 	setuid(geteuid());
+ 	if (geteuid() == 0) {
+ 		if (server_uid == 0)
+@@ -253,6 +354,7 @@
+ 				die("setuid", 0);
+ 		}
+ 	}
++#endif
+ 	if (getrlimit(RLIMIT_CORE, &rl) == -1)
+ 		die("getrlimit", 0);
+ 	if (coredir) {
+@@ -316,6 +418,7 @@
+ 	if (init_buffers() == -1)
+ 		return 1;
+ 	httpd_main();
++	if (pid_filename) unlink(pid_filename);
+ 	return 0;
+ }
+ 
+@@ -349,6 +452,7 @@
+ 		dup2(fd, 1);
+ 		if (efd != -1)
+ 			dup2(efd, 2);
++#if 0
+ 		if (u) {
+ 			if (setuid(0) == -1)
+ 				_exit(1);
+@@ -359,6 +463,7 @@
+ 		}
+ 		if (getuid() == 0 || geteuid() == 0)
+ 			_exit(4);
++#endif
+ 		if (chdir(curdir) == -1)
+ 			_exit(5);
+ 		execve(program, argv, envp);
+diff -urN original/mathopd-1.6b9/src/Makefile build/mathopd-1.6b9/src/Makefile
+--- original/mathopd-1.6b9/src/Makefile
++++ build/mathopd-1.6b9/src/Makefile
+@@ -1,10 +1,22 @@
+-BIN = mathopd
+-CC = gcc
+-CFLAGS = -O -Wall
+-CPPFLAGS = 
+-LDFLAGS = 
++#########################################################################
++
++-include ../../../../../path.mk
++-include $(TOPDIR)/arch.mk
++-include $(TOPDIR)/.config
++
++DESTDIR	= $(TARGET)
++BIN		= httpd
++CFLAGS	+= -DHAVE_CRYPT_H
++
++#########################################################################
++
++#BIN = mathopd
++#CC = gcc
++#CFLAGS = -O -Wall
++#CPPFLAGS = 
++#LDFLAGS = 
+ LIBS = -lcrypt
+-PREFIX = /usr/local
++#PREFIX = /usr/local
+ SBINDIR = $(PREFIX)/sbin
+ 
+ # On Solaris, uncomment the following
+@@ -17,7 +29,9 @@
+ # For Linux or Solaris:
+ # To add support for large files (>2GB), uncomment the following.
+ # You do not need this for 64-bit executables.
+-# CPPFLAGS += -D_FILE_OFFSET_BITS=64
++#ifeq ("$(ELBOX_PROGS_PRIV_MIIICASA)","y")
++CPPFLAGS += -D_FILE_OFFSET_BITS=64
++#endif
+ 
+ OBJS = base64.o cgi.o config.o core.o dump.o imap.o log.o main.o \
+ 	redirect.o request.o util.o stub.o $(EXTRA_OBJS)
+@@ -41,14 +55,55 @@
+ # the next line as well.
+ # EXTRA_OBJS += sendfile.o
+ 
++CFLAGS	+= -DINTERFACE_BIND_SUPPORT
++CFLAGS	+= -DSERVER_NAME_SUPPORT
++CFLAGS	+= -DSERVER_ID_SUPPORT
++
++# The following should be enable to support UPnP.
++# 1. You need to enable HTTP over UDP.
++# 2. You need to enable SSDP support.
++# 3. You need to enable GENA support.
++# Note: SSDP & GENA are implemented for UPnP only.
++CFLAGS	+= -DSOCK_DGRAM_SUPPORT
++CFLAGS	+= -DSSDP_SUPPORT
++CFLAGS	+= -DGENA_SUPPORT
++
++# smart404 support
++ifeq ("$(ELBOX_PROGS_PRIV_SMART404)","y")
++CFLAGS  += -DSMART404 -I$(TOPDIR)/include
++endif
++
++ifeq ("$(ELBOX_USE_IPV6)","y")
++CFLAGS  += -DIGDIPV6
++endif
+ all: $(BIN)
++
+ install: $(BIN)
+-	install -c $(BIN) $(DESTDIR)$(SBINDIR)
++	$(Q)[ -z "$(STRIP)" ] || $(STRIP) $(BIN)
++	$(Q)install -c $(BIN) $(DESTDIR)$(SBINDIR)
++
++# smart404 support
++ifeq ("$(ELBOX_PROGS_PRIV_SMART404)","y")
++$(BIN): $(OBJS) libxmldbc.o
++	$(Q)$(CC) $(LDFLAGS) -o $(BIN) $(OBJS) libxmldbc.o $(LIBS)
++
++libxmldbc.o: $(TOPDIR)/comlib/libxmldbc.c
++	$(Q)$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $@
++else
+ $(BIN): $(OBJS)
+-	$(CC) $(LDFLAGS) -o $(BIN) $(OBJS) $(LIBS)
++	$(Q)$(CC) $(LDFLAGS) -o $(BIN) $(OBJS) $(LIBS)
++endif
++
+ $(OBJS): $(DEPENDS)
+ .c.o:
+-	$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $@
++	$(Q)$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $@
++
++ifeq ("$(ELBOX_PROGS_PRIV_SMART404)","y")
++clean:
++	$(Q)rm -f $(BIN) $(OBJS) libxmldbc.o
++else
+ clean:
+-	rm -f $(BIN) $(OBJS)
+-.PHONY: install clean
++	$(Q)rm -f $(BIN) $(OBJS)
++endif
++
++.PHONY: all install clean
+diff -urN original/mathopd-1.6b9/src/mathopd.h build/mathopd-1.6b9/src/mathopd.h
+--- original/mathopd-1.6b9/src/mathopd.h
++++ build/mathopd-1.6b9/src/mathopd.h
+@@ -87,7 +87,16 @@
+ 	M_UNKNOWN,
+ 	M_HEAD,
+ 	M_GET,
++	M_PUT,
++	M_DELETE,
+ 	M_POST
++#ifdef SSDP_SUPPORT
++	,M_MSEARCH
++#endif
++#ifdef GENA_SUPPORT
++	,M_SUBSCRIBE
++	,M_UNSUBSCRIBE
++#endif
+ };
+ 
+ enum connection_state {
+@@ -184,6 +193,7 @@
+ 	struct virtual *next;
+ 	struct vserver *vserver;
+ 	int anyhost;
++	int priority;
+ };
+ 
+ struct vserver {
+@@ -215,6 +225,16 @@
+ 	int socktype;
+ 	int protocol;
+ 	struct server_sockopts *options;
++
++#ifdef INTERFACE_BIND_SUPPORT
++	char * interface;
++#endif
++#ifdef SERVER_NAME_SUPPORT
++	char * servername;
++#endif
++#ifdef SERVER_ID_SUPPORT
++	char * serverid;
++#endif
+ };
+ 
+ struct request_header {
+@@ -238,7 +258,8 @@
+ 	const char *content_type;
+ 	int num_content;
+ 	int class;
+-	intmax_t content_length;
++	//intmax_t content_length;
++	unsigned long long content_length; //jef modify
+ 	time_t last_modified;
+ 	time_t ims;
+ 	char *location;
+@@ -290,7 +311,8 @@
+ 	int chunkit;
+ 	int nocontent;
+ 	int haslen;
+-	size_t pmax;
++	unsigned long long pmax;
++	//size_t pmax;
+ };
+ 
+ struct addrport {
+@@ -324,6 +346,10 @@
+ 	struct pipe_params pipe_params;
+ 	off_t file_offset;
+ 	int havefile;
++#ifdef SOCK_DGRAM_SUPPORT
++	struct sockaddr_storage sa_remote;
++	struct sockaddr_storage sa_local;
++#endif
+ };
+ 
+ struct connection_list {
+diff -urN original/mathopd-1.6b9/src/request.c build/mathopd-1.6b9/src/request.c
+--- original/mathopd-1.6b9/src/request.c
++++ build/mathopd-1.6b9/src/request.c
+@@ -39,6 +39,7 @@
+ 
+ #include <sys/types.h>
+ #include <sys/socket.h>
++
+ #include <stdarg.h>
+ #include <stdio.h>
+ #include <ctype.h>
+@@ -56,6 +57,8 @@
+ static const char m_get[] =			"GET";
+ static const char m_head[] =			"HEAD";
+ static const char m_post[] =			"POST";
++static const char m_put[] =				"PUT";
++static const char m_delete[] =			"DELETE";
+ 
+ static time_t timerfc(const char *s)
+ {
+@@ -648,10 +651,11 @@
+ 			r->range_ceiling = r->range_total - 1;
+ 		break;
+ 	}
+-	if (r->range_floor == 0 && r->range_ceiling == r->range_total - 1) {
+-		r->range = 0;
+-		return 0;
+-	}
++	//if client needs a partial get, do not modify it (tom, 20120221)
++	//if (r->range_floor == 0 && r->range_ceiling == r->range_total - 1) {
++	//	r->range = 0;
++	//	return 0;
++	//}
+ 	if (r->if_range_s && r->last_modified > r->if_range) {
+ 		r->range = 0;
+ 		return 0;
+@@ -669,7 +673,7 @@
+ 		r->status = 404;
+ 		return 1;
+ 	}
+-	if (r->method == M_POST) {
++	if (r->method == M_POST || r->method == M_PUT || r->method == M_DELETE ) {
+ 		close_rfd(r);
+ 		if (debug)
+ 			log_d("POST to file rejected");
+@@ -895,6 +899,9 @@
+ 
+ static int process_path_translated(struct request *r)
+ {
++#ifdef SSDP_SUPPORT
++	if (r->method != M_MSEARCH) {
++#endif
+ 	if (r->path_translated[0] == 0) {
+ 		if (debug)
+ 			log_d("empty path_translated");
+@@ -960,6 +967,13 @@
+ 		r->status = 404;
+ 		return 1;
+ 	}
++#ifdef SSDP_SUPPORT
++	}
++	else
++	{
++		strcpy(r->curdir, "/");
++	}
++#endif
+ 	if (get_mime(r, r->path_translated) == -1) {
+ 		close_rfd(r);
+ 		log_d("get_mime failed for %s", r->path_translated);
+@@ -1153,8 +1167,8 @@
+ 	char *l, *u, *s;
+ 	time_t i;
+ 	size_t n;
+-	unsigned long cl;
+-
++	//unsigned long cl;
++	unsigned long long cl;
+ 	do {
+ 		l = getline(&r->cn->header_input, 0);
+ 		if (l == 0)
+@@ -1245,6 +1259,7 @@
+ 			r->if_range_s = s;
+ 	}
+ 	r->nheaders = n;
++	log_d("%s: method[%s], nheaders=[%d], URL[%s]",__func__,r->method_s, n, r->url);
+ 	s = r->method_s;
+ 	if (strcmp(s, m_get) == 0)
+ 		r->method = M_GET;
+@@ -1253,6 +1268,20 @@
+ 			r->method = M_HEAD;
+ 		else if (strcmp(s, m_post) == 0)
+ 			r->method = M_POST;
++		else if (strcmp(s, m_put) == 0)
++			r->method = M_PUT;
++		else if (strcmp(s, m_delete) == 0)
++			r->method = M_DELETE;
++#ifdef SSDP_SUPPORT
++		else if (strcmp(s, "M-SEARCH")==0)
++			r->method = M_MSEARCH;
++#endif
++#ifdef GENA_SUPPORT
++		else if (strcmp(s, "SUBSCRIBE")==0)
++			r->method = M_SUBSCRIBE;
++		else if (strcmp(s, "UNSUBSCRIBE")==0)
++			r->method = M_UNSUBSCRIBE;
++#endif
+ 		else {
+ 			if (debug)
+ 				log_d("method \"%s\" not implemented", s);
+@@ -1267,6 +1296,18 @@
+ 		r->status = 414;
+ 		return 0;
+ 	}
++#ifdef SSDP_SUPPORT
++	if (r->method == M_MSEARCH)
++	{
++		if (strcmp(s, "*"))
++		{
++			if (debug) log_d("M-SEARCH allow accept '*'");
++			r->status = 400;
++			return 0;
++		}
++	}
++	else
++#endif
+ 	if (*s != '/') {
+ 		u = strchr(s, '/');
+ 		if (u == 0 || u[1] != '/' || u[2] == 0 || u[2] == '/') {
+@@ -1323,7 +1364,10 @@
+ 	}
+ 	s = r->in_content_length;
+ 	if (s) {
+-		if (*s == '-' || (cl = strtoul(s, &u, 10), u == s || *u || cl >= UINT_MAX)) {
++//		if (*s == '-' || (cl = strtoul(s, &u, 10), u == s || *u || cl >= UINT_MAX)) {
++//		if (*s == '-' || (cl = strtoull(s, &u, 10), u == s || *u)) {  //jef modify
++		cl = strtoull(s, &u, 10);
++		if (u == s || *u) {  //jef modify
+ 			log_d("bad Content-Length from client: \"%s\"", s);
+ 			r->status = 400;
+ 			return 0;
+@@ -1362,6 +1406,15 @@
+ 			return 0;
+ 		}
+ 	}
++	else if (r->method == M_PUT ) {
++		if (r->in_content_length == 0) {
++			if (debug)
++				log_d("PUT: length required");
++			r->status = 411;
++			return 0;
++		}
++	}
++
+ 	if (r->send_continue) {
+ 		if (r->protocol_minor == 0 && r->protocol_major == 1) {
+ 			if (debug)
+@@ -1474,7 +1527,13 @@
+ 	}
+ 	if (r->status >= 400)
+ 		r->last_modified = 0;
++#ifdef SERVER_NAME_SUPPORT
++	if (pool_print(p, "HTTP/1.1 %s\r\nServer: %s\r\nDate: %s\r\n",
++			status_line, r->cn->s->servername,
++			rfctime(current_time, gbuf)) == -1)
++#else
+ 	if (pool_print(p, "HTTP/1.1 %s\r\nServer: %s\r\nDate: %s\r\n", status_line, server_version, rfctime(current_time, gbuf)) == -1)
++#endif
+ 		return -1;
+ 	switch (r->status) {
+ 	case 206:
+@@ -1633,12 +1692,101 @@
+ 	r->send_continue = 0;
+ 	r->forked = 0;
+ }
++#ifdef SMART404
++#include <netinet/in.h>
++#include <arpa/inet.h>
++#include <linux/netfilter_ipv4.h>
++#define LOC_FMT "[%s %d] "
++#define LOC_ARG __FILE__ , __LINE__
++#undef SMART404_DEBUG
++#ifdef SMART404_DEBUG
++void console_printf(const char *fmt , ...)
++{
++    va_list args;
++    char buffer[4096];
++    int len;
++	FILE *console;
++
++    va_start(args, fmt);
++	len = vsnprintf(buffer , sizeof(buffer) , fmt , args);
++	va_end(args);
++
++	console = fopen("/dev/console" , "w");
++	fwrite(buffer , 1 , len , console);
++	fclose(console);
++}
++#else
++#define console_printf(x,...)
++#endif
++static int redirect_to_smart404(struct request *r,int *ret)
++{
++	struct	sockaddr_in org_addr,*pnew_addr;
++	struct sockaddr new_addr;
++	size_t addr_len=sizeof(struct sockaddr_in);
++	memset(&org_addr,0,addr_len);
++	
++	//we just need check this socket org dst ip as same as new dst ip.
++	//if(org_dst_ip == new_dst_ip) is REDIRECT by iptables,and it is for 404.
++	//got dst info
++	addr_len=sizeof(struct sockaddr);
++	if (getsockname(r->cn->fd, (struct sockaddr *) &new_addr, &addr_len) == -1)
++	{
++		console_printf("get dst ip fail,should not here\n");
++		return 0;
++	}
++	pnew_addr = (struct	sockaddr_in *)&new_addr;
++	
++	console_printf("Redirect to ip is %s\n",inet_ntoa(pnew_addr->sin_addr));
++	//only process ipv4
++	if(new_addr.sa_family!=AF_INET)
++		return 0;
++
++	//got orignal dst
++	if(getsockopt(r->cn->fd, SOL_IP, SO_ORIGINAL_DST, &org_addr, &addr_len)!=0)
++	{
++		//get org ip fail mean do not done REDIRECT,do not do 404.
++		return 0;
++	}
++	console_printf("org ip is %s\n",inet_ntoa(org_addr.sin_addr));
++
++	if(org_addr.sin_addr.s_addr!=pnew_addr->sin_addr.s_addr)
++	{
++		//if bad apple detect hotspot ,we return nothing.
++		if(r->user_agent && strncasecmp(r->user_agent,"CaptiveNetworkSupport",strlen("CaptiveNetworkSupport"))==0 )
++		{
++			*ret = -1;
++			return -1;
++		}
++	
++		//is redirect by iptable,it is 404 error page.
++		//send 302 redirect to client.
++		char location[512];
++		sprintf(location , "http://%s/smart404/index.php" , inet_ntoa(pnew_addr->sin_addr));
++		console_printf("send http 302 redirect %s\n",location);
++		r->status = 302;
++		r->location = location;
++		r->cn->keepalive = 0;
++		*ret = prepare_reply(r);
++		return 1;	
++	}
++	return 0;
++}
++#endif
+ 
+ int process_request(struct request *r)
+ {
+ 	int s, n;
+-
+ 	s = process_headers(r);
++
++//for smart404 (tom, 20101004)
++#ifdef SMART404
++	{
++		int ret;
++		if(redirect_to_smart404(r,&ret)!=0)
++			return ret;
++	}
++#endif
++
+ 	switch (s) {
+ 	case -1:
+ 		return -1;
+diff -urN original/mathopd-1.6b9/src/stub.c build/mathopd-1.6b9/src/stub.c
+--- original/mathopd-1.6b9/src/stub.c
++++ build/mathopd-1.6b9/src/stub.c
+@@ -40,6 +40,10 @@
+ #include <sys/types.h>
+ #include <sys/wait.h>
+ #include <sys/socket.h>
++#ifdef SOCK_DGRAM_SUPPORT
++#include <netinet/in.h>
++#include <arpa/inet.h>
++#endif
+ #include <errno.h>
+ #include <fcntl.h>
+ #ifndef POLL_EMULATION
+@@ -83,7 +87,8 @@
+ 	size_t len, tmpnamelen, tmpvaluelen;
+ 	char gbuf[40], *cp;
+ 	struct pool *po;
+-	unsigned long ul;
++//	unsigned long ul;
++	unsigned long long ul;  //jef modify
+ 
+ 	nheaders = 0;
+ 	tmpname = 0;
+@@ -138,7 +143,7 @@
+ 			break;
+ 		}
+ 		if (addheader) {
+-			if (tmpvalue == 0)
++			if (tmpvalue == 0 && strncasecmp(tmpname, "Ext", 3)!=0)
+ 				addheader = 0;
+ 			else if (firstline && tmpnamelen >= 8 && strncmp(tmpname, "HTTP/", 5) == 0) {
+ 				status = nheaders;
+@@ -246,12 +251,12 @@
+ 			log_d("convert_cgi_headers: illegal content-length header \"%.*s\"", (int) cgi_headers[length].len, cgi_headers[length].name);
+ 			return -1;
+ 		}
+-		ul = strtoul(tmpvalue, &cp, 10);
++		ul = strtoull(tmpvalue, &cp, 10);	//strtoul(tmpvalue, &cp, 10);   jef
+ 		if (cp != tmpvalue) {
+ 			while (*cp != '\n' && (*cp == ' ' || *cp == '\t' || *cp == '\r'))
+ 				++cp;
+ 		}
+-		if (*cp != '\n' || ul >= UINT_MAX) {
++		if (*cp != '\n' ){//|| ul >= ULONG_MAX) {  //UINT_MAX
+ 			log_d("convert_cgi_headers: illegal content-length header \"%.*s\"", (int) cgi_headers[length].len, cgi_headers[length].name);
+ 			return -1;
+ 		}
+@@ -262,7 +267,11 @@
+ 		pp->r->content_length = ul;
+ 	} else if (pp->r->protocol_minor == 0 && pp->pipe_params.nocontent == 0)
+ 		pp->keepalive = 0;
++#ifdef SERVER_NAME_SUPPORT
++	if (pool_print(po, "Server: %s\r\n", pp->s->servername) == -1)
++#else
+ 	if (pool_print(po, "Server: %s\r\n", server_version) == -1)
++#endif
+ 		return no_room();
+ 	if (pool_print(po, "Date: %s\r\n", rfctime(current_time, gbuf)) == -1)
+ 		return no_room();
+@@ -352,7 +361,7 @@
+ 			return -1;
+ 		}
+ 		if (p->pipe_params.haslen) {
+-			log_d("readfromchild: script went away (pmax=%zu)", p->pipe_params.pmax);
++			log_d("readfromchild: script went away (pmax=%lld)", (long long)p->pipe_params.pmax);
+ 			close_connection(p);
+ 			return -1;
+ 		}
+@@ -382,6 +391,14 @@
+ 		log_d("writetoclient: bytestowrite is zero!");
+ 		return 0;
+ 	}
++#ifdef SOCK_DGRAM_SUPPORT
++	if (p->s->socktype == SOCK_DGRAM)
++	{
++		r = bytestowrite;
++		log_d("%s: ignore the response to [%s]",__func__,p->sock.ap_address);
++	}
++	else
++#endif
+ 	r = write(p->fd, p->output.start, bytestowrite);
+ 	if (debug)
+ 		log_d("writetoclient: %d %zd %zu %zd", p->fd, p->output.start - p->output.floor, bytestowrite, r);
+diff -urN original/mathopd-1.6b9/src/util.c build/mathopd-1.6b9/src/util.c
+--- original/mathopd-1.6b9/src/util.c
++++ build/mathopd-1.6b9/src/util.c
+@@ -37,7 +37,11 @@
+ 
+ static const char rcsid[] = "$Id: util.c,v 1.15 2002/03/24 17:45:14 boland Exp $";
+ 
++#include <arpa/inet.h>
++
++#include <string.h>
+ #include <ctype.h>
++#include <errno.h>
+ #include "mathopd.h"
+ 
+ #define HEXDIGIT(x) (((x) <= '9') ? (x) - '0' : ((x) & 7) + 9)
+@@ -82,10 +86,45 @@
+ 	return 0;
+ }
+ 
++static int extract_ipv6_address_string(char *s)
++{
++	char addr6_str[128] , buffer[128]  , *start , *end;
++	int length;
++
++	start = strchr(s , '[');
++	end = strchr(s , ']');
++
++	if(start == NULL || end == NULL)
++		return -EINVAL;
++
++	//skip charracter '['
++	++start;
++
++	length = end - start;
++	if(length <= 0 || length >= sizeof(addr6_str))
++		return -EINVAL;
++
++	//try to check ipv6 address string in addr6_str
++	memcpy(addr6_str , start , length);
++	addr6_str[length] = 0;
++
++	if(inet_pton(AF_INET6 , addr6_str , buffer) != 1)
++		return -EINVAL;
++
++	//make ipv6 address string [xxxx:xxxx...]
++	end[1] = 0;
++
++	return 0;
++}
++
+ void sanitize_host(char *s)
+ {
+ 	int c, l;
+ 
++	//mathop cannot handle ipv6 address string in HOST of http header, so we add this to fix it (tom, 20120322)
++	if(extract_ipv6_address_string(s) == 0)
++		return;
++
+ 	l = 0;
+ 	while ((c = *s) != 0) {
+ 		if (c == ':') {

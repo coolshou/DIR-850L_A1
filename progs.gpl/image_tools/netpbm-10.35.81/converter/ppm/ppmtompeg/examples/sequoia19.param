@@ -1,0 +1,35 @@
+# speed test parameter file
+
+PATTERN		IBBPBBPBBPBBPBB
+
+OUTPUT		/n/charlie-brown/project/mm/mpeg/mpeg_encode/output/seq.mpg
+GOP_SIZE	30
+SLICES_PER_FRAME	1
+
+BASE_FILE_FORMAT	PPM
+YUV_SIZE	352x240
+
+INPUT_CONVERT	/n/zonker/video/seqframes/gframe /n/video/video/sequoia * 640x480.100 352 240
+
+INPUT_DIR	/n/zonker/video
+
+INPUT
+*	[0-199]
+END_INPUT
+
+# quality parameters
+
+IQSCALE		8
+PQSCALE		10
+BQSCALE		25
+
+# motion vector search parameters
+
+PIXEL		HALF
+
+RANGE		10
+
+PSEARCH_ALG	LOGARITHMIC
+BSEARCH_ALG	CROSS2
+
+REFERENCE_FRAME	DECODED

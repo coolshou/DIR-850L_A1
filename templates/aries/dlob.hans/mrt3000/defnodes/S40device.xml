@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<SiGnAtUrE>
+	<runtime>
+		<device>
+			<wlandriver>BGN band: RT3883</wlandriver>
+			<modelname>MRT-3000</modelname>
+			<upnpmodelname>miiiCasa Router</upnpmodelname>
+			<producturl>http://www.miiicasa.com</producturl>
+			<description>Wireless Broadband Router</description>
+			<conntrack_max>8192</conntrack_max>
+			<conntrack_min>4096</conntrack_min>
+		</device>
+	</runtime>
+</SiGnAtUrE>

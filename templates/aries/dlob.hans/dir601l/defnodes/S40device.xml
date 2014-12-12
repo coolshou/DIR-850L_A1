@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<SiGnAtUrE>
+	<runtime>
+		<device>
+			<wlandriver>rt2860v2 WiFi driver v2600</wlandriver>
+			<modelname>DIR-601L</modelname>
+			<producturl>http://www.dlink.com.tw</producturl>
+			<description>Wireless Broadband Router</description>
+			<conntrack_max>4096</conntrack_max>
+			<conntrack_min>4096</conntrack_min>
+		</device>
+	</runtime>
+</SiGnAtUrE>

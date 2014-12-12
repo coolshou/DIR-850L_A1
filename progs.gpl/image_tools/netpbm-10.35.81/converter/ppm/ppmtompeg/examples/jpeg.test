@@ -1,0 +1,66 @@
+# speed test parameter file
+
+PATTERN		ibbpbbpbbpbbpbb
+OUTPUT		/n/picasso/users/keving/encode/output/flowgard.jpeg.mpg
+GOP_SIZE	30
+SLICES_PER_FRAME	1
+
+BASE_FILE_FORMAT	PPM
+YUV_SIZE	352x240
+
+INPUT_CONVERT	djpeg *
+
+INPUT_DIR	/n/picasso/project/mm/mpeg/mpeg_encode/input/flowg/jpeg
+
+INPUT
+sflowg.*.jpeg	[1-20]
+END_INPUT
+
+# the following two are optional  (default = 10, 60)
+
+# number of frames to do initially to gauge speed of machine
+PARALLEL_TEST_FRAMES	3
+
+# number of seconds per chunk thereafter
+PARALLEL_TIME_CHUNKS	30
+
+# specifies what the IO server must do before transmitting to remote sites
+IO_SERVER_CONVERT	*
+
+# specifies what the remote slave must do after receiving from IO server
+SLAVE_CONVERT		djpeg *
+
+PARALLEL
+# lines must be of form "machine <whitespace> username <whitespace> executable"
+# these guys are sorta slow:
+#elmer-fudd	keving	~keving/encode/bin/sun/mpeg_encode
+#roger-rabbit	keving	~keving/encode/bin/sun/mpeg_encode
+#tweety		keving	~keving/encode/bin/sun/mpeg_encode
+#mickey		keving	~keving/encode/bin/mickey/mpeg_encode
+#
+# these guys are pretty fast:
+#
+#big-bird	keving	~keving/encode/bin/hp/mpeg_encode
+#gumby		keving	~keving/encode/bin/hp/mpeg_encode
+charlie-brown	keving	~keving/encode/bin/dec-alpha/mpeg_encode
+woodstock	keving	~keving/encode/bin/dec-alpha/mpeg_encode
+#bugs-bunny	keving	~keving/encode/bin/sun/mpeg_encode
+#
+# remotes
+#
+END_PARALLEL
+
+
+# motion vector search parameters
+
+PIXEL		HALF
+RANGE		8
+PSEARCH_ALG	LOGARITHMIC
+BSEARCH_ALG	SIMPLE
+
+IQSCALE		8
+PQSCALE		10
+BQSCALE		25
+
+REFERENCE_FRAME	ORIGINAL
+

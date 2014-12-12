@@ -1,0 +1,36 @@
+# speed test parameter file
+
+PATTERN		IBBPBBPBBPBBPBB
+
+OUTPUT		/n/zonker/video/sequoia.mpg
+GOP_SIZE	30
+SLICES_PER_FRAME	1
+
+BASE_FILE_FORMAT	PPM
+YUV_SIZE	320x240
+
+INPUT_CONVERT	/n/zonker/video/getframe *
+
+INPUT_DIR	/n/zonker/video/seqframes
+
+INPUT
+# really goes up to 200
+*	[0-1000]
+END_INPUT
+
+# quality parameters
+
+IQSCALE		15
+PQSCALE		18
+BQSCALE		30
+
+# motion vector search parameters
+
+PIXEL		HALF
+
+RANGE		10
+
+PSEARCH_ALG	LOGARITHMIC
+BSEARCH_ALG	CROSS2
+
+REFERENCE_FRAME	ORIGINAL

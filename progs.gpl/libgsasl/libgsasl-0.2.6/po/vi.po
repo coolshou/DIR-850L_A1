@@ -1,0 +1,297 @@
+# Vietnamese Translation for libgsasl-0.2.2.
+# Copyright (C) 2005 Free Software Foundation, Inc.
+# Clytie Siddall <clytie@riverland.net.au>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: libgsasl-0.2.2\n"
+"Report-Msgid-Bugs-To: bug-gsasl@gnu.org\n"
+"POT-Creation-Date: 2005-08-10 12:46+0200\n"
+"PO-Revision-Date: 2005-02-06 20:22+1030\n"
+"Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
+"Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net> \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Libgsasl success"
+msgstr "Libgsasl thành công"
+
+#, fuzzy
+msgid "SASL mechanism needs more data"
+msgstr "Cơ cấu SASL cần dữ liệu thêm"
+
+msgid "Unknown SASL mechanism"
+msgstr "Cơ cấu SASL chưa biết"
+
+msgid "SASL mechanism called too many times"
+msgstr "Đã gọi cơ cấu SASL quá nhiều lần"
+
+msgid "Memory allocation error in SASL library"
+msgstr "Lỗi phân định bộ nhớ trong thư viện SASL"
+
+msgid "Base 64 coding error in SASL library"
+msgstr "Lỗi mã cơ số 64 trong thư viện SASL"
+
+msgid "Low-level crypto error in SASL library"
+msgstr "Lỗi mã hóa mức thập trong thư viện SASL"
+
+msgid ""
+"GSSAPI library could not deallocate memory in gss_release_buffer() in SASL "
+"library.  This is a serious internal error."
+msgstr ""
+"Thư viện GSSAPI không bỏ phân định được bộ nhớ trong bộ đệm "
+"gss_release_buffer() trong thư viện SASL. Đây là lỗi nội bộ nghiêm trọng."
+
+msgid ""
+"GSSAPI library could not understand a peer name in gss_import_name() in SASL "
+"library.  This may be due to incorrect user supplied data."
+msgstr ""
+"Thư viện GSSAPI không hiểu được tên ngang hàng trong gss_import_name() trong "
+"thư viện SASL. Có thể vì người dùng cung cấp dữ liệu không đúng."
+
+msgid ""
+"GSSAPI error in client while negotiating security context in "
+"gss_init_sec_context() in SASL library.  This is most likely due "
+"insufficient credentials or malicious interactions."
+msgstr ""
+"Lỗi GSSAPI trong ứng dụng khách khi thỏa thuận ngữ cảnh bảo mật trong "
+"gss_init_sec_context() trong thư viện SASL. Chắc vì chưa có đủ thông tin xác "
+"thức hay có truyền hiểm độc."
+
+msgid ""
+"GSSAPI error in server while negotiating security context in "
+"gss_init_sec_context() in SASL library.  This is most likely due "
+"insufficient credentials or malicious interactions."
+msgstr ""
+"Lỗi GSSAPI trong máy chủ khi thỏa thuận ngữ cảnh bảo mật trong "
+"gss_init_sec_context() trong thư viện SASL. Chắc vì chưa có đủ thông tin xác "
+"thức hay có truyền hiểm độc."
+
+msgid ""
+"GSSAPI error while decrypting or decoding data in gss_unwrap() in SASL "
+"library.  This is most likely due to data corruption."
+msgstr ""
+"Lỗi GSSAPI khi giải mã dữ liệu trong gss_unwrap() trong thư viện SASL. Chắc "
+"vì dữ liệu bị hỏng."
+
+msgid ""
+"GSSAPI error while encrypting or encoding data in gss_wrap() in SASL library."
+msgstr "Lỗi GSSAPI khi mã hóa dữ liệu trong gss_wrap() trong thư viện SASL."
+
+#, fuzzy
+msgid ""
+"GSSAPI error acquiring credentials in gss_acquire_cred() in SASL library.  "
+"This is most likely due to not having the proper Kerberos key available in /"
+"etc/krb5.keytab on the server."
+msgstr ""
+"Lỗi GSSAPI khi gọi thông tin xác thức trong gss_acquire_cred() trong thư "
+"viện SASL. Chắc vì không có khóa Kerberos đúng sẵn sàng trong /etc/krb5."
+"keytab trên máy chủ."
+
+#, fuzzy
+msgid ""
+"GSSAPI error creating a display name denoting the client in gss_display_name"
+"() in SASL library.  This is probably because the client supplied bad data."
+msgstr ""
+"Lỗi GSSAPI khi tạo tên hiển thị đối với ứng dụng khách trong gss_display_name"
+"() trong thư viện SASL. Chắc vì ứng dụng khách cung cấp dữ liệu sai."
+
+msgid ""
+"Other entity requested integrity or confidentiality protection in GSSAPI "
+"mechanism but this is currently not implemented."
+msgstr ""
+"Đối thể khác yêu cầu bảo vệ sự tích hợp hay bí mật trong cơ cấu GSSAPI nhưng "
+"khả năng này chưa được thi hành."
+
+msgid "SASL mechanism could not parse input"
+msgstr "Cơ cấu SASL không phân tách được dữ liệu nhập"
+
+#, fuzzy
+msgid "Error authenticating user"
+msgstr "Lỗi xác thức người dùng"
+
+msgid "Integrity error in application payload"
+msgstr "Lỗi sự tích hợp trong trọng tải ứng dụng"
+
+msgid "Client-side functionality not available in library (application error)"
+msgstr ""
+"Khả năng bên ứng dụng khách không sẵn sàng trong thư viện (lỗi ứng dụng)"
+
+msgid "Server-side functionality not available in library (application error)"
+msgstr "Khả năng bên máy chủ không sẵn sàng trong thư viện (lỗi ứng dụng)"
+
+msgid "No callback specified by caller (application error)."
+msgstr "Điều gọi chưa ghi rõ cách trở lại (lỗi ứng dụng)."
+
+msgid "Authentication failed because the anonymous token was not provided."
+msgstr "Không xác thức được vì chưa cung cấp hiệu bài nặc danh."
+
+msgid ""
+"Authentication failed because the authentication identity was not provided."
+msgstr "Không xác thức được vì không cung cấp đồng nhất xác thức."
+
+msgid ""
+"Authentication failed because the authorization identity was not provided."
+msgstr "Không xác thức được vì không cung cấp đồng nhất xin phép."
+
+msgid "Authentication failed because the password was not provided."
+msgstr "Không xác thức được vì không cung cấp mật khẩu."
+
+msgid "Authentication failed because the passcode was not provided."
+msgstr "Không xác thức được vì không cung cấp mã mật khẩu."
+
+msgid "Authentication failed because the pin code was not provided."
+msgstr "Không xác thức được vì không cung cấp mã PIN."
+
+msgid "Authentication failed because the service name was not provided."
+msgstr "Không xác thức được vì không cung cấp tên dịch vụ."
+
+msgid "Authentication failed because the host name was not provided."
+msgstr "Không xác thức được vì không cung cấp tên máy chủ."
+
+msgid "Could not prepare internationalized (non-ASCII) string."
+msgstr ""
+
+#, fuzzy
+msgid "SASL function needs larger buffer (internal error)"
+msgstr "Chức năng SASL cần bộ đệm lớn hơn (lỗi nội bộ)"
+
+msgid "Could not open file in SASL library"
+msgstr "Không mở được tập tin trong thư viện SASL"
+
+msgid "Could not close file in SASL library"
+msgstr "Không đóng được tập tin trong thư viện SASL"
+
+msgid "Cannot get internal library handle (library error)"
+msgstr "Không gọi được điều quản lý thư viện nội bộ (lỗi thư viện)"
+
+msgid ""
+"SASL mechanism needs gsasl_client_callback_anonymous() callback (application "
+"error)"
+msgstr ""
+"Cơ cấu SASL cần khả nang gọi trở lại dạng gsasl_client_callback_anonymous() "
+"(lỗi ứng dụng)"
+
+msgid ""
+"SASL mechanism needs gsasl_client_callback_password() callback (application "
+"error)"
+msgstr ""
+"Cơ cấu SASL cần khả nang gọi trở lại dạng gsasl_client_callback_password() "
+"(lỗi ứng dụng)"
+
+msgid ""
+"SASL mechanism needs gsasl_client_callback_passcode() callback (application "
+"error)"
+msgstr ""
+"Cơ cấu SASL cần khả nang gọi trở lại dạng gsasl_client_callback_passcode() "
+"(lỗi ứng dụng)"
+
+msgid ""
+"SASL mechanism needs gsasl_client_callback_pin() callback (application error)"
+msgstr ""
+"Cơ cấu SASL cần khả nang gọi trở lại dạng gsasl_client_callback_pin() (lỗi "
+"ứng dụng)"
+
+msgid ""
+"SASL mechanism needs gsasl_client_callback_authorization_id() callback "
+"(application error)"
+msgstr ""
+"Cơ cấu SASL cần khả nang gọi trở lại dạng "
+"gsasl_client_callback_authorization_id() (lỗi ứng dụng)"
+
+msgid ""
+"SASL mechanism needs gsasl_client_callback_authentication_id() callback "
+"(application error)"
+msgstr ""
+"Cơ cấu SASL cần khả nang gọi trở lại dạng "
+"gsasl_client_callback_authentication_id() (lỗi ứng dụng)"
+
+msgid ""
+"SASL mechanism needs gsasl_client_callback_service() callback (application "
+"error)"
+msgstr ""
+"Cơ cấu SASL cần khả nang gọi trở lại dạng gsasl_client_callback_service() "
+"(lỗi ứng dụng)"
+
+msgid ""
+"SASL mechanism needs gsasl_server_callback_validate() callback (application "
+"error)"
+msgstr ""
+"Cơ cấu SASL cần khả nang gọi trở lại dạng gsasl_server_callback_validate() "
+"(lỗi ứng dụng)"
+
+msgid ""
+"SASL mechanism needs gsasl_server_callback_cram_md5() callback (application "
+"error)"
+msgstr ""
+"Cơ cấu SASL cần khả nang gọi trở lại dạng gsasl_server_callback_cram_md5() "
+"(lỗi ứng dụng)"
+
+msgid ""
+"SASL mechanism needs gsasl_server_callback_digest_md5() callback "
+"(application error)"
+msgstr ""
+"Cơ cấu SASL cần khả nang gọi trở lại dạng gsasl_server_callback_digest_md5() "
+"(lỗi ứng dụng)"
+
+msgid ""
+"SASL mechanism needs gsasl_server_callback_anonymous() callback (application "
+"error)"
+msgstr ""
+"Cơ cấu SASL cần khả nang gọi trở lại dạng gsasl_server_callback_anonymous() "
+"(lỗi ứng dụng)"
+
+msgid ""
+"SASL mechanism needs gsasl_server_callback_external() callback (application "
+"error)"
+msgstr ""
+"Cơ cấu SASL cần khả nang gọi trở lại dạng gsasl_server_callback_external() "
+"(lỗi ứng dụng)"
+
+msgid ""
+"SASL mechanism needs gsasl_server_callback_realm() callback (application "
+"error)"
+msgstr ""
+"Cơ cấu SASL cần khả nang gọi trở lại dạng gsasl_server_callback_realm() (lỗi "
+"ứng dụng)"
+
+msgid ""
+"SASL mechanism needs gsasl_server_callback_securid() callback (application "
+"error)"
+msgstr ""
+"Cơ cấu SASL cần khả nang gọi trở lại dạng gsasl_server_callback_securid() "
+"(lỗi ứng dụng)"
+
+msgid ""
+"SASL mechanism needs gsasl_server_callback_service() callback (application "
+"error)"
+msgstr ""
+"Cơ cấu SASL cần khả nang gọi trở lại dạng gsasl_server_callback_service() "
+"(lỗi ứng dụng)"
+
+msgid ""
+"SASL mechanism needs gsasl_server_callback_gssapi() callback (application "
+"error)"
+msgstr ""
+"Cơ cấu SASL cần khả nang gọi trở lại dạng gsasl_server_callback_gssapi() "
+"(lỗi ứng dụng)"
+
+msgid ""
+"SASL mechanism needs gsasl_server_callback_retrieve() callback (application "
+"error)"
+msgstr ""
+"Cơ cấu SASL cần khả nang gọi trở lại dạng gsasl_server_callback_retrieve() "
+"(lỗi ứng dụng)"
+
+msgid "Failed to perform Unicode Normalization on string."
+msgstr "Không tiêu chuẩn hoá dạng Unicode chuỗi."
+
+msgid "No more realms available (non-fatal)"
+msgstr "Không còn có miền sẵn sàng lại (không nghiêm trọng)"
+
+msgid "The provided library handle was invalid (application error)"
+msgstr "Điều quản lý thư viện đã cho là không hợp lệ (lỗi ứng dụng)"
+
+msgid "Libgsasl unknown error"
+msgstr "Lỗi chưa biết Libgsasl"

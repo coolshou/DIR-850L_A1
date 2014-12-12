@@ -1,0 +1,23 @@
+--- build/samba-3.0.24/source/utils/smbpasswd.c	2007-02-05 02:59:25.000000000 +0800
++++ build_final/samba-3.0.24/source/utils/smbpasswd.c	2011-03-08 17:33:39.863870000 +0800
+@@ -549,7 +549,12 @@
+ /*********************************************************
+  Start here.
+ **********************************************************/
++//sam_pan add
++#ifdef SAMBA_LINK_ALL
++int main_with_smbd(int argc, char **argv)
++#else
+ int main(int argc, char **argv)
++#endif
+ {	
+ 	int local_flags = 0;
+ 	
+@@ -564,7 +569,6 @@
+ 	}
+ 
+ 	load_case_tables();
+-
+ 	local_flags = process_options(argc, argv, local_flags);
+ 
+ 	setup_logging("smbpasswd", True);

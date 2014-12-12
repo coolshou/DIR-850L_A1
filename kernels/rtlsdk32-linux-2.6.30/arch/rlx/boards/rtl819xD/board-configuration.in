@@ -1,0 +1,28 @@
+
+comment "rtl819xD"
+choice
+prompt "Selected Board Configuration"
+default MODEL_RTL819xD_96D_92D_GW
+
+config MODEL_RTL819xD_96D_92D_GW
+        bool "96D+92D GW"
+
+config MODEL_RTL819xD_97D_92C_92D_GW
+        bool "97D+92C+92D GW"
+
+config MODEL_RTL819xD_97D_8367R_GW
+        bool "97D+8367R+92C+8812 GW"
+
+config MODEL_RTL819xD_97D_8367R_AP
+        bool "97D+8367R AP"
+
+config MODEL_RTL819xD_97DL_88ER_GW
+        bool "97DL+88ER GW"
+
+config MODEL_RTL819xD_97DL_92C_92D_GW
+        bool "97DL+92C+92D GW"
+
+config MODEL_RTL819xD_MP
+        bool "MP"
+
+endchoice

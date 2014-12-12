@@ -1,0 +1,15 @@
+echo Test 1.  Should print 1240379484 41
+./pnminvert ../testgrid.pbm | cksum
+echo Test 2.  Should print 1416115901 101484
+./pnminvert ../testimg.ppm | cksum
+echo Test 3.  Should print 4215652354 33838
+ppmtopgm ../testimg.ppm | ./pnminvert | cksum
+echo Test 4.  Should print 2595564405 14
+pbmmake -w 7 7 | ./pnminvert | cksum
+echo Test 5.  Should print 2595564405 14
+pbmmake -b 7 7 | cksum
+echo Test 6.  Should print 2595564405 14
+pbmmake -b 7 7 | ./pnminvert | ./pnminvert | cksum
+echo Test 7.  Should print 2896726098 15
+pbmmake -g 8 8 | ./pnminvert | cksum
+

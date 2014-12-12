@@ -1,0 +1,72 @@
+Many of the source files for Pamx contain code written by or derived
+from code written by Jim Frost for his program Xloadimage.  The files
+in which Frost has copyright contain Frost's name at the top.  Frost
+licenses his copyright to the public as follows:
+
+    Copyright 1989, 1993 Jim Frost
+   
+    Permission to use, copy, modify, distribute, and sell this software
+    and its documentation for any purpose is hereby granted without fee,
+    provided that the above copyright notice appear in all copies and
+    that both that copyright notice and this permission notice appear
+    in supporting documentation.  The author makes no representations
+    about the suitability of this software for any purpose.  It is
+    provided "as is" without express or implied warranty.
+   
+    THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE,
+    INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN
+    NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+    CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS
+    OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE
+    OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE
+    USE OR PERFORMANCE OF THIS SOFTWARE.
+
+
+The rest of the code was primarily written by Bryan Henderson,
+starting in 2006.  Bryan and other authors have contributed their work
+to the public domain.
+
+
+Here is a more or less complete list of people who contributed to
+the Xloadimage from which Pamx was derived.  The list is from the README
+file in the Xloadimage source code:
+
+Special thanks to the crew at the Boston University Graphics Lab for
+their assistance and sample images, and to bzs@std.com for his simple
+dithering algorithm (or what's left of it).  Real special thanks to
+Kirk L. Johnson (tuna@athena.mit.edu) for a very nice GIF loader and
+dithering routine, to Mark Snitily (zok!mark@apple.com) for 386/ix
+compatibility work, to Andreas Stolcke (stolcke@icsib12.berkeley.edu)
+for miscellaneous bug fixes, to Anthony A. Datri (datri@convex.com)
+for a number of things, to Mark Moraes (moraes@cs.toronto.edu) for
+the slideshow colormap fix, to Gregg Townsend (gmt@cs.arizona.edu) for
+a suggested dithering routine and other fixes, to Brian Frost
+(B1F5814@RIGEL.TAMU.EDU) for changes for VMS, to Chip Horstman for G3
+FAX support, to Deron Dann Johnson (dj@eng.sun.com) for fixing the
+RetainTemporary bug, to Tom Tatlow (tatlow@dash.enet.dec.com) for
+image rotation code, to Mark A. Horstman (mhorstm@sarek.sbc.com) for
+tilde expansion in .xloadimagerc files and virtual-root support in
+root.c, to Tim Roper (timr@labtam.labtam.oz.au), Graeme Gill
+(graeme@labtam.oz.au) for gamma correction and Utah RLE image support,
+Mark Majhor (uunet!sequent!markm) for FBM and MacPaint support, Ian
+MacPhedran (macphed@dvinci.usask.ca) for PGM and PPM support, Per
+Fogelstrom (pf@diab.se) for a fix to send.c, Hans J. Albertsson
+(hans@Sweden.Sun.COM) for cleaning up GIF aborting, Graham Hudspith
+(gwh@inmos.com) for a geometry patch, Glenn P. Davis
+(davis@unidata.ucar.edu) for McIDAS areafile support, Keith S. Pickens
+(maxwell.nde.swri.edu!ksp) for fixing the RLE loader to work with the
+updated zio package, Mike Douglas (douglas@wilbur.coyote.trw.com) for
+normalization, Rod Johnson (johnson@wrl.epi.com) for speedup
+suggestions, Hal Peterson (hrp@cray.com) for his Imakefile fix, Matt
+Caprile (Matthew.Caprile@ec.bull.fr) for slideshow delay code, Bob
+Deroy (rwd@bucrsb.bu.edu) for mondo 24-bit Sun Rasterfile images that
+broke everything, Christos S. Zoulas (christo@ee.cornell.edu) for a
+first-cut 24-bit implementation, Gerald James Barnes
+(gjb@oasis.icl.stc.co.uk) for a first-cut forced-visual
+implementation, Michael Campanella (campanella@cvg.enet.dec.com) for
+more VMS changes, Kee Hinckley (nazgul@alfalfa.com) for robustness
+changes to the g3 and MacPaint loaders and the ZIO package, Tim
+Northrup (tim@brspyr1.brs.com) for PC Paintbrush and GEM image
+formats, Richard Weidner (richard@elroy.jpl.nasa.gov) for lots of
+24-bit testing,  Eckhard Rueggeberg (erueg@cfgauss.uni-math.gwdg.de)
+for a better PCX loader, and any others whose names I've missed.

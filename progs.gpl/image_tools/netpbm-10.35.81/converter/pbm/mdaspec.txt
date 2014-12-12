@@ -1,0 +1,239 @@
+
+         MicroDesign 3 page (.MDP) and area (.MDA) file specifications
+                                       
+   This publication and all information contained herein is Copyright ©
+   Creative Technology 1992. This information carries no guarantees of
+   accuracy or liabilities on the part of either Creative Technology or
+   myself.
+   
+   A hard copy of this document (with far better artwork) is available
+   from Creative Technology, 10 Park Street, Uttoxeter, Staffs ST14 7AG,
+   creative@net-shopper.co.uk.
+   
+   [Note: throughout this file hexadecimal numbers are represented as
+   #nn; 'one pixel' refers to one PCW screen pixel, ie. a MicroDesign
+   half-pixel; 'word' format indicates a 16-bit word stored with the LSBs
+   first]
+   
+The MDA (MicroDesign Area) file formats
+
+   There are two different MDA file formats. The earlier MicroDesign2
+   format uses a simple compression technique to reduce continuous areas
+   of white and black, while the more recent MicroDesign3 format uses a
+   more sophisticated technique which generally results in smaller disc
+   files.
+   
+   MicroDesign2, ProSCAN and Tweak (versions 1 and 2) can only load and
+   save the earlier format, but either format may be loaded or saved in
+   MicroDesign3. In MD3, the filetype is detected automatically on load,
+   but the user must choose whether to save in 'AREA2' or 'AREA3' format.
+   
+   The format is identified in byte 21 of the initial file 'stamp' record
+   - for a MicroDesign2 area this byte is "0" (#30), whereas for a
+   MicroDesign3 area it is "3" (#33).
+   
+   When loaded into memory and uncompressed an Area file can occupy up
+   the 720k of data, but its size on disc is indeterminate due to the
+   compression used. Because of the compression it is not possible to
+   perform 'random-access' reads or writes to the disc file - it must be
+   read sequentially in order correctly to decompress the data.
+   
+   The older MicroDesign2 Area file format is as follows:
+   
+Bytes 0..127: file 'stamp':
+    0 -   3 (#00 - #03)  .MDA            File Type  (4 bytes)
+    4 -  17 (#04 - #11)  MicroDesignPCW  Program Identifier (14 bytes)
+   18 -  22 (#12 - #16)  v1.00           File Version  (5 bytes)
+   23 -  24 (#17 - #18)  CR,LF           ie. 13,10 decimal (2 bytes)
+   25 -  31 (#19 - #1F)  xxxxxxx         User Serial No (ASCII) (7 bytes)
+   32 -  33 (#20 - #21)  CR,LF           ie. 13,10 decimal (2 bytes)
+   34 - 127 (#22 - #7F)                  fill with zeroes (#00) (94 bytes)
+
+Bytes 128..: file proper:
+  128 - 129 (#80 - #81)  Height in Lines (multiple of 4) (word)
+  130 - 131 (#82 - #83)  Width in Bytes (Pixels * 8) (word)
+  132 -     (#84 -    )  Bit-Image Data as follows...
+
+   Bytes read from left to right in lines, top line first.
+   
+   Each byte is standard 1-bit-per-pixel layout where MSB = LH pixel, LSB
+   = RH pixel, 1 = white ('on'), and 0 = black ('off'). Each #00 (all
+   black) or #FF (all white) byte is followed by a 'count' byte (ie. #00
+   #03 means 3 whole bytes width of solid black; #FF #A0 means 160 bytes
+   width of solid white). A value #00 for the count byte means 256. This
+   'count' can overrun into the next (several) lines.
+   
+   For example: (. represents black, # white)
+   
+    ....#### ##..##.. ####.... ........ ..###### ######## ########
+       0F       CC       F0      00,01     3F          FF,02
+
+    ####.... ........ ........ ........ ........ ........ ........
+       F0                            00,06
+
+   Because of this compression the file length is indeterminate, but
+   there must be HEIGHT * WIDTH bytes of actual image data by the time it
+   has been uncompressed.
+   
+   The newer MicroDesign3 Area file format is as follows:
+   
+Bytes 0..127: file 'stamp':
+    0 -   3 (#00 - #03)  .MDA            File Type  (4 bytes)
+    4 -  17 (#04 - #11)  MicroDesignPCW  Program Identifier (14 bytes)
+   18 -  22 (#12 - #16)  v1.30           File Version  (5 bytes)
+   23 -  24 (#17 - #18)  CR,LF           ie. 13,10 decimal (2 bytes)
+   25 -  31 (#19 - #1F)  xxxxxxx         User Serial No (ASCII) (7 bytes)
+   32 -  33 (#20 - #21)  CR,LF           ie. 13,10 decimal (2 bytes)
+   34 - 127 (#22 - #7F)                  fill with zeroes (#00) (94 bytes)
+
+Bytes 128..: file proper:
+  128 - 129 (#80 - #81)  Height in Lines (multiple of 4) (word)
+  130 - 131 (#82 - #83)  Width in Bytes (Pixels * 8) (word)
+  132 -     (#84 -    )  Bit-Image Data as follows...
+
+   Bytes read from left to right in lines, top line first.
+   
+   Each byte is standard 1-bit-per-pixel layout where MSB = LH pixel, LSB
+   = RH pixel, 1 = white ('on'), and 0 = black ('off').
+   
+   Each line of data is compressed according to one of three 'line
+   types'. The first byte of data for each line is the line type.
+   
+Line type byte:
+  #00: Line is ALL-SAME-BYTE type
+  #01: Line is DATA type
+  #02: Line is DIFFERENCE DATA type
+
+   The actual data for each line follows this type byte:
+   
+   ALL-SAME-BYTE type:
+          One more byte follows the initial #00 type byte - this is the
+          actual bit-image data with which to fill the whole line width.
+          
+          eg. Whole line of white = #00 #FF, whole line of black = #00
+          #00
+          
+   DATA type:
+          Following the initial #01 type byte, the data content of the
+          line is compressed as follows:
+          
+          Data is encoded in 'blocks', which are of *either* repeating
+          data bytes *or* non-repeating bytes. Each block starts with a
+          control byte, which determines whether the data which follows
+          it is *either* just one data byte to be repeated *or* a
+          sequence of dissimilar bytes.
+          
+          If the control byte N is negative (-1 to -127 in two's
+          complement - #FF for -1, #81 for -127), *one* data byte follows
+          which is to be repeated -N times. This means that there are to
+          be a total of (-N+1) occurrences of this data byte.
+          
+          If the control byte N is positive (0 to 127; #00 to #7F), it is
+          followed by (N+1) bytes of dissimilar data to load directly
+          into the line.
+          
+          For instance: 01 (line type), then:
+          
+....#### ##..##.. ####.... ........ ######## ######## ########
+          03,0F,CC,F0,00                       FE,FF
+
+#####... #.#.#.#. #.#.#.#. #.#.#.#. #.#.#.#. #.#..... ........
+  00,F8                 FD,AA                     01,A0,00
+
+          Note: the POSITIVE control bytes are 1 LESS than the number of
+          dissimilar bytes following them; NEGATIVE ones are (MINUS) 1
+          LESS than the number of occurrences of the byte following them.
+          
+   DIFFERENCE DATA type:
+          Following the initial #02 type byte, the difference between the
+          data content of this line and the content of the previous line
+          is stored: ie. this line is XORed with the previous line to
+          produce a 'difference' line, which is then compressed using the
+          same method as for a DATA type line.
+          
+          For instance, the following line stored as a 'difference' line
+          from the line above would be 02 (line type), then: (the second
+          pixel row below shows the results of XORing the first two
+          lines)
+          
+....#### ##..##.. ##..##.. ......## ######## ######## ########
+........ ........ ..####.. ......## ........ ........ ........
+      FF,00           01,3C,03                 FE,00
+
+######.. #.#.#.#. #.#.#.#. #.#.#.#. #.#.#.#. #.#.#.#. ........
+.....#.. ........ ........ ........ ........ ....#.#. ........
+ 00,04                  FD,00                     01,0A,00
+
+          Note: this DIFFERENCE encoding is used if it will result in
+          less bytes of data being stored in the file. The line type of
+          the previous line is irrelevant.
+          
+   Because of these various types of compression the file length on the
+   disc is indeterminate, but there must be HEIGHT * WIDTH bytes of
+   actual image data by the time it has been uncompressed.
+   
+The MDP (MicroDesign Page) file formats
+
+   MicroDesign3's Page (.MDP) files are identical to its Area (.MDA)
+   files except for the following differences:
+   
+Bytes 0..127: file 'stamp':
+    0 -   3 (#00 - #03)  .MDP            File Type  (4 bytes)
+   34       (#22)        nn: dpi         00 = 240dpi
+                                         01 = 360dpi
+                                         02 = 300dpi
+   35       (#23)        nn: format      00 = A5 portrait
+                                         01 = A5 landscape
+                                         02 = A4 portrait
+                                         03 = A4 landscape
+                                         04 = A5 portrait (hi-res)
+                                         05 = A5 landscape (hi-res)
+   36       (#24)        nn: page ram required in 16k blocks
+
+   In all other respects a Page (.MDP) file is identical to an Area
+   (.MDA) file (MD3 type).
+   
+The CUT image format
+
+   (Note: this information is in no way 'official' and results from my
+   own dabblings; it is separate from the above information on the MDA
+   format and is included here for convenience. No warranty expressed or
+   implied)
+   
+   CUT files have a format as follows:
+   
+    0 -   1 (#00 - #01)  Height code h1 (word) (see below)
+    2 -   3 (#02 - #03)  Width code w1 (word) (see below)
+    4 -     (#04 -    )  Bitmap data, row-by-row
+
+   The height in pixels h1 can be calculated from the height code h using
+   h = (h1+3)/2; the width in pixels is w = w1+2; the number of whole
+   bytes per row in the file is wb = INT((w+8)/8). Bitmap data in the
+   file is stored row-by-row, with a whole number of bytes per row; the
+   LSBs of the last byte that extend beyond the right edge of the image
+   should be discarded. As usual in bitmap data the MSB is towards the
+   left and the LSB towards the right.
+   
+   Note: the formula above for wb implies that if the image is a whole
+   multiple of 8 pixels wide, none of the bits from the last byte in the
+   row will be used. Strange, but there you go.
+   
+The GRF image format
+
+   (Same disclaimer applies; this is all from experiment)
+   
+   GRF files are substantially similar to CUTs (although slightly more
+   logical) and have a format as follows:
+   
+    0 -   1 (#00 - #01)  Width in pixels (word)
+    2 -   3 (#02 - #03)  Height in pixels (word)
+    4 -     (#04 -    )  Bitmap data, row-by-row
+
+   The number of bytes per row is simply the width in pixels divided by
+   8, rounded up; no catches here. As with CUTs unused rightmost bits
+   should be discarded.
+     _________________________________________________________________
+                                      
+   
+    Go to CP/M page or main page
+    Last updated 16 April 1997; Jacob Nevins

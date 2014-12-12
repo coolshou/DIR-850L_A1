@@ -1,0 +1,13 @@
+--- build/samba-3.0.24/source/include/includes.h	2007-02-05 02:59:23.000000000 +0800
++++ build_final/samba-3.0.24/source/include/includes.h	2011-03-08 17:47:33.725443000 +0800
+@@ -1608,4 +1608,10 @@
+ #include "libnscd.h"
+ #endif
+ 
++//sam_pan
++#ifdef SAMBA_LINK_ALL
++int nmbd_main(int argc, const char *argv[]);
++int main_with_smbd(int argc, char **argv);
++#endif
++
+ #endif /* _INCLUDES_H */

@@ -1,0 +1,8 @@
+echo Test 1.  Should print 3424505894 913236
+./pamenlarge 3 ../testimg.ppm | cksum
+echo Test 2.  Should print 2940246561 304422
+ppmtopgm ../testimg.ppm | ./pamenlarge 3 | cksum
+echo Test 3.  Should print 3342398172 297
+./pamenlarge 3 ../testgrid.pbm | cksum
+echo Test 4.  Should print 237488670 3133413
+./pamenlarge 3 -plain ../testimg.ppm | cksum

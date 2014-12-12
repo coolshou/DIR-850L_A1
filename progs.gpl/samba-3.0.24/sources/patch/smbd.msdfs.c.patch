@@ -1,0 +1,63 @@
+--- build2/samba-3.0.24/source/smbd/msdfs.c	2007-02-05 02:59:13.000000000 +0800
++++ build/samba-3.0.24/source/smbd/msdfs.c	2011-04-26 17:30:38.000000000 +0800
+@@ -780,7 +780,7 @@
+  Set up the Dfs referral for the dfs pathname
+ ******************************************************************/
+ 
+-int setup_dfs_referral(connection_struct *orig_conn, char *pathname, int max_referral_level, char **ppdata)
++int setup_dfs_referral(connection_struct *orig_conn, char *pathname, int max_referral_level, char **ppdata, NTSTATUS *pstatus)
+ {
+ 	struct junction_map junction;
+ 	int consumedcnt;
+@@ -791,6 +791,7 @@
+ 	TALLOC_CTX *ctx;
+ 
+ 	if (!(ctx=talloc_init("setup_dfs_referral"))) {
++		*pstatus = NT_STATUS_NO_MEMORY;
+ 		return -1;
+ 	}
+ 
+@@ -799,6 +800,7 @@
+ 	/* get the junction entry */
+ 	if (!pathnamep) {
+ 		talloc_destroy(ctx);
++		*pstatus = NT_STATUS_NOT_FOUND;
+ 		return -1;
+ 	}
+ 
+@@ -811,11 +813,18 @@
+ 
+ 	pstrcpy(buf, pathnamep);
+ 	/* The following call can change cwd. */
+-	if (!get_referred_path(ctx, buf, &junction, &consumedcnt, &self_referral)) {
++	if (!get_referred_path(ctx, buf, &junction, &consumedcnt, &self_referral)) 
++	{
++		*pstatus = NT_STATUS_NOT_FOUND;
+ 		vfs_ChDir(orig_conn,orig_conn->connectpath);
+ 		talloc_destroy(ctx);
+ 		return -1;
+ 	}
++	else
++	{
++		*pstatus = NT_STATUS_OK;
++	}	
++		
+ 	vfs_ChDir(orig_conn,orig_conn->connectpath);
+ 	
+ 	if (!self_referral) {
+@@ -848,6 +857,7 @@
+ 	default:
+ 		DEBUG(0,("setup_dfs_referral: Invalid dfs referral version: %d\n", max_referral_level));
+ 		talloc_destroy(ctx);
++		*pstatus = NT_STATUS_INVALID_LEVEL;
+ 		return -1;
+ 	}
+       
+@@ -857,6 +867,7 @@
+ 	}
+ 
+ 	talloc_destroy(ctx);
++	*pstatus = NT_STATUS_OK;
+ 	return reply_size;
+ }
+ 

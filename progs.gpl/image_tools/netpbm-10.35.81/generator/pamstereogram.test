@@ -1,0 +1,70 @@
+# Make some input files
+pamdepth -quiet 255 ../testgrid.pbm >/tmp/testgrid.pgm
+
+
+# Random pattern
+
+echo Test 01.  Should print 610673698 293:
+./pamstereogram -randomseed=1 ../testgrid.pbm | cksum 
+echo Test 02.  Should print 610673698 293:
+./pamstereogram -randomseed=1 -blackandwhite ../testgrid.pbm | cksum 
+echo Test 03.  Should print 3439084201 170:
+pamseq -tupletype=GRAYSCALE 1 100 | ./pamstereogram -randomseed=1 | cksum 
+echo Test 04.  Should print 2484923390 1070:
+pamgauss 100 10 -maxval=10000 -sigma 20 | pamfunc -multiplier=500 | \
+  ./pamstereogram -randomseed=1 -dpi=10 | cksum
+
+# Makemask
+
+echo Test 10.  Should print 1266273778 293:
+./pamstereogram -randomseed=1 -makemask ../testgrid.pbm | cksum 
+
+echo Test 11.  Should print 3034751595 1070:
+./pamgauss 100 10 -maxval=10000 -sigma 20 | pamfunc -multiplier=500 | \
+  ./pamstereogram -randomseed=1 -dpi=10 -makemask | cksum
+
+# Grayscale
+
+echo Test 20.  Should print 2468969328 289:
+./pamstereogram -randomseed=1 -grayscale ../testgrid.pbm | cksum 
+echo Test 21.  Should print 1946982115 4068:
+./pamseq 1 100 | pnmtile 200 20 | \
+  ./pamstereogram -randomseed=1 -dpi=10 -grayscale | \
+  cksum
+echo Test 22.  Should print 2078013430 4068:
+./pamseq 1 100 | pnmtile 200 20 | \
+  ./pamstereogram -randomseed=1 -dpi=10 -grayscale -maxval 255 | \
+  cksum
+
+# Color
+
+echo Test 30.  Should print 1319392622 731:
+./pamstereogram -randomseed=1 -color ../testgrid.pbm | cksum 
+echo Test 31.  Should print 389886159 12062:
+./pamseq 1 100 | pnmtile 200 20 | \
+  ./pamstereogram -randomseed=1 -dpi=10 -color | \
+  cksum
+
+# Pattern file
+
+echo Test 40.  Should print 1834916830 660:
+pamgradient black gray50 white gray50 100 50 | \
+  ./pamstereogram -patfile ../testgrid.pbm -eyesep=.1 -crosseyed | cksum
+
+echo Test 41.  Should print 4016818756 5014:
+pamgradient black gray50 white gray50 100 50 | \
+  ./pamstereogram -patfile /tmp/testgrid.pgm -eyesep=.1 -crosseyed | cksum
+
+# drawguides
+
+echo Test 51.  Should print 2365956562 11071:
+pamgradient black gray50 white gray50 100 50 | \
+  ./pamstereogram -randomseed=1 -dpi 10 -guidesize=20 | cksum
+
+echo Test 51.  Should print 3502025270 1441:
+pamgradient black gray50 white gray50 100 50 | \
+  ./pamstereogram -patfile=../testgrid.pbm -dpi 10 -guidesize=20 | cksum
+
+
+# Clean up files we created
+rm /tmp/testgrid.pgm

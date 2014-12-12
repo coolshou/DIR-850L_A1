@@ -1,0 +1,35 @@
+# speed test parameter file
+
+PATTERN		I
+OUTPUT		/n/picasso/users/keving/encode/output/luxo2.mpg
+GOP_SIZE	30
+SLICES_PER_FRAME	1
+
+BASE_FILE_FORMAT	YUV
+YUV_SIZE	320x240
+
+INPUT_CONVERT	*
+
+INPUT_DIR	../input/luxo
+
+INPUT
+luxo1399.yuv
+luxo1400.yuv
+END_INPUT
+
+# quality parameters
+
+IQSCALE		8
+PQSCALE		10
+BQSCALE		20
+
+# motion vector search parameters
+
+PIXEL		HALF
+
+RANGE		10
+
+PSEARCH_ALG	EXHAUSTIVE
+BSEARCH_ALG	SIMPLE
+
+REFERENCE_FRAME	ORIGINAL

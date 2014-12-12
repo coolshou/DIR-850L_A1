@@ -1,0 +1,38 @@
+-include ../arch.mk
+-include ../../path.mk
+-include $(TOPDIR)/.config
+
+#full name
+LIB_SQLITE = sqlite-3.7.4
+LIB_ICONV = libiconv-1.9.1
+LIB_JPEG = jpeg-8c
+LIB_EXIF = libexif-0.6.20
+#LIB_ID3TAG = libid3tag-0.15.1b
+LIB_ID3TAG = libid3tag-0.15.0b
+LIB_OGG = libogg-1.3.0
+LIB_VORBIS = libvorbis-1.3.2
+LIB_FLAC = flac-1.2.1
+LIB_FFMPEG = ffmpeg-0.10.4
+LIB_E2FS = e2fsprogs-1.42.3
+APP_MINIDLNA = minidlna-1.0.24
+
+
+#path
+PATH_LIB_SQLITE = $(TOPDIR)/progs.gpl/$(LIB_SQLITE)
+PATH_LIB_ICONV = $(TOPDIR)/progs.gpl/libiconv
+PATH_LIB_ID3TAG = $(TOPDIR)/progs.gpl/itunes_server
+INC_LIB_SQLITE = $(TOPDIR)/progs.gpl/$(LIB_SQLITE)/build/sqlite-autoconf-3070400
+
+#INC_LIB_ID3TAG = $(LIB_ID3TAG)
+INC_LIB_ID3TAG = $(PATH_LIB_ID3TAG)/$(LIB_ID3TAG)
+INC_LIB_EXIF = $(LIB_EXIF)
+INC_LIB_OGG = $(LIB_OGG)/include
+INC_LIB_VORBIS = $(LIB_VORBIS)/include
+INC_LIB_FLAC = $(LIB_FLAC)/include
+INC_LIB_FFMPEG = $(LIB_FFMPEG)
+INC_LIB_AVUTIL = $(LIB_FFMPEG)/libavutil
+INC_LIB_AVFORMAT = $(LIB_FFMPEG)/libavformat
+INC_LIB_AVCODEC = $(LIB_FFMPEG)/libavcodec
+INC_LIB_E2FS = $(LIB_E2FS)/intl
+INC_TMP_ROOTFS = rootfs/include
+INC_LIB_JPEG = $(TOPDIR)/progs.gpl/image_tools/$(LIB_JPEG)

@@ -1,0 +1,24 @@
+#!/bin/sh
+# vi: set sw=4 ts=4:
+
+function d2u()
+{
+	find $TARGET -type f | file -i -f- | grep 'text/' | cut -d':' -f1 | xargs dos2unix -q
+}
+
+function xblank()
+{
+	find $TARGET -type f | file -i -f- | grep 'text/' | cut -d':' -f1 | xargs sed -i -e '/^$/d' -e '/^[ \t]*$/d' -e 's/^[ \t]*//' -e 's/[ \t]*$//'
+}
+
+DIR=`dirname $0`
+TOPDIR=$DIR/..
+TARGET=$TOPDIR/rootfs
+
+if [ ! -d $TARGET ]; then
+	echo "run rootfs build before this process ..."
+	exit 1
+fi
+
+d2u
+xblank

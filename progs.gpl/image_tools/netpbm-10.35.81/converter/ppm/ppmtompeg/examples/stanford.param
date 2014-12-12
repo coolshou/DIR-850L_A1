@@ -1,0 +1,34 @@
+# speed test parameter file
+
+PATTERN		IBBPBBPBBPBBPBB
+OUTPUT		/n/picasso/users/keving/encode/output/stanford.mpg
+GOP_SIZE	30
+SLICES_PER_FRAME	1
+
+BASE_FILE_FORMAT	YUV
+YUV_SIZE	352x240
+
+INPUT_CONVERT	*
+
+INPUT_DIR	../input/flowg
+
+INPUT
+sflowg.*.yuv	[0-149]
+END_INPUT
+
+# quality parameters
+
+IQSCALE		4
+PQSCALE		4
+BQSCALE		8
+
+# motion vector search parameters
+
+PIXEL		HALF
+
+RANGE		8
+
+PSEARCH_ALG	EXHAUSTIVE
+BSEARCH_ALG	SIMPLE
+
+REFERENCE_FRAME	ORIGINAL

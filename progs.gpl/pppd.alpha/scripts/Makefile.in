@@ -1,0 +1,10 @@
+
+all:
+
+install:
+	cp ./pppd $(TARGET)/bin/pppd
+	chmod +x $(TARGET)/bin/pppd
+
+clean:
+
+.PHONY: all install clean

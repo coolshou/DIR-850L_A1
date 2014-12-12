@@ -1,0 +1,31 @@
+-include ../../arch.mk
+-include ../../../path.mk
+MAKE = make
+VERSION = @VERSION@
+SRCDIR = .
+EMAILPATH = $(TOPDIR)/progs.priv/email
+
+CFLAGS = -g -O2 -Wall -W -DUSE_GNU_STRFTIME -I$(EMAILPATH) -I$(EMAILPATH)/src -I$(EMAILPATH)/include -I../include -I$(EMAILPATH)/dlib/include -I../dlib/include -DEMAIL_VERSION='"3.1.2"' -DCOMPILE_DATE='"01/04/2009-03:11:58PM_EST"' -DEMAIL_DIR='"$(TARGET)/etc/email"' -DHAVE_CONFIG_H
+LDFLAGS = 
+LIBS = -lm 
+DLIB = ../dlib/libdlib.a
+
+prefix = /usr/local
+bindir = ${exec_prefix}/bin
+sbindir = ${exec_prefix}/sbin
+mandir = ${datarootdir}/man
+sysconfdir = ${prefix}/etc
+datarootdir = ${prefix}/share
+
+FILES = email.o addr_parse.o addy_book.o conf.o error.o execgpg.o file_io.o \
+        message.o mimeutils.o processmail.o progress_bar.o \
+	remotesmtp.o sig_file.o smtpcommands.o utils.o
+
+all: $(FILES)
+	$(CC) $(CFLAGS) -o email $(FILES) $(OTHER_FILES) $(DLIB) $(LDFLAGS) $(LIBS)
+
+clean:
+	rm -f *.o *.d email
+
+clean-all:
+

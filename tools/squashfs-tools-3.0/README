@@ -1,0 +1,2 @@
+This is mksquashfs patched with LZMA support
+and with the patch for 'fragment_table rounding bug'

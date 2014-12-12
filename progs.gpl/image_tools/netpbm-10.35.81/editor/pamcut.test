@@ -1,0 +1,10 @@
+echo Test 1.  Should print 2958909756 124815
+./pamcut -top 0 -left 0 -width 260 -height 160 -pad ../testimg.ppm | cksum
+echo Test 2.  Should print 1550940962 10933
+./pamcut -top 200 -left 120 -width 40 -height 40 -pad ../testimg.ppm | cksum
+echo Test 3.  Should print 708474423 14
+./pamcut -top 5 -left 5 -bottom 5 -right 5 ../testimg.ppm | cksum
+echo Test 3.  Should print 3412257956 129
+pbmmake -g 50 50 | ./pamcut 5 5 30 30 | cksum
+
+

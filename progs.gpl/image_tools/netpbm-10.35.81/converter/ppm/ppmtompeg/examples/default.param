@@ -1,0 +1,34 @@
+# parameter file with good default values
+#
+# use this as a guideline for any parameters you don't really understand
+# or don't care about
+#
+
+PATTERN		IBBPBBPBBPBBPBB
+OUTPUT		output.mpg
+
+BASE_FILE_FORMAT	YUV
+GOP_SIZE	30
+SLICES_PER_FRAME	1
+
+PIXEL		HALF
+RANGE		10
+PSEARCH_ALG	LOGARITHMIC
+BSEARCH_ALG	CROSS2
+IQSCALE		8
+PQSCALE		10
+BQSCALE		25
+
+REFERENCE_FRAME	ORIGINAL
+
+#
+# you really need to understand the following
+#
+YUV_SIZE	352x240
+INPUT_CONVERT	*
+
+INPUT_DIR	input/flowg
+
+INPUT
+sflowg.*.yuv	[0-23]
+END_INPUT

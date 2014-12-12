@@ -1,0 +1,12 @@
+echo Test 1.  Should print 2116496681 101484
+./pamflip -lr ../testimg.ppm | cksum 
+echo Test 2.  Should print 217037000 101484
+./pamflip -cw ../testimg.ppm | cksum
+echo Test 3.  Should print 2052917888 101484
+./pamflip -tb ../testimg.ppm | cksum
+echo Test 4.  Should print 3375384165 41
+./pamflip -lr ../testgrid.pbm | cksum
+echo Test 5.  Should print 604323149 41
+./pamflip -tb ../testgrid.pbm | cksum
+echo Test 6.  Should print 490797850 37
+./pamflip -cw ../testgrid.pbm | cksum

@@ -1,0 +1,2 @@
+ACTION=="add", SUBSYSTEM=="net", KERNEL=="rai0", NAME="wifig0"
+ACTION=="add", SUBSYSTEM=="net", KERNEL=="rai1", NAME="wifig0.1"

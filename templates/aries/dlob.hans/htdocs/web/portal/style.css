@@ -1,0 +1,114 @@
+DIV {
+	TEXT-ALIGN: center
+}
+H1 {
+	TEXT-ALIGN: center
+}
+H2 {
+	TEXT-ALIGN: center
+}
+H3 {
+	TEXT-ALIGN: center
+}
+H4 {
+	TEXT-ALIGN: center
+}
+H5 {
+	TEXT-ALIGN: center
+}
+H6 {
+	TEXT-ALIGN: center
+}
+IMG {
+	BORDER-RIGHT: 0px; BORDER-TOP: 0px; BORDER-LEFT: 0px; BORDER-BOTTOM: 0px
+}
+.ahem {
+	DISPLAY: none
+}
+TD.nw {
+	WHITE-SPACE: nowrap
+}
+#hiddenText {
+	FONT-WEIGHT: normal; VISIBILITY: hidden; COLOR: #000000; FONT-STYLE: normal; TEXT-DECORATION: none
+}
+INPUT {
+	FONT-SIZE: 10px; BORDER-LEFT-COLOR: #ffffff; BORDER-BOTTOM-COLOR: #ffffff; COLOR: #000000; BORDER-TOP-COLOR: #ffffff; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #ffffff; BORDER-RIGHT-COLOR: #ffffff
+}
+TEXTAREA {
+	BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; BORDER-BOTTOM-WIDTH: 1px; BORDER-RIGHT-WIDTH: 1px
+}
+SELECT {
+	BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; BORDER-BOTTOM-WIDTH: 1px; BORDER-RIGHT-WIDTH: 1px
+}
+BODY {
+	overflow: auto; overflow-x: auto; SCROLLBAR-FACE-COLOR: #455866; SCROLLBAR-HIGHLIGHT-COLOR: #506676; SCROLLBAR-SHADOW-COLOR: #506676; SCROLLBAR-3DLIGHT-COLOR: #506676; SCROLLBAR-ARROW-COLOR: #fdc91d; SCROLLBAR-TRACK-COLOR: #506676; SCROLLBAR-DARKSHADOW-COLOR: #98aab1; BACKGROUND-COLOR: #757575
+}
+FONT {
+	FONT-SIZE: 15px; COLOR: #ffffff; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+TH {
+	FONT-SIZE: 12px; COLOR: #ffffff; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+TD {
+	FONT-SIZE: 12px; COLOR: #ffffff; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+P {
+	FONT-SIZE: 12px; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+A:link {
+	COLOR: #fdc91d
+}
+A:active {
+	COLOR: #fdc91d
+}
+A:visited {
+	COLOR: #fdc91d
+}
+/* #ffff33 */
+A:hover {
+	COLOR: #000000; TEXT-DECORATION: underline
+}
+HR {
+	FILTER: Alpha(Opacity=100,FinishOpacity=10,Style=2); WIDTH: 95%; COLOR: #ffffff; HEIGHT: 2px
+}
+/*
+H1 {
+	FONT-WEIGHT: bold; FONT-SIZE: 10px; COLOR: #ffffff
+}
+H2 {
+	FONT-WEIGHT: bold; FONT-SIZE: 10px; COLOR: #ffffff
+}
+*/
+.bg1 {
+	BACKGROUND-COLOR: #506676
+}
+.bg2 {
+	BACKGROUND-COLOR: #999999
+}
+.bg3 {
+	BACKGROUND-COLOR: #577b8e
+}
+.bg4 {
+	BACKGROUND-COLOR: #506676
+}
+.bg5 {
+	BACKGROUND-COLOR: #506676
+}
+.fg1 {
+	COLOR: #000000
+}
+.fg2 {
+	COLOR: #000000
+}
+
+H2
+{
+	color: #FFFFFF;
+	background-color: #333333;
+	font-size: 12px;
+	font-weight: bold;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	margin: 0 -10px 5px -10px;
+	padding: 5px 5px 5px 10px;
+}

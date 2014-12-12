@@ -1,0 +1,9 @@
+version.lo: version.c config.h global.h id3tag.h version.h
+
+config.h:
+
+global.h:
+
+id3tag.h:
+
+version.h:
