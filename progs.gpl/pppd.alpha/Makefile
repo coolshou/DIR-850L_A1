@@ -148,6 +148,8 @@ endif
 
 ifneq ($(wildcard /usr/include/crypt.h),)
 CFLAGS   += -DHAVE_CRYPT_H=1
+#jimmy,add following to fix compiler error on ubuntu 14.10 x64
+LIBS	+= -lcrypt
 endif
 ifneq ($(wildcard /usr/lib/libcrypt.*),)
 LIBS	+= -lcrypt
