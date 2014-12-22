@@ -1,0 +1,261 @@
+#!/bin/sh
+case "$1" in
+freset)
+	devconf del
+	;;
+isfreset)
+	SIZE=`devconf dump | scut -p "Data size :" -f 1`
+	if [ "$SIZE" = "0" ]; then
+		echo "YES"
+	else
+		echo "NO"
+	fi
+	;;
+init)
+	if [ $# -lt 6 ]; then
+		echo "Usage:"
+		echo "  mfc init <LANMAC> <WANMAC> <HWREV> <COUNTRYCODE> <PIN> <WIFIPASSWORD> <WLANMAC_5G>"
+		exit 1
+	fi
+	LANMAC=`echo -e $2 | tr [A-Z] [a-z]`
+	WANMAC=`echo -e $3 | tr [A-Z] [a-z]`
+	HWREV=`echo -e $4 | tr [a-z] [A-Z]`
+	CCODE="$5"
+	PIN="$6"
+	WIFIPWD="$7"
+	WLAN5MAC=`echo -e $8 | tr [A-Z] [a-z]`
+	[ "$LANMAC" != "" ] && DEVDATA="$DEVDATA -e lanmac=$LANMAC  -e wlanmac=$LANMAC"
+	[ "$WANMAC" != "" ] && DEVDATA="$DEVDATA -e wanmac=$WANMAC"
+	[ "$CCODE" = "" ] && CCODE="US"
+	[ "$PIN" != "" ] && DEVDATA="$DEVDATA -e pin=$PIN"
+	[ "$WIFIPWD" != "" ] && DEVDATA="$DEVDATA -e psk=$WIFIPWD"
+	[ "$WLAN5MAC" != "" ] && DEVDATA="$DEVDATA -e wlan5mac=$WLAN5MAC"
+	echo "clean devdata"
+	devdata clean
+	echo "devdata set -e countrycode=$CCODE $DEVDATA -f" > /dev/console
+	devdata set -e countrycode=$CCODE -e hwver=$HWREV $DEVDATA -f
+	echo "-------- devdata dump ----------------------" > /dev/console
+	devdata dump > /dev/console
+	;;
+dump)
+	devdata dump
+	;;
+ver)
+	echo Ver `cat /etc/config/buildver` Build `cat /etc/config/buildno`
+	;;
+get)
+	[ "$2" != "" ] && devdata get -e $2
+	;;
+set)
+	[ "$2" != "" ] && devdata set -e $2
+	;;
+test)
+	case $2 in
+	on)
+		usockc /var/gpio_ctrl DEBUG
+		;;
+	off)
+		usockc /var/gpio_ctrl NODEBUG
+		;;
+	esac
+	;;
+wlan24)
+	ifconfig wlan1 down
+	brctl delif br0 wlan1
+	killall hostapd
+	flash set_mib wlan1
+	iwpriv wlan1 set_mib band=11
+	case "$4" in
+	"HT20")
+		iwpriv wlan1 set_mib use40M=0
+	;;
+	"HT40")
+		iwpriv wlan1 set_mib use40M=1
+		iwpriv wlan1 set_mib coexist=0
+	;;
+	esac
+	if [ $3 -lt 5 ]; then
+		iwpriv wlan1 set_mib 2ndchoffset=2
+	else
+		iwpriv wlan1 set_mib 2ndchoffset=1
+	fi	
+	iwpriv wlan1 set_mib channel=$3
+	iwpriv wlan1 set_mib ssid=$2
+	iwpriv wlan1 set_mib authtype=0
+	iwpriv wlan1 set_mib encmode=0
+	brctl addif br0 wlan1
+	ifconfig wlan1 up
+	;;
+wlan5)
+	ifconfig wlan0 down
+	brctl delif br0 wlan0
+	killall hostapd
+	flash set_mib wlan0
+	iwpriv wlan0 set_mib band=76
+	case "$4" in
+	"HT20")
+		iwpriv wlan0 set_mib use40M=0
+	;;
+	"HT40")
+		iwpriv wlan0 set_mib use40M=1
+		iwpriv wlan0 set_mib coexist=0
+	;;
+	"HT80")
+		iwpriv wlan0 set_mib use40M=2
+		iwpriv wlan0 set_mib coexist=0
+	;;
+	esac
+	if	[ $3 -eq 36 ] || [ $3 -eq 44 ] || [ $3 -eq 52 ] || [ $3 -eq 60 ] || [ $3 -eq 100 ] || [ $3 -eq 108 ] || [ $3 -eq 116 ] || [ $3 -eq 124 ] || [ $3 -eq 132 ] || [ $3 -eq 140 ] || [ $3 -eq 149 ] || [ $3 -eq 157 ] || [ $3 -eq 165 ] || [ $3 -eq 173 ]; then
+		iwpriv wlan0 set_mib 2ndchoffset=2
+	else
+		iwpriv wlan0 set_mib 2ndchoffset=1
+	fi	
+	iwpriv wlan0 set_mib channel=$3
+	iwpriv wlan0 set_mib ssid=$2
+	iwpriv wlan0 set_mib authtype=0
+	iwpriv wlan0 set_mib encmode=0
+	brctl addif br0 wlan0
+	ifconfig wlan0 up
+	;;
+layout)
+	case $2 in
+	router)
+		rtlioc routermode
+		rtlioc enlan
+		;;
+	bridge)
+		rtlioc bridgemode
+		;;
+	esac
+	;;
+button)
+	case $2 in
+	reset)
+		usockc /var/gpio_ctrl GPIO_FRESET
+		cat /var/gpio_ctrl_result
+		;;
+	wps)
+		usockc /var/gpio_ctrl GPIO_WPS
+		cat /var/gpio_ctrl_result
+		;;
+	esac
+	;;
+led)
+	case "$2" in
+    status_green)
+        usockc /var/gpio_ctrl STATUS_GREEN
+		;;
+    status_amber)
+        usockc /var/gpio_ctrl STATUS_AMBER
+		;;
+    status_off)
+        usockc /var/gpio_ctrl STATUS_NONE
+        ;;
+	inet_green)
+		usockc /var/gpio_ctrl INET_GREEN
+        ;;
+	inet_amber)
+		usockc /var/gpio_ctrl INET_AMBER
+		;;
+	inet_off)
+		usockc /var/gpio_ctrl INET_NONE
+		;;
+	esac
+	;;
+usbtest)
+	set +e
+	rm -rf /var/mntusb
+	mkdir /var/mntusb
+	if [ -f /var/usbdev ] ; then
+		USB=`cat /var/usbdev`
+		mount -a /dev/$USB /var/mntusb 2> /dev/null
+	else
+		echo "Test Fail!"
+		echo "No USB device inserted!!"
+		exit 1
+	fi
+	if [ $? != "0" ] ; then
+		rm -rf /var/mntusb
+		echo "Test Fail!"
+		exit 1
+	fi
+	rm -f /var/mntusb/usbfile.test
+	cp -f /sbin/iwpriv  /var/mntusb/usbfile.test
+	if [ $? != "0" ] ; then
+		umount /var/mntusb
+		rm -rf /var/mntusb
+		echo "Test Fail!"
+		exit 1
+	fi
+	cmp -s /sbin/iwpriv /var/mntusb/usbfile.test
+	if [ $? = "0" ] ; then
+		echo "Test Ok!"
+	else
+		echo "Test Fail!"
+	fi
+	rm -f /var/mntusb/usbfile.test
+	umount /var/mntusb
+	rm -rf /var/mntusb
+	;;
+sigr)
+	case $2 in
+	0)
+		flash set wlan0 HW_11N_RESERVED10 0
+		flash get wlan0 HW_11N_RESERVED10
+		;;
+	1)
+		flash set wlan0 HW_11N_RESERVED10 1
+		flash get wlan0 HW_11N_RESERVED10
+		;;
+	esac
+	;;
+mode)
+	case $2 in
+	on)
+		devdata set -e mfcmode=1
+                flash set wlan0 HW_11N_RESERVED9 1
+                flash get wlan0 HW_11N_RESERVED9
+		echo "Enable mfc mode!"
+		;;
+	off)
+		devdata set -e mfcmode=0
+                flash set wlan0 HW_11N_RESERVED9 0
+                flash get wlan0 HW_11N_RESERVED9
+		echo "Disable mfc mode!"		
+		;;
+	esac
+	;;	
+*)
+	echo "Usage: mfc {command} <params>                              "
+	echo "Commands:                                                  "
+	echo "  mfc init <LANMAC> <WANMAC> <HWREV> <COUNTRYCODE> <PIN> <WIFIPASSWORD> <WLANMAC_5G>"
+	echo "                             Device Initialization         "
+	echo "  wlan24 <SSID> <Channel> <Bandwidth>                      "
+	echo "                             Configure WLAN for test       "
+	echo "                             Bandwidth: HT20/HT40          "
+	echo "  wlan5 <SSID> <Channel> <Bandwidth>                       "
+	echo "                             Configure WLAN for test       "
+	echo "                             Bandwidth: HT20/HT40/HT80     "
+	echo "  freset                     Factory reset                 "
+	echo "  isfreset                   Check device default or not   "
+	echo "  dump                       Dump devdata                  "
+	echo "  get <NAME>                 Get devdata                   "
+	echo "  set <NAME>=<VALUE>         Set devdata                   "
+	echo "  ver                        Get firmware version          "
+	echo "  test on                    Turn on test mode             "
+	echo "  test off                   Turn off test mode            "
+	echo "  button {reset|wps}										 "
+	echo "      reset                  Get reset button status       "
+	echo "      wps                    Get WPS button status"
+	echo "  led {status_green|status_amber|status_off|inet_green|inet_amber|inet_off}"
+	echo "      status_green           Turn on power/status green led."
+	echo "      status_amber           Turn on power/status amber led."
+	echo "      status_off             Turn off power/status led."
+	echo "      inet_green      	   Turn on internet green led."
+	echo "      inet_amber     		   Turn on internet amber led."
+	echo "      inet_off       		   Turn off internet led."
+	echo "  usbtest                    Test USB function."
+	echo "  sigr {0|1}                 0: Normal mode; 1: MP mode."
+	echo "  mode {on|off}              off: Normal mode; on: MP mode."
+	;;
+esac
