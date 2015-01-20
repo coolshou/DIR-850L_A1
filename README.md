@@ -35,6 +35,7 @@ Step 2.	Setup Build Enviornment($means command)
 	10) modify ./configs/default.config ELBOX_FIRMWARE_VERSION & ELBOX_FIRMWARE_REVISION for correct version.
 	
 Step 3. Building the image
+
 	1) $make
 	
 	2) $make
