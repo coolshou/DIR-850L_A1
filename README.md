@@ -32,10 +32,15 @@ Step 2.	Setup Build Enviornment($means command)
 	
 	9) $source ./setupenv	(ps : switch back to normal user permission)
 	
+	10) modify ./configs/default.config ELBOX_FIRMWARE_VERSION & ELBOX_FIRMWARE_REVISION for correct version.
+	
 Step 3. Building the image
 	1) $make
+	
 	2) $make
+	
 	3) $make
+	
      	===================================================
 	 You are going to build the f/w images.
 	 Both the release and tftp images will be generated.
